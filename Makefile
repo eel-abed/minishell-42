@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+         #
+#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/11 17:31:31 by codespace         #+#    #+#              #
-#    Updated: 2024/09/14 19:25:02 by maxencefour      ###   ########.fr        #
+#    Updated: 2024/10/18 14:00:41 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 RM = rm -f
 
 # SRC
-SRC = main.c
+SRC = main.c 
 OBJ = $(SRC:.c=.o)
 
 # LIB
