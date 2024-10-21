@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2024/10/21 15:56:56 by eel-abed         ###   ########.fr        #
+#    Updated: 2024/10/21 19:09:21 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ INC = -I$(INC_DIR) -I$(LIBFT_DIR)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(OBJ_FILES) -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
