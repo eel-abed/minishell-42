@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/21 15:57:19 by eel-abed         ###   ########.fr       */
+/*   Created: 2023/10/17 17:31:49 by eel-abed          #+#    #+#             */
+/*   Updated: 2023/10/28 16:36:51 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-
-
-int main ()
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int j = ft_strlen("hello");
-	printf("%d\n", j);
-	return (0);
+	unsigned char	*p;
+
+	if (!b)
+		return (NULL);
+	p = b;
+	while (len--)
+		*p++ = (unsigned char)c;
+	return (b);
 }

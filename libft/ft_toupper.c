@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/21 15:57:19 by eel-abed         ###   ########.fr       */
+/*   Created: 2023/10/19 17:34:32 by eel-abed          #+#    #+#             */
+/*   Updated: 2023/10/27 15:36:40 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-
-
-int main ()
+int	ft_toupper(int c)
 {
-	int j = ft_strlen("hello");
-	printf("%d\n", j);
-	return (0);
+	if (c >= 97 && c <= 122)
+		c -= 32;
+	return (c);
 }

@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/21 15:57:19 by eel-abed         ###   ########.fr       */
+/*   Created: 2023/10/19 17:48:20 by eel-abed          #+#    #+#             */
+/*   Updated: 2023/10/28 17:13:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-
-
-int main ()
+char	*ft_strrchr(const char *s, int c)
 {
-	int j = ft_strlen("hello");
-	printf("%d\n", j);
-	return (0);
+	char	*ptr;
+
+	if (!s)
+		return (NULL);
+	ptr = (char *)s + ft_strlen(s);
+	while (ptr >= s)
+	{
+		if (*ptr == (char)c)
+			return (ptr);
+		ptr--;
+	}
+	return (NULL);
 }

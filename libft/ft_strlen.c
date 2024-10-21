@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/21 15:57:19 by eel-abed         ###   ########.fr       */
+/*   Created: 2023/10/17 15:45:17 by eel-abed          #+#    #+#             */
+/*   Updated: 2023/10/28 16:37:38 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-
-
-int main ()
+size_t	ft_strlen(const char *s)
 {
-	int j = ft_strlen("hello");
-	printf("%d\n", j);
-	return (0);
+	size_t	len;
+
+	if (!s)
+		return (0);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }

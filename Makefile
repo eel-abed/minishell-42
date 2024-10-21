@@ -5,63 +5,66 @@
 #                                                     +:+ +:+         +:+      #
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/11 17:31:31 by codespace         #+#    #+#              #
-#    Updated: 2024/10/18 14:00:41 by eel-abed         ###   ########.fr        #
+#    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
+#    Updated: 2024/10/21 15:56:56 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
+# Compiler and flags
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+# Directories
+SRC_DIR = src
+OBJ_DIR = obj
+INC_DIR = include
+LIBFT_DIR = libft
+
+# Source files
+SRC_FILES = main.c \
+            execution/execution.c \
+            builtin/cd.c \
+            builtin/echo.c \
+            builtin/env.c \
+            builtin/exit.c \
+            builtin/export.c \
+            builtin/pwd.c \
+            builtin/unset.c
+
+# Object files
+OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
+
+# Executable name
 NAME = minishell
 
-CFLAGS = -Wall -Werror -Wextra -g
-RM = rm -f
+# Libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-# SRC
-SRC = main.c 
-OBJ = $(SRC:.c=.o)
+# Includes
+INC = -I$(INC_DIR) -I$(LIBFT_DIR)
 
-# LIB
-LIBFT_DIR = libft
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
+# Rules
+all: $(NAME)
 
-# HEADERS
-HEADERS_LIB = $(LIBFT_DIR)
+$(NAME): $(LIBFT) $(OBJ_FILES)
+	$(CC) $(CFLAGS) $(OBJ_FILES) -L$(LIBFT_DIR) -lft -o $(NAME)
 
- #READLINE
- 
- READLINE_VERSION = readline-8.2
- READLINE_DIR = $(CURDIR)/headers/readline
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-all : $(LIBFT_LIB) $(READLINE_DIR) $(NAME)
-
-$(READLINE_DIR):
-	curl -O https://ftp.gnu.org/gnu/readline/$(READLINE_VERSION).tar.gz
-	tar -zxvf $(READLINE_VERSION).tar.gz
-	@rm -rf $(READLINE_VERSION).tar.gz
-	@cd $(READLINE_VERSION) && ./configure --prefix=$(READLINE_DIR) && make && make install
-	@rm -rf $(READLINE_VERSION)
-
-$(LIBFT_LIB):
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-%.o: %.c
-	gcc $(CFLAGS) -I. -I$(HEADERS_LIB) -I$(READLINE_DIR)/include -c $< -o $@
-
-$(NAME): $(OBJ) $(READLINE_DIR)
-	 	gcc $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -L$(READLINE_DIR)/lib -lreadline -o $(NAME)
-		@echo "Compilation terminé avec succès!"
-
-
-leaks:
-	@valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=./$(NAME).sup ./$(NAME)
-
 clean:
-	$(RM) $(OBJ)
-	@make clean -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) clean
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
-	@make -C $(LIBFT_DIR) fclean 
-	@rm -rf $(READLINE_DIR)
+	@make -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
