@@ -6,8 +6,14 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/18 13:53:27 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:16:10 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void echo_builtin(char **args)
+{
+    (void)args;
+	printf("echo command executed\n");
+}

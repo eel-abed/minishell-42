@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/21 19:14:46 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:15:54 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,14 @@
 # include "../libft/libft.h"
 
 bool	is_builtin(char *cmd);
-
+void	execute_builtin(char *cmd, char **args);
+void	cd_builtin(char **args);
+void	pwd_builtin(void);
+void	echo_builtin(char **args);
+void	env_builtin(void);
+void	exit_builtin(char **args);
+void	export_builtin(char **args);
+void	unset_builtin(char **args);
 
 
 #endif
