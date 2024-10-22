@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/22 16:15:54 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:45:09 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <string.h>
 # include <limits.h>
+# include <errno.h>
+# include <linux/limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"

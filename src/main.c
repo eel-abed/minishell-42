@@ -6,14 +6,11 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/21 19:14:34 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:44:13 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
-
 
 int main(int argc, char **argv, char **envp)
 {
@@ -31,14 +28,23 @@ int main(int argc, char **argv, char **envp)
         if (strlen(input) > 0)
         {
             add_history(input);
-            if (is_builtin(input))
+
+            // Split input into command and arguments
+            char **args = ft_split(input, ' ');
+
+            if (is_builtin(args[0]))
             {
-                printf("'%s' is a builtin command\n", input);
+                execute_builtin(args[0], args);
             }
             else
             {
-                printf("'%s' is not a builtin command\n", input);
+                printf("'%s' is not a builtin command\n", args[0]);
             }
+
+            // Free the arguments array
+            for (int i = 0; args[i]; i++)
+                free(args[i]);
+            free(args);
         }
 
         free(input);
