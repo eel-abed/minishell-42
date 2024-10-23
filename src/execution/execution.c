@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/22 16:13:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:12:06 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	is_builtin(char *cmd)
 }
 //execute_builtin
 
-void execute_builtin(char *cmd, char **args)
+void	execute_builtin(char *cmd, char **args)
 {
 	if (!ft_strncmp(cmd, "cd", 2))
 		cd_builtin(args);
