@@ -17,3 +17,16 @@ void exit_builtin(char **args)
     (void)args;
 	printf("exit command executed\n");
 }
+
+/*
+void	exit_builtin(char **args)
+{
+	if (args[1])
+	{
+		printf("minishell: exit: too many arguments\n");
+		return;
+	}
+	printf("exit\n");
+	exit(g_exit_status);
+}
+*/
