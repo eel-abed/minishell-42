@@ -34,3 +34,45 @@ void	echo_builtin(char **args)
 	if (newline)
 		printf("\n");
 }
+/*
+static bool	is_valid_n_flag(const char *str)
+{
+	int	i;
+
+	if (!str || str[0] != '-')
+		return (false);
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (false);
+		i++;
+	}
+	return (i > 1);  // Vérifie qu'il y a au moins un 'n' après le '-'
+}
+
+void	echo_builtin(char **args)
+{
+	int		i;
+	bool	newline;
+
+	i = 1;
+	newline = true;
+	// Traite tous les flags -n consécutifs
+	while (args[i] && is_valid_n_flag(args[i]))
+	{
+		newline = false;
+		i++;
+	}
+	// Écrit les arguments
+	while (args[i])
+	{
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+		if (args[i + 1])
+			write(STDOUT_FILENO, " ", 1);
+		i++;
+	}
+	if (newline)
+		write(STDOUT_FILENO, "\n", 1);
+}
+*/
