@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/04 15:37:21 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:25:37 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ bool	is_builtin(char *cmd)
 		return (true);
 	return (false);
 }
-//execute_builtin
 
 void	execute_builtin(char *cmd, char **args)
 {
