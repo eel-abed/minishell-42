@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/23 16:12:06 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:37:21 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ bool	is_builtin(char *cmd)
 		return (false);
 	if (!ft_strncmp(cmd, "cd", 2) || !ft_strncmp(cmd, "pwd", 3)
 		|| !ft_strncmp(cmd, "echo", 4) || !ft_strncmp(cmd, "env", 3)
-		|| !ft_strncmp(cmd, "exit", 4))
+		|| !ft_strncmp(cmd, "exit", 4) || !ft_strncmp(cmd, "export", 6)
+		|| !ft_strncmp(cmd, "unset", 5))
 		return (true);
 	return (false);
 }
