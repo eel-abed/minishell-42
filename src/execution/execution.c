@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/05 13:52:18 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:08:09 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	execute_command(char **args)
 	}
 	else
 	{
-		// Appel à la fonction pour exécuter les commandes externes
 		execute_external_command(args);
 	}
 }
