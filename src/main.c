@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/10/22 16:44:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:52:54 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,8 @@ int main(int argc, char **argv, char **envp)
             // Split input into command and arguments
             char **args = ft_split(input, ' ');
 
-            if (is_builtin(args[0]))
-            {
-                execute_builtin(args[0], args);
-            }
-            else
-            {
-                printf("'%s' is not a builtin command\n", args[0]);
-            }
+            // Appel à la nouvelle fonction pour exécuter la commande
+            execute_command(args);
 
             // Free the arguments array
             for (int i = 0; args[i]; i++)

@@ -6,34 +6,41 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/10/22 16:45:09 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:00:28 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
+#define MINISHELL_H
 
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <limits.h>
-# include <errno.h>
-# include <linux/limits.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
+#include <linux/limits.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include "../libft/libft.h"
 
-bool	is_builtin(char *cmd);
-void	execute_builtin(char *cmd, char **args);
-void	cd_builtin(char **args);
-void	pwd_builtin(void);
-void	echo_builtin(char **args);
-void	env_builtin(void);
-void	exit_builtin(char **args);
-void	export_builtin(char **args);
-void	unset_builtin(char **args);
+extern char **environ;
+
+
+bool is_builtin(char *cmd);
+void execute_builtin(char *cmd, char **args);
+void cd_builtin(char **args);
+void pwd_builtin(void);
+void echo_builtin(char **args);
+void env_builtin(void);
+void exit_builtin(char **args);
+void export_builtin(char **args);
+void unset_builtin(char **args);
+void	execute_command(char **args);
+int execute_external_command(char **args);
 
 
 #endif

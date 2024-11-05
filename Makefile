@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2024/10/23 14:28:28 by eel-abed         ###   ########.fr        #
+#    Updated: 2024/11/05 13:55:25 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LIBFT_DIR = libft
 # Source files
 SRC_FILES = main.c \
             execution/execution.c \
+			execution/exec_cmd_ext.c \
             builtin/cd.c \
             builtin/echo.c \
             builtin/env.c \

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/04 19:25:26 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:39:32 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	unset_builtin(char **args)
 {
 	int			i;
 	int			j;
-	extern char	**environ;
 
 	i = 1;
 	while (args[i])

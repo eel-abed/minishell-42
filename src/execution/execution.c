@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/04 16:25:37 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:52:18 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,17 @@ void	execute_builtin(char *cmd, char **args)
 		export_builtin(args);
 	else if (!ft_strncmp(cmd, "unset", 5))
 		unset_builtin(args);
+}
+
+void	execute_command(char **args)
+{
+	if (is_builtin(args[0]))
+	{
+		execute_builtin(args[0], args);
+	}
+	else
+	{
+		// Appel à la fonction pour exécuter les commandes externes
+		execute_external_command(args);
+	}
 }
