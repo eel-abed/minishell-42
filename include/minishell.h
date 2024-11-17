@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/05 14:00:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:50:13 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <readline/history.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include "../libft/libft.h"
 
 extern char **environ;
@@ -41,6 +42,11 @@ void export_builtin(char **args);
 void unset_builtin(char **args);
 void	execute_command(char **args);
 int execute_external_command(char **args);
+int redirect_input(const char *file);
+int redirect_output(const char *file);
+int redirect_append(const char *file);
+int heredoc(const char *delimiter);
+
 
 
 #endif
