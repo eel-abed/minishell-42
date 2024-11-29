@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2024/11/17 15:54:04 by eel-abed         ###   ########.fr        #
+#    Updated: 2024/11/22 17:27:43 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ LIBFT_DIR = libft
 SRC_FILES = main.c \
             execution/execution.c \
 			execution/exec_cmd_ext.c \
-			execution/redirections.c \
+			helper_func/redirections.c \
+			helper_func/pipe.c \
+			helper_func/handle_redirections.c \
             builtin/cd.c \
             builtin/echo.c \
             builtin/env.c \
