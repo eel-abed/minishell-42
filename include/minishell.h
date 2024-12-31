@@ -6,13 +6,14 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/22 17:26:16 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:56:04 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#define _POSIX_C_SOURCE 200809L
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +28,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include "../libft/libft.h"
+#include <signal.h>
 
 extern char **environ;
 
@@ -64,6 +66,7 @@ int	handle_input_redirect(char **args, int i, t_command *cmd_info);
 int	handle_output_redirect(char **args, int i, t_command *cmd_info);
 int	handle_append_redirect(char **args, int i, t_command *cmd_info);
 int	handle_heredoc(char **args, int i, t_command *cmd_info);
+void setup_signals(void);
 
 
 
