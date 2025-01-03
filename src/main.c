@@ -6,11 +6,14 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/01/03 14:33:53 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:44:14 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
+int g_exit_status;
 
 int main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/05 14:11:41 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:49:30 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	handle_child_process(char **args)
 	if (!cmd_path)
 	{
 		write(2, args[0], ft_strlen(args[0]));
-		write(2, ": command not found\n", 19);
+		write(2, ": command not found\n", 21);
 		exit(127);
 	}
 	if (execve(cmd_path, args, environ) == -1)

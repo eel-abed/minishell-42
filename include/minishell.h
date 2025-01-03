@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/12/31 11:56:04 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:43:59 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #include <signal.h>
 
 extern char **environ;
+extern int g_exit_status;
 
 typedef struct s_command
 {

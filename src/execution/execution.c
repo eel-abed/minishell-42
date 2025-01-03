@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/22 17:16:06 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:14:16 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,33 @@ void execute_builtin(char *cmd, char **args)
 }
 
 /* Helper function to execute pipe commands */
-static void	execute_pipe_commands(t_command *cmd_info)
+static void execute_pipe_commands(t_command *cmd_info)
 {
+    int status;
+
     if (pipe(cmd_info->pipefd) == -1)
     {
         perror("pipe");
-        return ;
+        g_exit_status = 1;
+        return;
     }
     cmd_info->pid1 = fork_and_execute_first(cmd_info);
     if (cmd_info->pid1 == -1)
-        return ;
+    {
+        g_exit_status = 1;
+        return;
+    }
     cmd_info->pid2 = fork_and_execute_second(cmd_info);
     if (cmd_info->pid2 == -1)
-        return ;
+    {
+        g_exit_status = 1;
+        return;
+    }
     close(cmd_info->pipefd[0]);
     close(cmd_info->pipefd[1]);
-    waitpid(cmd_info->pid1, NULL, 0);
-    waitpid(cmd_info->pid2, NULL, 0);
+    
+    // Wait for first command but don't update global status
+    waitpid(cmd_info->pid1, &status, 0);
 }
 
 /* Helper function to handle redirections */
@@ -98,22 +108,34 @@ static void	parse_command_args(char **args, t_command *cmd_info)
     }
 }
 
-void	execute_command(char **args)
+void execute_command(char **args)
 {
-    t_command	cmd_info;
+    t_command cmd_info;
+    int status;
 
     ft_memset(&cmd_info, 0, sizeof(t_command));
     if (!args || !args[0])
-        return ;
+        return;
     parse_command_args(args, &cmd_info);
     if (cmd_info.cmd1 && cmd_info.cmd2)
+    {
         execute_pipe_commands(&cmd_info);
+        // For pipes, take the exit status of the last command
+        waitpid(cmd_info.pid2, &status, 0);
+        if (WIFEXITED(status))
+            g_exit_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            g_exit_status = 128 + WTERMSIG(status);
+    }
     else
     {
         handle_redirections(&cmd_info);
         if (is_builtin(args[0]))
+        {
             execute_builtin(args[0], args);
+            // Builtins set their own exit status
+        }
         else
-            execute_external_command(args);
+            g_exit_status = execute_external_command(args);
     }
 }
