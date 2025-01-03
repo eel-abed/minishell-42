@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2024/12/31 11:51:59 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:33:53 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
     (void)envp;
-
+    //test
     setup_signals();
 
     while (1)
