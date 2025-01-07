@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/01/03 16:14:16 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:12:09 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,52 +21,22 @@ bool is_builtin(char *cmd)
 	return (false);
 }
 
-void execute_builtin(char *cmd, char **args)
+void execute_builtin(char *cmd, char **args, t_command *cmd_info)
 {
-	if (!ft_strncmp(cmd, "cd", 2))
-		cd_builtin(args);
-	else if (!ft_strncmp(cmd, "pwd", 3))
-		pwd_builtin();
-	else if (!ft_strncmp(cmd, "echo", 4))
-		echo_builtin(args);
-	else if (!ft_strncmp(cmd, "env", 3))
-		env_builtin();
-	else if (!ft_strncmp(cmd, "exit", 4))
-		exit_builtin(args);
-	else if (!ft_strncmp(cmd, "export", 6))
-		export_builtin(args);
-	else if (!ft_strncmp(cmd, "unset", 5))
-		unset_builtin(args);
-}
-
-/* Helper function to execute pipe commands */
-static void execute_pipe_commands(t_command *cmd_info)
-{
-    int status;
-
-    if (pipe(cmd_info->pipefd) == -1)
-    {
-        perror("pipe");
-        g_exit_status = 1;
-        return;
-    }
-    cmd_info->pid1 = fork_and_execute_first(cmd_info);
-    if (cmd_info->pid1 == -1)
-    {
-        g_exit_status = 1;
-        return;
-    }
-    cmd_info->pid2 = fork_and_execute_second(cmd_info);
-    if (cmd_info->pid2 == -1)
-    {
-        g_exit_status = 1;
-        return;
-    }
-    close(cmd_info->pipefd[0]);
-    close(cmd_info->pipefd[1]);
-    
-    // Wait for first command but don't update global status
-    waitpid(cmd_info->pid1, &status, 0);
+    if (!ft_strncmp(cmd, "cd", 2))
+        cd_builtin(args, cmd_info->env);
+    else if (!ft_strncmp(cmd, "pwd", 3))
+        pwd_builtin();
+    else if (!ft_strncmp(cmd, "echo", 4))
+        echo_builtin(args);
+    else if (!ft_strncmp(cmd, "env", 3))
+        env_builtin(cmd_info->env);
+    else if (!ft_strncmp(cmd, "exit", 4))
+        exit_builtin(args);
+    else if (!ft_strncmp(cmd, "export", 6))
+        export_builtin(args, cmd_info->env);
+    else if (!ft_strncmp(cmd, "unset", 5))
+        unset_builtin(args, cmd_info->env);
 }
 
 /* Helper function to handle redirections */
@@ -108,34 +78,72 @@ static void	parse_command_args(char **args, t_command *cmd_info)
     }
 }
 
-void execute_command(char **args)
+static void execute_pipe_commands(t_command *cmd_info)
 {
-    t_command cmd_info;
     int status;
 
-    ft_memset(&cmd_info, 0, sizeof(t_command));
+    if (pipe(cmd_info->pipefd) == -1)
+    {
+        perror("pipe");
+        g_exit_status = 1;
+        return;
+    }
+
+    // Execute first command
+    cmd_info->pid1 = fork_and_execute_first(cmd_info);
+    if (cmd_info->pid1 == -1)
+    {
+        close(cmd_info->pipefd[0]);
+        close(cmd_info->pipefd[1]);
+        g_exit_status = 1;
+        return;
+    }
+
+    // Execute second command
+    cmd_info->pid2 = fork_and_execute_second(cmd_info);
+    if (cmd_info->pid2 == -1)
+    {
+        close(cmd_info->pipefd[0]);
+        close(cmd_info->pipefd[1]);
+        waitpid(cmd_info->pid1, &status, 0);
+        g_exit_status = 1;
+        return;
+    }
+
+    close(cmd_info->pipefd[0]);
+    close(cmd_info->pipefd[1]);
+    
+    // Wait for first command but don't update global status
+    waitpid(cmd_info->pid1, &status, 0);
+}
+
+void execute_command(char **args, t_command *cmd_info)
+{
+    int status;
+
     if (!args || !args[0])
         return;
-    parse_command_args(args, &cmd_info);
-    if (cmd_info.cmd1 && cmd_info.cmd2)
+
+    // Reset redirection settings
+    cmd_info->input_file = NULL;
+    cmd_info->output_file = NULL;
+    cmd_info->delimiter = NULL;
+    cmd_info->heredoc_flag = false;
+
+    parse_command_args(args, cmd_info);
+    if (cmd_info->cmd1 && cmd_info->cmd2)
     {
-        execute_pipe_commands(&cmd_info);
-        // For pipes, take the exit status of the last command
-        waitpid(cmd_info.pid2, &status, 0);
+        execute_pipe_commands(cmd_info);
+        waitpid(cmd_info->pid2, &status, 0);
         if (WIFEXITED(status))
             g_exit_status = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-            g_exit_status = 128 + WTERMSIG(status);
     }
     else
     {
-        handle_redirections(&cmd_info);
+        handle_redirections(cmd_info);
         if (is_builtin(args[0]))
-        {
-            execute_builtin(args[0], args);
-            // Builtins set their own exit status
-        }
+            execute_builtin(args[0], args, cmd_info);
         else
-            g_exit_status = execute_external_command(args);
+            g_exit_status = execute_external_command(args, cmd_info);
     }
 }

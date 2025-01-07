@@ -6,20 +6,20 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:40 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/11/05 13:39:55 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:31:54 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	env_builtin(void)
+void env_builtin(t_env *env)
 {
-	char		**env;
+    int i;
 
-	env = environ;
-	while (*env)
-	{
-		ft_putendl_fd(*env, STDOUT_FILENO);
-		env++;
-	}
+    i = 0;
+    while (env->env_array[i])
+    {
+        ft_putendl_fd(env->env_array[i], STDOUT_FILENO);
+        i++;
+    }
 }

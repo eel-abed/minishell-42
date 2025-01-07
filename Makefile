@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/01/03 16:37:38 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/01/07 18:00:18 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_FILES = main.c \
 			helper_func/pipe.c \
 			helper_func/handle_redirections.c \
 			helper_func/signals.c\
+			helper_func/env_utils.c\
             builtin/cd.c \
             builtin/echo.c \
             builtin/env.c \
