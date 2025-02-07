@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 16:00:57 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:11:02 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 #include <fcntl.h>
 #include "../libft/libft.h"
 #include <signal.h>
+
+//TODO : EXIT STATUS heredoc >> << et linked pour env (pour exve);
 
 extern int g_exit_status;
 
