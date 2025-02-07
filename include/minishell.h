@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 18:02:52 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:45:39 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,19 @@
 
 //TODO :
 
-// - Gestion des erreurs de unset (par exemple si on fait unset sur une variable qui n'existe pas)
-// - Gestion des erreurs de exit (par exemple si on fait exit sur un nombre qui n'est pas un entier)
-// - Gestion des erreurs de heredoc (par exemple si on fait un heredoc sur un fichier qui n'existe pas)
-// - Utiliser une linked list pour stocker les variables d'environement au lieu d'un tableau
 // - Considerer les implications de l'utilisation d'un global variable pour stocker le numero du signal recu
 // - Utiliser une structure de donnees plus appropriee que le type "norm" pour stocker les informations sur les signaux
 
 extern int g_exit_status;
 
+typedef struct s_env_var {
+    char *key;
+    char *value;
+    struct s_env_var *next;
+} t_env_var;
+
 typedef struct s_env {
-    char **env_array;
+    t_env_var *vars;
     int size;
 } t_env;
 
@@ -87,5 +89,6 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info);
 void setup_signals(void);
 char *find_command_path(char *cmd, t_env *env);
 void update_env_vars(t_env *env);
+char **env_to_array(t_env *env);
 
 #endif

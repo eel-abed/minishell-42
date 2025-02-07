@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/01/07 17:58:48 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:44:04 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*join_path(char *path, char *cmd)
 
 char *find_command_path(char *cmd, t_env *env)
 {
-    char *path = NULL;
+    t_env_var *path_var;
     char **paths;
     char *full_path;
     int i;
@@ -51,21 +51,18 @@ char *find_command_path(char *cmd, t_env *env)
         return (ft_strdup(cmd));
     
     // Find PATH in environment
-    i = 0;
-    while (env->env_array[i])
+    path_var = env->vars;
+    while (path_var)
     {
-        if (strncmp(env->env_array[i], "PATH=", 5) == 0)
-        {
-            path = env->env_array[i] + 5;
+        if (ft_strncmp(path_var->key, "PATH", 4) == 0)
             break;
-        }
-        i++;
+        path_var = path_var->next;
     }
     
-    if (!path)
+    if (!path_var || !path_var->value)
         return (NULL);
     
-    paths = ft_split(path, ':');
+    paths = ft_split(path_var->value, ':');
     if (!paths)
         return (NULL);
     
@@ -103,16 +100,31 @@ int execute_external_command(char **args, t_command *cmd)
     if (pid == 0)
     {
         char *cmd_path = find_command_path(args[0], cmd->env);
+        char **env_array;
+
         if (!cmd_path)
         {
             write(2, args[0], ft_strlen(args[0]));
             write(2, ": command not found\n", 21);
             exit(127);
         }
-        if (execve(cmd_path, args, cmd->env->env_array) == -1)
+
+        env_array = env_to_array(cmd->env);
+        if (!env_array)
+        {
+            perror("malloc");
+            free(cmd_path);
+            exit(1);
+        }
+
+        if (execve(cmd_path, args, env_array) == -1)
         {
             perror(args[0]);
             free(cmd_path);
+            int i = 0;
+            while (env_array[i])
+                free(env_array[i++]);
+            free(env_array);
             exit(126);
         }
     }
