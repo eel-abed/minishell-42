@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 19:17:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 15:11:04 by mafourni         ###   ########.fr       */
+/*   Created: 2024/07/02 13:21:24 by mafourni          #+#    #+#             */
+/*   Updated: 2024/07/06 19:33:43 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	char	*p_;
-	if (!s || n == 0)
-		return ;
-	p_ = s;
-	while (n--)
-	{
-		*p_++ = 0;
-	}
+	new->next = *lst;
+	*lst = new;
 }

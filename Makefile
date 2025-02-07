@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/01/07 18:00:18 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/02/07 18:53:38 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRC_FILES = main.c \
             builtin/exit.c \
             builtin/export.c \
             builtin/pwd.c \
-            builtin/unset.c
+            builtin/unset.c \
+			parsing\lexer\lexer.c
+
 
 # Object files
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
