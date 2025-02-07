@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 17:42:11 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:36 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,17 @@
 #include "../libft/libft.h"
 #include <signal.h>
 
-//TODO : EXIT STATUS heredoc >> << et linked pour env (pour exve);
+//TODO :
+// - Gestion des erreurs d'ouverture de fichiers (par exemple si on fait un cat sur un fichier qui n'existe pas)
+// - Gestion des erreurs de redirection (par exemple si on fait >> sur un fichier qui n'existe pas)
+// - Gestion des erreurs de cd (par exemple si on fait cd sur un repertoire qui n'existe pas)
+// - Gestion des erreurs de export (par exemple si on fait export sur une variable qui n'existe pas)
+// - Gestion des erreurs de unset (par exemple si on fait unset sur une variable qui n'existe pas)
+// - Gestion des erreurs de exit (par exemple si on fait exit sur un nombre qui n'est pas un entier)
+// - Gestion des erreurs de heredoc (par exemple si on fait un heredoc sur un fichier qui n'existe pas)
+// - Utiliser une linked list pour stocker les variables d'environement au lieu d'un tableau
+// - Considerer les implications de l'utilisation d'un global variable pour stocker le numero du signal recu
+// - Utiliser une structure de donnees plus appropriee que le type "norm" pour stocker les informations sur les signaux
 
 extern int g_exit_status;
 

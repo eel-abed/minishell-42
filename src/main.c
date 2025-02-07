@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/07 15:19:51 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:50:05 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int g_exit_status;
 
 int main(int argc, char **argv, char **envp) 
 {
-    t_list  token_clean;
     char *input;
     t_env *env;
     t_command cmd;
@@ -41,18 +40,17 @@ int main(int argc, char **argv, char **envp)
         if (strlen(input) > 0) 
         {
             add_history(input);
-            token_clean = ft_lexer();
-            // char **args = ft_split(input, ' ');
+            char **args = ft_split(input, ' ');
             cmd.cmd1 = NULL;
             cmd.cmd2 = NULL;
-            // execute_command(args, &cmd);
-            // // Add cleanup for args
-            // int i = 0;
-            // while (args[i]) {
-            //     free(args[i]);
-            //     i++;
-            // }
-            // free(args);
+            execute_command(args, &cmd);
+            // Add cleanup for args
+            int i = 0;
+            while (args[i]) {
+                free(args[i]);
+                i++;
+            }
+            free(args);
         }
         free(input);
     }
