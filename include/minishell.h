@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/01/07 18:10:29 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:58:43 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@
 #include <signal.h>
 
 extern int g_exit_status;
+
 typedef struct s_env {
     char **env_array;
     int size;
 } t_env;
 
-typedef struct s_command {
+
+typedef struct s_command 
+{
     char *input_file;
     char *output_file;
     char *delimiter;
@@ -75,7 +78,5 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info);
 void setup_signals(void);
 char *find_command_path(char *cmd, t_env *env);
 void update_env_vars(t_env *env);
-
-
 
 #endif
