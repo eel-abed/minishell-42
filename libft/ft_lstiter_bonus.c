@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 19:17:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 15:11:04 by mafourni         ###   ########.fr       */
+/*   Created: 2024/07/06 19:10:07 by mafourni          #+#    #+#             */
+/*   Updated: 2024/07/19 18:16:29 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	char	*p_;
-	if (!s || n == 0)
-		return ;
-	p_ = s;
-	while (n--)
-	{
-		*p_++ = 0;
-	}
-}
+// void	ft_lstiter(t_list	*lst, void (*f)(void *))
+// {
+// 	if (!lst)
+// 		return ;
+// 	while (lst)
+// 	{
+// 		f(lst->content);
+// 		lst = lst->next;
+// 	}
+// }
