@@ -14,12 +14,17 @@
 
 void env_builtin(t_env *env)
 {
-    int i;
+    t_env_var *current;
 
-    i = 0;
-    while (env->env_array[i])
+    current = env->vars;
+    while (current)
     {
-        ft_putendl_fd(env->env_array[i], STDOUT_FILENO);
-        i++;
+        if (current->value)  // N'affiche que les variables avec une valeur
+        {
+            ft_putstr_fd(current->key, STDOUT_FILENO);
+            ft_putchar_fd('=', STDOUT_FILENO);
+            ft_putendl_fd(current->value, STDOUT_FILENO);
+        }
+        current = current->next;
     }
 }
