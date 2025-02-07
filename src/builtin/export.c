@@ -34,14 +34,22 @@ static void set_env_var(char *arg, t_env *env)
     if (equal_sign)
     {
         new_env = malloc(sizeof(char *) * (env->size + 2));
-        for (i = 0; env->env_array[i]; i++)
+        i = 0;
+        while (env->env_array[i])
+        {
             new_env[i] = ft_strdup(env->env_array[i]);
+            i++;
+        }
         new_env[i] = ft_strdup(arg);
         new_env[i + 1] = NULL;
         
         // Free old array
-        for (i = 0; env->env_array[i]; i++)
+        i = 0;
+        while (env->env_array[i])
+        {
             free(env->env_array[i]);
+            i++;
+        }
         free(env->env_array);
         
         env->env_array = new_env;

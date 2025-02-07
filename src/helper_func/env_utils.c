@@ -21,8 +21,9 @@ t_env *init_env(char **envp) {
         return NULL;
 
     // Count environment variables
-    for (i = 0; envp[i]; i++)
-        ;
+    i = 0;
+    while (envp[i])
+        i++;
     
     env->size = i;
     env->env_array = malloc(sizeof(char *) * (i + 1));
@@ -47,8 +48,12 @@ void free_env(t_env *env) {
     if (!env)
         return;
     
-    for (i = 0; env->env_array[i]; i++)
+    i = 0;
+    while (env->env_array[i])
+    {
         free(env->env_array[i]);
+        i++;
+    }
     free(env->env_array);
     free(env);
 }

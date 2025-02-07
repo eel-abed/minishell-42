@@ -51,13 +51,15 @@ char *find_command_path(char *cmd, t_env *env)
         return (ft_strdup(cmd));
     
     // Find PATH in environment
-    for (i = 0; env->env_array[i]; i++)
+    i = 0;
+    while (env->env_array[i])
     {
         if (strncmp(env->env_array[i], "PATH=", 5) == 0)
         {
             path = env->env_array[i] + 5;
             break;
         }
+        i++;
     }
     
     if (!path)

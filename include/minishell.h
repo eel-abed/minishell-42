@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/01/07 18:10:29 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:00:57 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #include <signal.h>
 
 extern int g_exit_status;
+
 typedef struct s_env {
     char **env_array;
     int size;
