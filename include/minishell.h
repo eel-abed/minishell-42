@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 17:48:36 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:02:52 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@
 #include <signal.h>
 
 //TODO :
-// - Gestion des erreurs d'ouverture de fichiers (par exemple si on fait un cat sur un fichier qui n'existe pas)
-// - Gestion des erreurs de redirection (par exemple si on fait >> sur un fichier qui n'existe pas)
-// - Gestion des erreurs de cd (par exemple si on fait cd sur un repertoire qui n'existe pas)
-// - Gestion des erreurs de export (par exemple si on fait export sur une variable qui n'existe pas)
+
 // - Gestion des erreurs de unset (par exemple si on fait unset sur une variable qui n'existe pas)
 // - Gestion des erreurs de exit (par exemple si on fait exit sur un nombre qui n'est pas un entier)
 // - Gestion des erreurs de heredoc (par exemple si on fait un heredoc sur un fichier qui n'existe pas)
@@ -74,7 +71,7 @@ void echo_builtin(char **args);
 void env_builtin(t_env *env);
 void exit_builtin(char **args);
 void export_builtin(char **args, t_env *env);
-void unset_builtin(char **args, t_env *env);
+int unset_builtin(char **args, t_env *env);
 void execute_command(char **args, t_command *cmd_info);
 int execute_external_command(char **args, t_command *cmd);
 int redirect_input(const char *file);
