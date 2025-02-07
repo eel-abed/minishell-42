@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:17:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2023/10/28 17:16:11 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:11:04 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	char	*p;
-
+	char	*p_;
 	if (!s || n == 0)
 		return ;
-	p = s;
+	p_ = s;
 	while (n--)
 	{
-		*p++ = 0;
+		*p_++ = 0;
 	}
 }
