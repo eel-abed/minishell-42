@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/08 17:46:08 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/02/09 19:19:54 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#define OK "\033[32mOK\033[0m"
+#define ERROR "\033[31mERROR\033[0m"
+#define KO "\033[31mKO\033[0m"
 
 # define _POSIX_C_SOURCE 200809L
 # include "../libft/libft.h"
@@ -89,13 +93,24 @@ typedef enum e_operator_kind
 {
 	kind_none,
 	kind_redir_left,
-	kind_redir_righ,
+	kind_redir_right,
 	kind_pipe	
 }	t_operator_kind;
 
+
+//LEXER
 t_list		*ft_lexer(char *input);
-int			operator_error(char *input);
-int			skip_space(char *input, int i);
 int			quote_check(char *input);
+
+bool	check_syntax(char *input);
+bool 	is_operator(char ch, t_operator_kind *out_kind);
+bool	is_valid_operator(char *str, size_t remain, t_operator_kind kind);
+
+bool is_valid_redir_left(char *string, size_t remaining);
+bool is_valid_redir_right(char *string, size_t remaining);
+bool is_valid_pipe(char *string);
+
+//UTILS
+bool is_space (char *input, int i);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tema.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:29:37 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/08 18:01:17 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/02/09 17:22:44 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ bool is_valid_redir_right(char *string, size_t remaining)
         return (redir_left_count <= 2);
 }
 
-bool is_valid_pipe(char *string, size_t remaining) {
+bool is_valid_pipe(char *string, size_t remaining) 
+{
         size_t i                = 1;
         size_t redir_left_count = 1;
 
@@ -83,13 +84,18 @@ bool is_valid_pipe(char *string, size_t remaining) {
         return (redir_left_count <= 1);
 }
 
-bool is_valid_operator(char *string, size_t remaining, t_operator_kind kind) {
-        if (kind == kind_pipe) {
+bool is_valid_operator(char *string, size_t remaining, t_operator_kind kind) 
+{
+        if (kind == kind_pipe)
+        {
                 return is_valid_pipe(string, remaining);
-        } else if (kind == kind_redir_right) {
+        } 
+        else if (kind == kind_redir_right) 
+        {
                 return is_valid_redir_right(string, remaining);
-
-        } else if (kind == kind_redir_left) {
+        }
+        else if (kind == kind_redir_left) 
+        {
                 return is_valid_redir_left(string, remaining);
         }
         return true;

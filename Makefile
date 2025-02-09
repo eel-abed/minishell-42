@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/08 01:23:11 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/09 19:10:14 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,10 @@ SRC_FILES = main.c \
             builtin/export.c \
             builtin/pwd.c \
             builtin/unset.c \
-			parsing/lexer.c
+			parsing/lexer/lexer.c \
+			parsing/lexer/syntax.c \
+			parsing/lexer/quote.c \
+			parsing/utils/utils.c
 
 
 # Object files

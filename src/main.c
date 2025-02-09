@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/08 01:38:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/09 19:16:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int main(int argc, char **argv, char **envp)
             add_history(input);
             token_clean = ft_lexer(input);
             if(token_clean == NULL)
-                (printf("CHECH\n"));
+               printf("Token_clean NULL\n");
             // printf("Tu le sais %d \n",token_clean->index);
             // char **args = ft_split(input, ' ');
             // cmd.cmd1 = NULL;
