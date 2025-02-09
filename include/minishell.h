@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/08 03:37:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:46:08 by maxencefour      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <linux/limits.h>
+// # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -83,6 +83,16 @@ void		update_env_vars(t_env *env);
 int			quote_check(char *input);
 
 // MAXENCE
+
+
+typedef enum e_operator_kind
+{
+	kind_none,
+	kind_redir_left,
+	kind_redir_righ,
+	kind_pipe	
+}	t_operator_kind;
+
 t_list		*ft_lexer(char *input);
 int			operator_error(char *input);
 int			skip_space(char *input, int i);
