@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/07 18:53:38 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/10 16:23:01 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC_FILES = main.c \
             builtin/export.c \
             builtin/pwd.c \
             builtin/unset.c \
-			parsing\lexer\lexer.c
+			parsing/lexer/lexer.c
 
 
 # Object files
