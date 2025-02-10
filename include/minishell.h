@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:08:52 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:12:24 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 
 //- Considerer les implications de l'utilisation d'un global variable pour stocker le numero du signal recu
 //- Utiliser une structure de donnees plus appropriee que le type "norm" pour stocker les informations sur les signaux
+// << >> 
+//multiple pipes
 
 extern int				g_exit_status;
 
