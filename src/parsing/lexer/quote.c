@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 19:01:46 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/09 19:02:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:23:53 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ int	quote_check(char *input)
 {
 	int i;
 	int flag;
-    char to_found;
-    
+	char to_found;
+
 	i = 0;
 	flag = -1;
 	while (input[i])
 	{
 		if (input[i] == '\"' || input[i] == '\'')
 		{
-            to_found = input[i];
+			to_found = input[i];
 			flag = 0;
-            i++;
+			i++;
 			while (input[i] && flag == 0)
 			{
 				if (input[i] == to_found)
 					flag = -1;
 				i++;
 			}
-            i--;
+			i--;
 		}
 		i++;
 	}
