@@ -58,7 +58,23 @@ int handle_heredoc(char **args, int i, t_command *cmd_info)
         g_exit_status = 2;
         return (i);
     }
-    cmd_info->delimiter = args[i + 1];
+
+    if (args[i + 1][0] == '\0')
+    {
+        ft_putendl_fd("minishell: syntax error near unexpected token `<<'", 2);
+        g_exit_status = 2;
+        return (i);
+    }
+
+    // Save the delimiter
+    cmd_info->delimiter = ft_strdup(args[i + 1]);
+    if (!cmd_info->delimiter)
+    {
+        ft_putendl_fd("minishell: memory allocation error", 2);
+        g_exit_status = 1;
+        return (i);
+    }
+
     cmd_info->heredoc_flag = true;
     return (i + 2);
 }

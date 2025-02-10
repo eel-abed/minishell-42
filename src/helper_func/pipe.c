@@ -15,12 +15,16 @@
 static void child_process_first(t_command *cmd_info)
 {
     char *cmd_path;
+    char **env_array;
     
     close(cmd_info->pipefd[0]);
     dup2(cmd_info->pipefd[1], STDOUT_FILENO);
     close(cmd_info->pipefd[1]);
     if (is_builtin(cmd_info->cmd1[0]))
+    {
         execute_builtin(cmd_info->cmd1[0], cmd_info->cmd1, cmd_info);
+        exit(0);
+    }
     else
     {
         cmd_path = find_command_path(cmd_info->cmd1[0], cmd_info->env);
@@ -30,8 +34,21 @@ static void child_process_first(t_command *cmd_info)
             write(2, ": command not found\n", 21);
             exit(127);
         }
-        execve(cmd_path, cmd_info->cmd1, cmd_info->env->env_array);
+
+        env_array = env_to_array(cmd_info->env);
+        if (!env_array)
+        {
+            perror("malloc");
+            free(cmd_path);
+            exit(1);
+        }
+
+        execve(cmd_path, cmd_info->cmd1, env_array);
         free(cmd_path);
+        int i = 0;
+        while (env_array[i])
+            free(env_array[i++]);
+        free(env_array);
         exit(126);
     }
 }
@@ -39,12 +56,16 @@ static void child_process_first(t_command *cmd_info)
 static void child_process_second(t_command *cmd_info)
 {
     char *cmd_path;
+    char **env_array;
     
     close(cmd_info->pipefd[1]);
     dup2(cmd_info->pipefd[0], STDIN_FILENO);
     close(cmd_info->pipefd[0]);
     if (is_builtin(cmd_info->cmd2[0]))
+    {
         execute_builtin(cmd_info->cmd2[0], cmd_info->cmd2, cmd_info);
+        exit(0);
+    }
     else
     {
         cmd_path = find_command_path(cmd_info->cmd2[0], cmd_info->env);
@@ -54,8 +75,21 @@ static void child_process_second(t_command *cmd_info)
             write(2, ": command not found\n", 21);
             exit(127);
         }
-        execve(cmd_path, cmd_info->cmd2, cmd_info->env->env_array);
+
+        env_array = env_to_array(cmd_info->env);
+        if (!env_array)
+        {
+            perror("malloc");
+            free(cmd_path);
+            exit(1);
+        }
+
+        execve(cmd_path, cmd_info->cmd2, env_array);
         free(cmd_path);
+        int i = 0;
+        while (env_array[i])
+            free(env_array[i++]);
+        free(env_array);
         exit(126);
     }
 }
