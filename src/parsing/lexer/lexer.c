@@ -5,80 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 15:18:15 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/10 16:23:15 by eel-abed         ###   ########.fr       */
+/*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
+/*   Updated: 2025/02/10 16:23:44 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-// t_list  *ft_lexer(char *input)
-// {
-//     t_list  *token_list;
-//     char *temp = input;
-//     token_list = NULL;
-//     if (quote_check(temp) == 0)
-//         return(printf("Syntax error\n"),NULL)
-//     // if (check_syntax(temp))
-//     //     retunr(printf())
-// }
+t_list	*ft_lexer(char *input)
+{
+	t_list	*token_list;
+	char	*temp;
 
-// int quote_check(char *input)
-// {
-//     int i;
-//     int j;
-//     int d_flag;
-//     int s_flag;
+	temp = input;
+	token_list = NULL;
+	if (quote_check(temp) == 1)
+		return (printf("Quote Syntax %s !\n", ERROR), NULL);
+	printf("[QUOTE %s !]\n", OK);
+	if (check_syntax(temp))
+		return (printf("[SYNTAX OPE %s !]\n", OK), NULL);
+	return (token_list);
+}
 
-//     j = 0;
-//     i = 0;
-//     d_flag = -1;
-//     s_flag = -1;
-//     while(input[i] != NULL)
-//     {
-//         if (input[i] = '"')
-//         {
-// 			j = i;
-//             d_flag = 0;
-//             while(input[j] || d_flag == -1)
-//             {
-// 			    if (input[j] = '"')
-//             	    d_flag = -1;
-// 			j++;
-// 			}
-//         }
-//         if (input[i] = 39)
-//         {
-//             j = i;
-//             s_flag = 0;
-//             while(input[i] || s_flag == -1)
-//             {
-// 			if (input[i] = '"')
-//             	s_flag = -1;
-// 			i++;
-// 			}
-//         }
-//         i++;
-//     }   
-//     if (d_flag != -1 || s_flag != -1)
-//         return(1);
-//     else
-//         return (0);
-// }
+bool	check_syntax(char *input)
+{
+	size_t			i;
+	size_t			len;
+	t_operator_kind	maybe_kind;
 
-// int check_syntax(char *input)
-// {
-//     int i;
-//     i = 0;
-//     while (input != NULL)
-//     {
-//         int j = 0;
-//         if(input[i] = '>')
-//             {
-//                 j = i;
-//                 while(input[j])
-                    
-//             }
-//         i++;
-//     }
-// }
+	maybe_kind = kind_none;
+	i = 0;
+	len = ft_strlen(input);
+	while (i < len)
+	{
+		if (is_operator(input[i], &maybe_kind))
+		{
+			if (is_valid_operator(&input[i], len - i, maybe_kind) == false)
+			{
+				printf("[OPE SYNTAX %s at '%s' !]\n", ERROR, &input[i]);
+				return (false);
+			}
+		}
+		++i;
+	}
+	return (true);
+}

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/08 00:45:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:43:14 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,32 @@ void update_env_vars(t_env *env);
 char **env_to_array(t_env *env);
 int quote_check(char *input);
 t_list  *ft_lexer(char *input);
+
+// MAXENCE
+
+
+typedef enum e_operator_kind
+{
+	kind_none,
+	kind_redir_left,
+	kind_redir_right,
+	kind_pipe	
+}	t_operator_kind;
+
+
+//LEXER
+t_list		*ft_lexer(char *input);
+int			quote_check(char *input);
+
+bool	check_syntax(char *input);
+bool 	is_operator(char ch, t_operator_kind *out_kind);
+bool	is_valid_operator(char *str, size_t remain, t_operator_kind kind);
+
+bool is_valid_redir_left(char *string, size_t remaining);
+bool is_valid_redir_right(char *string, size_t remaining);
+bool is_valid_pipe(char *string);
+
+//UTILS
+bool is_space (char *input, int i);
 
 #endif
