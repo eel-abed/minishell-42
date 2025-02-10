@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:18:15 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/07 17:16:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:15:10 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ t_list  *ft_lexer(char *input)
     t_list  *token_list;
     char *temp = input;
     token_list = NULL;
-    if (quote_check(temp))
-        return(printf("Syntax error\n"),1)
-    if (check_syntax(temp))
-        retunr(printf())
+    if (quote_check(temp) == 0)
+        return(printf("Syntax error\n"),NULL)
+    // if (check_syntax(temp))
+    //     retunr(printf())
 }
-
 
 int quote_check(char *input)
 {
@@ -41,11 +40,11 @@ int quote_check(char *input)
         {
 			j = i;
             d_flag = 0;
-            while(input[i] || d_flag == -1)
+            while(input[j] || d_flag == -1)
             {
-			if (input[i] = '"')
-            	d_flag = -1;
-			i++;
+			    if (input[j] = '"')
+            	    d_flag = -1;
+			j++;
 			}
         }
         if (input[i] = 39)
@@ -59,7 +58,12 @@ int quote_check(char *input)
 			i++;
 			}
         }
-    }    
+        i++;
+    }   
+    if (d_flag != -1 || s_flag != -1)
+        return(1);
+    else
+        return (0);
 }
 
 int check_syntax(char *input)

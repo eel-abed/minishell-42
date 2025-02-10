@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 18:45:39 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/08 00:45:37 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ void setup_signals(void);
 char *find_command_path(char *cmd, t_env *env);
 void update_env_vars(t_env *env);
 char **env_to_array(t_env *env);
+int quote_check(char *input);
+t_list  *ft_lexer(char *input);
 
 #endif
