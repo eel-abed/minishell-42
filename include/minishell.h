@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:12:24 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:17:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-// TODO :
+// TODO ELIAS:
 
 //- Considerer les implications de l'utilisation d'un global variable pour stocker le numero du signal recu
 //- Utiliser une structure de donnees plus appropriee que le type "norm" pour stocker les informations sur les signaux
 // << >> 
 //multiple pipes
+
+//TODO MAX :
+//aller chercher les env
+//split good
+//enum token
 
 extern int				g_exit_status;
 
