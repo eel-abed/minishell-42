@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 17:43:14 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:00:42 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
+//COLORS
+#define OK "\033[32mOK\033[0m"
+#define ERROR "\033[31mERROR\033[0m"
+#define KO "\033[31mKO\033[0m"
 
 #define _POSIX_C_SOURCE 200809L
 #include <stdbool.h>
