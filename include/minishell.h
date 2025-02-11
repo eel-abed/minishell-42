@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:17:28 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:59:24 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ void					setup_signals(void);
 char					*find_command_path(char *cmd, t_env *env);
 void					update_env_vars(t_env *env);
 char					**env_to_array(t_env *env);
-int						quote_check(char *input);
-t_list					*ft_lexer(char *input);
 
 // MAXENCE
 
@@ -118,10 +116,11 @@ typedef enum e_operator_kind
 	kind_redir_left,
 	kind_redir_right,
 	kind_pipe
-}						t_operator_kind;
+}t_operator_kind;
 
 // LEXER
-t_list					*ft_lexer(char *input);
+char					*any_env(char *input, t_env *env);
+t_list					*ft_lexer(char *input, t_env *env);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -134,6 +133,9 @@ bool					is_valid_redir_right(char *string, size_t remaining);
 bool					is_valid_pipe(char *string);
 
 // UTILS
-bool					is_space(char *input, int i);
+bool	is_space(char *input, int i);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strcpy(char *dest, char *src, int i, int j);
+char 	*might_replace(t_env *env,char *input, int j, char *tmp);
 
 #endif

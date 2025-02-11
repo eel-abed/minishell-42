@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:28:36 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/07 14:58:14 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:20:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <unistd.h>
+
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <linux/limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 typedef struct s_list

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/10 18:07:35 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:51:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
-	char		**args;
-	int			i;
+	// char		**args;
+	// int			i;
 
 	(void)argc;
 	(void)argv;
@@ -39,21 +39,21 @@ int	main(int argc, char **argv, char **envp)
 		if (strlen(input) > 0)
 		{
 			add_history(input);
-			token_clean = ft_lexer(input);
+			token_clean = ft_lexer(input,env);
 			if (token_clean == NULL)
 				printf("Token_clean NULL\n");
-			args = ft_split(input, ' ');
-			cmd.cmd1 = NULL;
-			cmd.cmd2 = NULL;
-			execute_command(args, &cmd);
+			// args = ft_split(input, ' ');
+			// cmd.cmd1 = NULL;
+			// cmd.cmd2 = NULL;
+			// execute_command(args, &cmd);
 			// Add cleanup for args
-			i = 0;
-			while (args[i])
-			{
-				free(args[i]);
-				i++;
-			}
-			free(args);
+			// i = 0;
+			// while (args[i])
+			// {
+			// 	free(args[i]);
+			// 	i++;
+			// }
+			// free(args);
 		}
 		free(input);
 	}
