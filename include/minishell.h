@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/11 17:59:24 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/13 06:20:34 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ bool	is_space(char *input, int i);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *dest, char *src, int i, int j);
 char 	*might_replace(t_env *env,char *input, int j, char *tmp);
+char 	*ft_strlcat_mini(char *dst, const char *src, size_t dstsize);
 
 #endif
