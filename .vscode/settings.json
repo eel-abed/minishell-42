@@ -1,5 +1,14 @@
 {
     "files.associations": {
-        "libft.h": "c"
+        "libft.h": "c",
+        "type_traits": "cpp",
+        "cmath": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "exception": "cpp",
+        "limits": "cpp",
+        "new": "cpp",
+        "typeinfo": "cpp",
+        "minishell.h": "c"
     }
 }

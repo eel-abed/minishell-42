@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:22:02 by mafourni          #+#    #+#             */
-/*   Updated: 2024/07/19 18:15:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/14 02:04:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,4 @@ t_list	*ft_lstnew(int content)
 	newlst->next = NULL;
 	return (newlst);
 }
+

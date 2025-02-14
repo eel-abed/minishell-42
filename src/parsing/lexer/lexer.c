@@ -6,15 +6,15 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/13 07:28:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/14 07:05:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_list	*ft_lexer(char *input, t_env *env)
+t_tokens	*ft_lexer(char *input, t_env *env)
 {
-	t_list	*token_list;
+	t_tokens	*token_list;
 	char	*temp;
 
 	temp = input;
@@ -26,7 +26,15 @@ t_list	*ft_lexer(char *input, t_env *env)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	printf("[OPE %s !]\n", OK);
 	temp = any_env(temp, env);
-	printf("TEMP = apres any_env [%s]", temp);
+	token_list = lets_tokeninze(temp);
+	// t_tokens *head = token_list;
+	// while(token_list)
+	// {
+	// 	printf(" Apres Token = [%s]\n", token_list->value);
+	// 	token_list = token_list->next;
+	// }
+	// token_list = head;
+	printf("TEMP (l'input quoi) after any_env(function) =  [%s]\n", temp);
 	return (token_list);
 }
 
@@ -65,17 +73,25 @@ char *any_env(char *input, t_env *env)
 	i = 0;
 	while(input[i])
 	{
+		// printf("index while = [%d]\n",i);
 		if (input[i] == '$' && input[i])
 		{
+			// printf("IN\n");
 			i++;
 			j = i;
 			while(ft_isalnum(input[i]) && input[i])
 				i++;
+			// printf("i apres isalnum =[%d]\n",i);
 			tmp = ft_strcpy(tmp,input,i,j);
+			int h = ft_strlen(input);
 			input = might_replace(envi,input,j,tmp);
+			if((int)ft_strlen(input) < h) //Ya pete un bug si env value et 2
+				i = i - (h - (int)ft_strlen(input));
+			// printf("i = [%d]\n",i);
+			// printf("INPUT = [%s]\n", input);
 			free(tmp);
 		}
-		if(input[i])
+		if(input[i] && input[i] != '$')
 			i++;
 	}
 	return(input);
@@ -88,6 +104,7 @@ char *might_replace(t_env *env,char *input, int j, char *tmp)
 	new_input = input;
 	len = 0;
 	head = env->vars;
+	// printf("TMP before : while loop = [%s]\n",tmp);
 	while(env->vars != NULL)
 	{
 		if (ft_strcmp(env->vars->key,tmp) == 0)
@@ -96,6 +113,7 @@ char *might_replace(t_env *env,char *input, int j, char *tmp)
 			new_input = ft_calloc(len + 1, 1);
 			if (!new_input)
 				return (NULL);
+			// printf("value de J = [%d]\n",j);
 			new_input = ft_strncpy(new_input,input,j);
 			ft_strlcat_mini(new_input,env->vars->value, len);
 			ft_strlcat(new_input, input + j + ft_strlen(tmp),len);
@@ -107,17 +125,21 @@ char *might_replace(t_env *env,char *input, int j, char *tmp)
 	}
 	if (env->vars == NULL)
 	{
-	len = ft_strlen(input) + ft_strlen("");
+	len = ft_strlen(input);
 	new_input = ft_calloc(len + 1, 1);
 	if (!new_input)
 		return (NULL);
-	new_input = ft_strncpy(new_input,input,j);
-	ft_strlcat_mini(new_input,"", len);
-	printf("new input = [%s]\n", new_input);
-	ft_strlcat(new_input, input +ft_strlen(tmp),len);
+	new_input = ft_strncpy(new_input,input,j - 1);
+	// printf("new input apres strncpy = [%s]\n", new_input);
+	// ft_strlcat_mini(new_input,"", len);
+	// printf("new input strlcatmini = [%s]\n", new_input);
+	// printf("LEN DE TMP = [%ld]\n",ft_strlen(tmp));
+	ft_strlcat(new_input, input + ft_strlen(tmp)+ j,len);
+	// printf("new input strlcat tou = [%s]\n", new_input);
 	input = new_input;
 	env->vars = head;
 	}
-	printf("input = [%s]",input);
+	// printf("input = [%s]\n",input);
 	return (input);
 }
+// salut $USER et $non existe pas

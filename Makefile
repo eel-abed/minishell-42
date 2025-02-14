@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/11 16:54:53 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/14 05:33:42 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,10 @@ SRC_FILES = main.c \
 			parsing/lexer/lexer.c \
 			parsing/lexer/syntax.c \
 			parsing/lexer/quote.c \
-			parsing/utils/utils.c
+			parsing/utils/utils.c \
+			parsing/lexer/linked_listfunctions.c \
+			parsing/lexer/token.c \
+			parsing/lexer/split.c \
 
 
 # Object files

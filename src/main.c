@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/13 03:31:08 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/14 02:24:52 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_list		*token_clean;
+	t_tokens	*token_clean;
 	char		*input;
 	t_env		*env;
 	t_command	cmd;

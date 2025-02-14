@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 06:20:34 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/14 07:29:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,23 @@ typedef enum e_operator_kind
 	kind_none,
 	kind_redir_left,
 	kind_redir_right,
+	kind_redir_2left,
+	kind_redir_2right,
 	kind_pipe
 }t_operator_kind;
 
+
+typedef struct s_tokens
+{
+	t_operator_kind type;
+	char 	*value;
+	struct s_tokens *next;
+	struct s_tokens *prev;
+}t_tokens;
+
 // LEXER
 char					*any_env(char *input, t_env *env);
-t_list					*ft_lexer(char *input, t_env *env);
+t_tokens				*ft_lexer(char *input, t_env *env);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -132,11 +143,29 @@ bool					is_valid_redir_left(char *string, size_t remaining);
 bool					is_valid_redir_right(char *string, size_t remaining);
 bool					is_valid_pipe(char *string);
 
+//liked list tokens 
+void		mini_lstadd_back(t_tokens **lst, t_tokens *new);
+void		mini_lstadd_front(t_tokens **lst, t_tokens *new);
+t_tokens	*mini_lstlast(t_tokens *lst);
+t_tokens	*mini_lstnew(char *value, int kind);
+int			mini_lstsize(t_tokens *lst);
+//COUNT WORD FOR SPLIT
+int		count_tokens(char *input);
+int 	detect_operator(char c);
+// SPLIT MINI
+char	**split_mini(char *input);
+char	*extract_token(char *input, int *i, int *start);
+void	skip_quotes(char *input, int *i, char quote);
+void	handle_operator(char *input, int *i);
+int is_empty_token(char *str);
+
+// void remove_empty_tokens(t_tokens **list);
+t_tokens *lets_tokeninze(char *input);
 // UTILS
 bool	is_space(char *input, int i);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *dest, char *src, int i, int j);
 char 	*might_replace(t_env *env,char *input, int j, char *tmp);
 char 	*ft_strlcat_mini(char *dst, const char *src, size_t dstsize);
-
+void 	print_tokens(t_tokens *list);
 #endif

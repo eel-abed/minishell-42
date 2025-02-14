@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/13 04:30:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/14 07:17:52 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ char *ft_strlcat_mini(char *dst, const char *src, size_t dstsize)
 	if (!dst)
 		return (0);
 	dstlen = ft_strlen(dst) - 1; // ya le -1 pour ecrire sur le $ car len compte \0
-	printf("dst len = [%ld]\n",dstlen);
+	// printf("dst len = [%ld]\n",dstlen);
 	// srclen = ft_strlen(src);
 	i = 0;
 	if (dstsize <= dstlen)
 	{
-		printf("jreteun null\n");
+		// printf("jreteun null\n");
 		return (NULL);
 	}
 	while (src[i] && dstlen + i < dstsize - 1)
@@ -84,4 +84,35 @@ char	*ft_strcpy(char *dest, char *src, int i, int j)
 	}
 	dest[index] = '\0';
 	return (dest);
+}
+
+int detect_operator(char c)
+{
+    return (c == '|' || c == '<' || c == '>');
+}
+void print_tokens(t_tokens *list)
+{
+    t_tokens *current;
+    int i;
+
+    if (!list)
+    {
+        printf("Token list is empty\n");
+        return ;
+    }
+    i = 0;
+    current = list;
+    while (list)
+    {
+        printf("Token[%d]:\n", i);
+        printf("  Value: [%s]\n", list->value);
+        printf("  Type:  [%d]\n", list->type);
+        printf("  Addr:  [%p]\n", list);
+        printf("  Next:  [%p]\n", list->next);
+        printf("  Prev:  [%p]\n", list->prev);
+        printf("------------------------\n");
+        list = list->next;
+        i++;
+    }
+	list = current;
 }
