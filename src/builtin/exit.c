@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:05:34 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:21:40 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static long long	ft_atoll(const char *str)
 	return (result * sign);
 }
 
-void	exit_builtin(char **args)
+void	exit_builtin(char **args, t_command *cmd)
 {
 	int	exit_status;
 
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (!args[1])
 	{
-		exit_status = g_exit_status;
+		exit_status = cmd->exit_status;
 		exit(exit_status);
 	}
 	if (!is_valid_number(args[1]))
@@ -75,7 +75,7 @@ void	exit_builtin(char **args)
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		g_exit_status = 1;
+		cmd->exit_status = 1;
 		return ;
 	}
 	exit_status = (unsigned char)ft_atoll(args[1]);

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 15:10:00 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:21:34 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	update_env_vars(t_env *env)
 		update_env_var(env, "PWD", cwd);
 }
 
-void	cd_builtin(char **args, t_env *env)
+void	cd_builtin(char **args, t_env *env, t_command *cmd)
 {
 	t_env_var	*home_var;
 	const char	*target_dir;
@@ -79,7 +79,7 @@ void	cd_builtin(char **args, t_env *env)
 		if (!home_var || !home_var->value)
 		{
 			ft_putstr_fd("cd: HOME not set\n", 2);
-			g_exit_status = 1;
+			cmd->exit_status = 1;
 			return ;
 		}
 		target_dir = home_var->value;
@@ -89,9 +89,9 @@ void	cd_builtin(char **args, t_env *env)
 	if (chdir(target_dir) != 0)
 	{
 		perror("cd");
-		g_exit_status = 1;
+		cmd->exit_status = 1;
 		return ;
 	}
 	update_env_vars(env);
-	g_exit_status = 0;
+	cmd->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:06:36 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:22:25 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	remove_env_var(t_env *env, const char *key)
 	}
 }
 
-int	unset_builtin(char **args, t_env *env)
+int	unset_builtin(char **args, t_env *env, t_command *cmd)
 {
 	int	i;
 	int	exit_status;
@@ -77,5 +77,7 @@ int	unset_builtin(char **args, t_env *env)
 		}
 		i++;
 	}
+	
+	cmd->exit_status = exit_status;
 	return (exit_status);
 }
