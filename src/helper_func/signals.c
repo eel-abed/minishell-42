@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:07:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:12:01 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	handle_sigint(int sig)
 {
-	(void)sig;
+	g_signal_received = sig; // Stocke juste le numéro du signal
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -23,7 +23,7 @@ static void	handle_sigint(int sig)
 // eviter warning du compile et imiter comportement de bash.
 static void	handle_sigquit(int sig)
 {
-	(void)sig;
+	g_signal_received = sig; // Stocke juste le numéro du signal
 	// Do nothing in interactive mode
 }
 

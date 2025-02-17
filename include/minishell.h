@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:12:24 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:16:39 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 // << >> 
 //multiple pipes
 
-extern int				g_exit_status;
+extern int				g_signal_received; // Remplacez g_exit_status par g_signal_received
 
 typedef struct s_env_var
 {
@@ -69,6 +69,7 @@ typedef struct s_command
 	pid_t				pid1;
 	pid_t				pid2;
 	t_env				*env;
+	int					exit_status;  // Ajout du champ pour le status de sortie
 }						t_command;
 
 t_env					*init_env(char **envp);

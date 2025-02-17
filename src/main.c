@@ -6,13 +6,13 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/10 18:07:35 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:16:55 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+int	g_signal_received = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	ft_memset(&cmd, 0, sizeof(t_command));
 	cmd.env = env;
+	cmd.exit_status = 0; // Initialisation
 	while (1)
 	{
 		input = readline("minishell> ");
