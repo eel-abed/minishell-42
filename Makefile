@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/14 05:33:42 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/17 17:04:16 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ SRC_FILES = main.c \
 			parsing/lexer/linked_listfunctions.c \
 			parsing/lexer/token.c \
 			parsing/lexer/split.c \
+			parsing/lexer/trim.c \
+			parsing/lexer/token_pipe.c \
 
 
 # Object files

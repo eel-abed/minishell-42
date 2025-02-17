@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/14 07:05:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:03:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	printf("[OPE %s !]\n", OK);
 	temp = any_env(temp, env);
 	token_list = lets_tokeninze(temp);
-	// t_tokens *head = token_list;
-	// while(token_list)
-	// {
-	// 	printf(" Apres Token = [%s]\n", token_list->value);
-	// 	token_list = token_list->next;
-	// }
-	// token_list = head;
-	printf("TEMP (l'input quoi) after any_env(function) =  [%s]\n", temp);
+	token_list = ft_trim_all(token_list);
+	printf("BEFORE PIPE  function \n");
+	print_tokens(token_list);
+	token_list = token_with_pipe(token_list);
+	printf("AFTER PIPE function \n");
+	print_tokens(token_list);
+	// printf("TEMP (l'input quoi) after any_env(function) =  [%s]\n", temp);
 	return (token_list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:02:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/14 06:17:48 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:49:41 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_tokens	*mini_lstnew(char *value, int kind)
 	if (!newlst)
 		return (NULL);
 	// newlst->index = -1;
+	newlst->prev = NULL;
 	newlst->type = kind;
 	newlst->value = value;
 	newlst->next = NULL;
