@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:07:22 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:11:59 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,5 @@ int	heredoc(const char *delimiter)
 	}
 	unlink(filename);
 	free(filename);
-	return status;
+	return (status);
 }
