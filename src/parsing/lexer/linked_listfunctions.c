@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:02:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/17 18:49:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:43:32 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	mini_lstadd_back(t_tokens **lst, t_tokens *new)
 	{
 		*lst = new;
 		(*lst)->next = NULL;
-        (*lst)->prev = NULL; 
+		(*lst)->prev = NULL;
 		return ;
 	}
 	tmp = *lst;
@@ -29,6 +29,7 @@ void	mini_lstadd_back(t_tokens **lst, t_tokens *new)
 	(tmp)->next = new;
 	new->next = NULL;
 }
+
 void	mini_lstadd_front(t_tokens **lst, t_tokens *new)
 {
 	new->next = *lst;
@@ -55,13 +56,13 @@ t_tokens	*mini_lstnew(char *value, int kind)
 	newlst = malloc(sizeof (t_tokens));
 	if (!newlst)
 		return (NULL);
-	// newlst->index = -1;
 	newlst->prev = NULL;
 	newlst->type = kind;
 	newlst->value = value;
 	newlst->next = NULL;
 	return (newlst);
 }
+
 int	mini_lstsize(t_tokens *lst)
 {
 	int	i;

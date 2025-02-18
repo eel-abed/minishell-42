@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:03:58 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:46:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,19 @@ int						is_empty_token(char *str);
 
 // void remove_empty_tokens(t_tokens **list);
 t_tokens				*lets_tokeninze(char *input);
+int						check_empty_quotes(char *str, int len);
+int						is_empty_or_quoted_empty(char *str);
 t_tokens				*ft_trim_all(t_tokens *tokens);
-char					*trim_unquoted(char *str);
 
-t_tokens *token_with_pipe(t_tokens *tokens);
+// TRIM
+char					*trim_unquoted(char *str);
+int						has_empty_quotes_at_start(char *str);
+int						is_quote(char c);
+char					*remove_outer_quotes(char *str);
+int						should_trim_quotes(char *str);
+int						has_attached_quotes(char *str);
+
+t_tokens				*token_with_pipe(t_tokens *tokens);
 
 // UTILS
 bool					is_space(char *input, int i);

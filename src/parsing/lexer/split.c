@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/17 18:09:47 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:33:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ char	*extract_token(char *input, int *i, int *start)
 
 char	**split_mini(char *input)
 {
-	char **result;
-	int i;
-	int j;
-	int start;
+	char	**result;
+	int		i;
+	int		j;
+	int		start;
 
-	if (!input || !(result = malloc(sizeof(char *) * (count_tokens(input)
-					+ 1))))
+	result = malloc(sizeof(char *) * (count_tokens(input)+ 1));
+	if (!input || !result)
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -106,7 +106,8 @@ char	**split_mini(char *input)
 		while (input[i] && input[i] == ' ')
 			i++;
 		start = i;
-		if (!(result[j] = extract_token(input, &i, &start)))
+		result[j] = extract_token(input, &i, &start);
+		if (!result[j])
 		{
 			while (j > 0)
 				free(result[--j]);

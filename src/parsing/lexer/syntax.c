@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:57:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/10 16:23:57 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:44:32 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,10 @@ bool	is_valid_pipe(char *string)
 	size_t	i;
 
 	i = 1;
-	// size_t redir_left_count = 1;
 	while (is_space(string, i))
 		i++;
 	if (string[i] == '|' || string[i] == '\0')
 		return (false);
-	// while (i < remaining && string[i] == '|')
-	// {
-	//     redir_left_count += 1;
-	//     ++i;
-	// }
 	return (true);
 }
 
@@ -80,6 +74,7 @@ bool	is_valid_operator(char *str, size_t remain, t_operator_kind kind)
 		return (is_valid_redir_left(str, remain));
 	return (true);
 }
+
 bool	is_operator(char ch, t_operator_kind *out_kind)
 {
 	if (ch == '|')

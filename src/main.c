@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/17 11:59:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:48:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
+
 	// char		**args;
 	// int			i;
-
 	(void)argc;
 	(void)argv;
 	env = init_env(envp);
@@ -39,9 +39,10 @@ int	main(int argc, char **argv, char **envp)
 		if (strlen(input) > 0)
 		{
 			add_history(input);
-			token_clean = ft_lexer(input,env);
+			token_clean = ft_lexer(input, env);
 			if (token_clean == NULL)
 				printf("Token_clean NULL\n");
+			print_tokens(token_clean);
 			// args = ft_split(input, ' ');
 			// cmd.cmd1 = NULL;
 			// cmd.cmd2 = NULL;
