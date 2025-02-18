@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/09 19:10:14 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/18 17:54:02 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC_FILES = main.c \
             builtin/env.c \
             builtin/exit.c \
             builtin/export.c \
+            builtin/export_utils.c \
             builtin/pwd.c \
             builtin/unset.c \
 			parsing/lexer/lexer.c \

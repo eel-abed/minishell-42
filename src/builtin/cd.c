@@ -6,13 +6,13 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:21:34 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:53:43 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static t_env_var	*find_env_var(t_env *env, const char *key)
+t_env_var	*find_env_var(t_env *env, const char *key)
 {
 	t_env_var	*current;
 	size_t		key_len;
