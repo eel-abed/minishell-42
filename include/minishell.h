@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 17:51:48 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:39:34 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ void					update_env_vars(t_env *env);
 char					**env_to_array(t_env *env);
 int						quote_check(char *input);
 t_list					*ft_lexer(char *input);
-t_env_var	*find_env_var(t_env *env, const char *key);
-void		append_env_var(t_env *env, t_env_var *new_var);
-void		handle_export_error(char *arg);
+t_env_var				*find_env_var(t_env *env, const char *key);
+void					append_env_var(t_env *env, t_env_var *new_var);
+void					handle_export_error(char *arg);
+void					execute_pipe_commands(t_command *cmd_info);
+
 
 // MAXENCE
 

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:27:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:38:08 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,48 +81,12 @@ static void	parse_command_args(char **args, t_command *cmd_info)
 	}
 }
 
-static void	execute_pipe_commands(t_command *cmd_info)
-{
-	int	status;
-
-	if (pipe(cmd_info->pipefd) == -1)
-	{
-		perror("pipe");
-		cmd_info->exit_status = 1;
-		return ;
-	}
-	// Execute first command
-	cmd_info->pid1 = fork_and_execute_first(cmd_info);
-	if (cmd_info->pid1 == -1)
-	{
-		close(cmd_info->pipefd[0]);
-		close(cmd_info->pipefd[1]);
-		cmd_info->exit_status = 1;
-		return ;
-	}
-	// Execute second command
-	cmd_info->pid2 = fork_and_execute_second(cmd_info);
-	if (cmd_info->pid2 == -1)
-	{
-		close(cmd_info->pipefd[0]);
-		close(cmd_info->pipefd[1]);
-		waitpid(cmd_info->pid1, &status, 0);
-		cmd_info->exit_status = 1;
-		return ;
-	}
-	close(cmd_info->pipefd[0]);
-	close(cmd_info->pipefd[1]);
-	// Wait for first command but don't update global status
-	waitpid(cmd_info->pid1, &status, 0);
-}
-
 void	execute_command(char **args, t_command *cmd)
 {
 	int	status;
 
 	if (!args || !args[0])
 		return ;
-	// Reset redirection settings
 	cmd->input_file = NULL;
 	cmd->output_file = NULL;
 	cmd->delimiter = NULL;
