@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 19:46:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:09:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ char					*find_command_path(char *cmd, t_env *env);
 void					update_env_vars(t_env *env);
 char					**env_to_array(t_env *env);
 int						quote_check(char *input);
-t_list					*ft_lexer(char *input);
 t_env_var				*find_env_var(t_env *env, const char *key);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg);

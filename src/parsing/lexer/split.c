@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:33:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:12:13 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	count_tokens(char *input)
 		}
 		process_token(input, &i);
 	}
-	printf("count = %d\n", count);
 	return (count);
 }
 
