@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:17:28 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:46:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@
 
 //- Considerer les implications de l'utilisation d'un global variable pour stocker le numero du signal recu
 //- Utiliser une structure de donnees plus appropriee que le type "norm" pour stocker les informations sur les signaux
-// << >> 
-//multiple pipes
+// << >>
+// multiple pipes
 
-//TODO MAX :
-//aller chercher les env
-//split good
-//enum token
+// TODO MAX :
+// aller chercher les env
+// split good
+// enum token
 
 extern int				g_exit_status;
 
@@ -107,8 +107,6 @@ void					setup_signals(void);
 char					*find_command_path(char *cmd, t_env *env);
 void					update_env_vars(t_env *env);
 char					**env_to_array(t_env *env);
-int						quote_check(char *input);
-t_list					*ft_lexer(char *input);
 
 // MAXENCE
 
@@ -117,11 +115,22 @@ typedef enum e_operator_kind
 	kind_none,
 	kind_redir_left,
 	kind_redir_right,
+	kind_redir_2left,
+	kind_redir_2right,
 	kind_pipe
 }						t_operator_kind;
 
+typedef struct s_tokens
+{
+	t_operator_kind		type;
+	char				*value;
+	struct s_tokens		*next;
+	struct s_tokens		*prev;
+}						t_tokens;
+
 // LEXER
-t_list					*ft_lexer(char *input);
+char					*any_env(char *input, t_env *env);
+t_tokens				*ft_lexer(char *input, t_env *env);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -133,7 +142,45 @@ bool					is_valid_redir_left(char *string, size_t remaining);
 bool					is_valid_redir_right(char *string, size_t remaining);
 bool					is_valid_pipe(char *string);
 
+// liked list tokens
+void					mini_lstadd_back(t_tokens **lst, t_tokens *new);
+void					mini_lstadd_front(t_tokens **lst, t_tokens *new);
+t_tokens				*mini_lstlast(t_tokens *lst);
+t_tokens				*mini_lstnew(char *value, int kind);
+int						mini_lstsize(t_tokens *lst);
+// COUNT WORD FOR SPLIT
+int						count_tokens(char *input);
+int						detect_operator(char c);
+// SPLIT MINI
+char					**split_mini(char *input);
+char					*extract_token(char *input, int *i, int *start);
+void					skip_quotes(char *input, int *i, char quote);
+void					handle_operator(char *input, int *i);
+int						is_empty_token(char *str);
+
+// void remove_empty_tokens(t_tokens **list);
+t_tokens				*lets_tokeninze(char *input);
+int						check_empty_quotes(char *str, int len);
+int						is_empty_or_quoted_empty(char *str);
+t_tokens				*ft_trim_all(t_tokens *tokens);
+
+// TRIM
+char					*trim_unquoted(char *str);
+int						has_empty_quotes_at_start(char *str);
+int						is_quote(char c);
+char					*remove_outer_quotes(char *str);
+int						should_trim_quotes(char *str);
+int						has_attached_quotes(char *str);
+
+t_tokens				*token_with_pipe(t_tokens *tokens);
+
 // UTILS
 bool					is_space(char *input, int i);
-
+int						ft_strcmp(const char *s1, const char *s2);
+char					*ft_strcpy(char *dest, char *src, int i, int j);
+char					*might_replace(t_env *env, char *input, int j,
+							char *tmp);
+char					*ft_strlcat_mini(char *dst, const char *src,
+							size_t dstsize);
+void					print_tokens(t_tokens *list);
 #endif

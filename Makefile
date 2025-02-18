@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/09 19:10:14 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/18 19:26:23 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 # Directories
 SRC_DIR = src
@@ -40,7 +40,15 @@ SRC_FILES = main.c \
 			parsing/lexer/lexer.c \
 			parsing/lexer/syntax.c \
 			parsing/lexer/quote.c \
-			parsing/utils/utils.c
+			parsing/utils/utils.c \
+			parsing/utils/utils2.c \
+			parsing/lexer/linked_listfunctions.c \
+			parsing/lexer/token.c \
+			parsing/lexer/token2.c \
+			parsing/lexer/split.c \
+			parsing/lexer/trim.c \
+			parsing/lexer/trim2.c \
+			parsing/lexer/token_pipe.c \
 
 
 # Object files
