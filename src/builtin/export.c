@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:06:27 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:53:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,28 @@ static void	print_exported_vars(t_env *env)
 	}
 }
 
-static t_env_var	*find_env_var(t_env *env, const char *key)
-{
-	t_env_var	*current;
-
-	current = env->vars;
-	while (current)
-	{
-		if (ft_strncmp(current->key, key, ft_strlen(key)) == 0)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}
-
 static void	update_env_var(t_env_var *var, const char *value)
 {
 	if (var->value)
 		free(var->value);
-	var->value = value ? ft_strdup(value) : NULL;
+	if (value)
+		var->value = ft_strdup(value);
+	else
+		var->value = NULL;
 }
 
 static void	add_env_var(t_env *env, const char *key, const char *value)
 {
 	t_env_var	*new_var;
-	t_env_var	*current;
 
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
 		return ;
 	new_var->key = ft_strdup(key);
-	new_var->value = value ? ft_strdup(value) : NULL;
+	if (value)
+		new_var->value = ft_strdup(value);
+	else
+		new_var->value = NULL;
 	new_var->next = NULL;
 	if (!new_var->key || (value && !new_var->value))
 	{
@@ -72,15 +63,7 @@ static void	add_env_var(t_env *env, const char *key, const char *value)
 		free(new_var);
 		return ;
 	}
-	if (!env->vars)
-		env->vars = new_var;
-	else
-	{
-		current = env->vars;
-		while (current->next)
-			current = current->next;
-		current->next = new_var;
-	}
+	append_env_var(env, new_var);
 	env->size++;
 }
 
@@ -115,9 +98,7 @@ static void	set_env_var(char *arg, t_env *env)
 
 void	export_builtin(char **args, t_env *env)
 {
-	int		i;
-	char	*error_msg;
-	char	*temp;
+	int	i;
 
 	i = 1;
 	if (!args[1])
@@ -128,18 +109,9 @@ void	export_builtin(char **args, t_env *env)
 	while (args[i])
 	{
 		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
-		{
 			set_env_var(args[i], env);
-		}
 		else
-		{
-			error_msg = ft_strjoin("minishell: export: '", args[i]);
-			temp = error_msg;
-			error_msg = ft_strjoin(error_msg, "': not a valid identifier");
-			free(temp);
-			ft_putendl_fd(error_msg, STDERR_FILENO);
-			free(error_msg);
-		}
+			handle_export_error(args[i]);
 		i++;
 	}
 }

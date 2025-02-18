@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+int	g_signal_received = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	ft_memset(&cmd, 0, sizeof(t_command));
 	cmd.env = env;
+	cmd.exit_status = 0; // Initialisation
 	while (1)
 	{
 		input = readline("minishell> ");

@@ -42,12 +42,7 @@
 // << >>
 // multiple pipes
 
-// TODO MAX :
-// aller chercher les env
-// split good
-// enum token
-
-extern int				g_exit_status;
+extern int g_signal_received; // Remplacez g_exit_status par g_signal_received
 
 typedef struct s_env_var
 {
@@ -74,6 +69,7 @@ typedef struct s_command
 	pid_t				pid1;
 	pid_t				pid2;
 	t_env				*env;
+	int exit_status; // Ajout du champ pour le status de sortie
 }						t_command;
 
 t_env					*init_env(char **envp);
@@ -81,13 +77,13 @@ void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
 void					execute_builtin(char *cmd, char **args,
 							t_command *cmd_info);
-void					cd_builtin(char **args, t_env *env);
+void					cd_builtin(char **args, t_env *env, t_command *cmd);
 void					pwd_builtin(void);
 void					echo_builtin(char **args);
 void					env_builtin(t_env *env);
-void					exit_builtin(char **args);
+void					exit_builtin(char **args, t_command *cmd);
 void					export_builtin(char **args, t_env *env);
-int						unset_builtin(char **args, t_env *env);
+int						unset_builtin(char **args, t_env *env, t_command *cmd);
 void					execute_command(char **args, t_command *cmd_info);
 int						execute_external_command(char **args, t_command *cmd);
 int						redirect_input(const char *file);
@@ -107,6 +103,14 @@ void					setup_signals(void);
 char					*find_command_path(char *cmd, t_env *env);
 void					update_env_vars(t_env *env);
 char					**env_to_array(t_env *env);
+int						quote_check(char *input);
+t_list					*ft_lexer(char *input);
+t_env_var				*find_env_var(t_env *env, const char *key);
+void					append_env_var(t_env *env, t_env_var *new_var);
+void					handle_export_error(char *arg);
+void					execute_pipe_commands(t_command *cmd_info);
+void					free_paths(char **paths);
+char					*join_path(char *path, char *cmd);
 
 // MAXENCE
 

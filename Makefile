@@ -24,7 +24,9 @@ LIBFT_DIR = libft
 # Source files
 SRC_FILES = main.c \
             execution/execution.c \
+            execution/execution_utils.c \
 			execution/exec_cmd_ext.c \
+			execution/exec_cmd_ext_utils.c \
 			helper_func/redirections.c \
 			helper_func/pipe.c \
 			helper_func/handle_redirections.c \
@@ -35,6 +37,7 @@ SRC_FILES = main.c \
             builtin/env.c \
             builtin/exit.c \
             builtin/export.c \
+            builtin/export_utils.c \
             builtin/pwd.c \
             builtin/unset.c \
 			parsing/lexer/lexer.c \
