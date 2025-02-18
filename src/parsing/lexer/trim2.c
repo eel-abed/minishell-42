@@ -1,41 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   trim2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 14:25:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 02:15:01 by mafourni         ###   ########.fr       */
+/*   Created: 2025/02/18 19:25:13 by mafourni          #+#    #+#             */
+/*   Updated: 2025/02/18 19:27:19 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../include/minishell.h"
 
-char	*ft_strdup(const char *src)
+int	is_quote(char c)
 {
-	int		leng;
-	int		i;
-	char	*dest;
+	return (c == '"' || c == '\'');
+}
 
-	if (!src)
-		return (NULL);
-	leng = 0;
-	while (src[leng] != '\0')
-	{
-		leng++;
-	}
-	dest = malloc(sizeof(char) * (leng + 1));
-	if (dest == NULL)
-	{
-		return (NULL);
-	}
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+int	has_empty_quotes_at_start(char *str)
+{
+	return (str[0] == str[1] && (str[0] == '"' || str[0] == '\''));
 }

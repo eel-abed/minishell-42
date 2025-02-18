@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 14:25:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 02:15:01 by mafourni         ###   ########.fr       */
+/*   Created: 2025/02/18 19:11:55 by mafourni          #+#    #+#             */
+/*   Updated: 2025/02/18 19:13:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../include/minishell.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strcpy(char *dest, char *src, int i, int j)
 {
-	int		leng;
-	int		i;
-	char	*dest;
+	int	index;
+	int	len;
 
-	if (!src)
+	index = 0;
+	len = i - j;
+	dest = malloc(sizeof(char) * (len + 1));
+	if (!dest)
 		return (NULL);
-	leng = 0;
-	while (src[leng] != '\0')
+	while (index < len)
 	{
-		leng++;
+		dest[index] = src[j];
+		j++;
+		index++;
 	}
-	dest = malloc(sizeof(char) * (leng + 1));
-	if (dest == NULL)
-	{
-		return (NULL);
-	}
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
+	dest[index] = '\0';
 	return (dest);
+}
+
+int	detect_operator(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
 }

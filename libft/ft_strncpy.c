@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 14:25:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 02:15:01 by mafourni         ###   ########.fr       */
+/*   Created: 2025/02/13 01:58:18 by mafourni          #+#    #+#             */
+/*   Updated: 2025/02/14 01:17:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
-	int		leng;
-	int		i;
-	char	*dest;
+	unsigned int	i;
 
-	if (!src)
-		return (NULL);
-	leng = 0;
-	while (src[leng] != '\0')
-	{
-		leng++;
-	}
-	dest = malloc(sizeof(char) * (leng + 1));
-	if (dest == NULL)
-	{
-		return (NULL);
-	}
 	i = 0;
-	while (src[i] != '\0')
+	while (src[i] && i < n)
 	{
 		dest[i] = src[i];
+        // printf("dest = [%c], index [%d]\n",dest[i],i);
 		i++;
 	}
+    // printf("DEBUG 1\n");
+	// while (i < n)
+	// {
 	dest[i] = '\0';
+	// 	i ++;
+	// }
+    // printf("DEBUG 2\n");
+    // printf("dest = [%s]",dest);
 	return (dest);
 }
