@@ -6,38 +6,64 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:06:58 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:05:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*join_path(char *path, char *cmd);
+static t_env_var	*get_path_variable(t_env *env)
+{
+	t_env_var	*path_var;
 
-static void	free_paths(char **paths)
+	path_var = env->vars;
+	while (path_var)
+	{
+		if (ft_strncmp(path_var->key, "PATH", 4) == 0)
+			break ;
+		path_var = path_var->next;
+	}
+	return (path_var);
+}
+
+static int	handle_child_failure(char *cmd_path, char **env_array)
 {
 	int	i;
 
-	i = 0;
-	while (paths[i])
+	perror("malloc");
+	if (cmd_path)
+		free(cmd_path);
+	if (env_array)
 	{
-		free(paths[i]);
-		i++;
+		i = 0;
+		while (env_array[i])
+			free(env_array[i++]);
+		free(env_array);
 	}
-	free(paths);
+	exit(1);
 }
 
-static char	*join_path(char *path, char *cmd)
+static void	child_process(char **args, t_command *cmd)
 {
-	char	*temp;
-	char	*full;
+	char	*cmd_path;
+	char	**env_array;
 
-	temp = ft_strjoin(path, "/");
-	if (!temp)
-		return (NULL);
-	full = ft_strjoin(temp, cmd);
-	free(temp);
-	return (full);
+	cmd_path = find_command_path(args[0], cmd->env);
+	if (!cmd_path)
+	{
+		write(2, args[0], ft_strlen(args[0]));
+		write(2, ": command not found\n", 21);
+		exit(127);
+	}
+	env_array = env_to_array(cmd->env);
+	if (!env_array)
+		handle_child_failure(cmd_path, NULL);
+	if (execve(cmd_path, args, env_array) == -1)
+	{
+		perror(args[0]);
+		free(cmd_path);
+		handle_child_failure(NULL, env_array);
+	}
 }
 
 char	*find_command_path(char *cmd, t_env *env)
@@ -49,14 +75,7 @@ char	*find_command_path(char *cmd, t_env *env)
 
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return (ft_strdup(cmd));
-	// Find PATH in environment
-	path_var = env->vars;
-	while (path_var)
-	{
-		if (ft_strncmp(path_var->key, "PATH", 4) == 0)
-			break ;
-		path_var = path_var->next;
-	}
+	path_var = get_path_variable(env);
 	if (!path_var || !path_var->value)
 		return (NULL);
 	paths = ft_split(path_var->value, ':');
@@ -69,10 +88,7 @@ char	*find_command_path(char *cmd, t_env *env)
 		if (!full_path)
 			continue ;
 		if (access(full_path, F_OK | X_OK) == 0)
-		{
-			free_paths(paths);
-			return (full_path);
-		}
+			return (free_paths(paths), full_path);
 		free(full_path);
 	}
 	free_paths(paths);
@@ -83,45 +99,19 @@ int	execute_external_command(char **args, t_command *cmd)
 {
 	pid_t	pid;
 	int		status;
-	char	*cmd_path;
-	char	**env_array;
-	int		i;
+	int		exit_status;
 
 	if (!args || !args[0])
 		return (1);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		return (1);
-	}
+		return (perror("fork"), 1);
 	if (pid == 0)
-	{
-		cmd_path = find_command_path(args[0], cmd->env);
-		if (!cmd_path)
-		{
-			write(2, args[0], ft_strlen(args[0]));
-			write(2, ": command not found\n", 21);
-			exit(127);
-		}
-		env_array = env_to_array(cmd->env);
-		if (!env_array)
-		{
-			perror("malloc");
-			free(cmd_path);
-			exit(1);
-		}
-		if (execve(cmd_path, args, env_array) == -1)
-		{
-			perror(args[0]);
-			free(cmd_path);
-			i = 0;
-			while (env_array[i])
-				free(env_array[i++]);
-			free(env_array);
-			exit(126);
-		}
-	}
+		child_process(args, cmd);
 	waitpid(pid, &status, 0);
-	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
+	if (WIFEXITED(status))
+		exit_status = WEXITSTATUS(status);
+	else
+		exit_status = 1;
+	return (exit_status);
 }

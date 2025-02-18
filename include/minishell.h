@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 18:39:34 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:06:34 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ t_env_var				*find_env_var(t_env *env, const char *key);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg);
 void					execute_pipe_commands(t_command *cmd_info);
-
+void					free_paths(char **paths);
+char					*join_path(char *path, char *cmd);
 
 // MAXENCE
 
