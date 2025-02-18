@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:22:25 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:20:51 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	unset_builtin(char **args, t_env *env, t_command *cmd)
 		}
 		i++;
 	}
-	
 	cmd->exit_status = exit_status;
 	return (exit_status);
 }
