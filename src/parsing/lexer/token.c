@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:46:51 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:51:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ t_tokens	*lets_tokeninze(char *input)
 
 	token_list = NULL;
 	split_result = split_mini(input);
+	int i = 0;
+	while (split_result[i])
+	{
+		printf("split_result[%d] = %s\n", i, split_result[i]);
+		i++;
+	}
 	token_list = ft_tokenizer_cmd_or_ope(split_result);
 	remove_empty_tokens(&token_list);
 	return (token_list);
