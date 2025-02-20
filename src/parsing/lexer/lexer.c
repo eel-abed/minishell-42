@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:40:29 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:01:51 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	token_list = NULL;
 	if (quote_check(temp) == 1)
 		return (printf("Quote Syntax %s !\n", ERROR), NULL);
-	printf("[QUOTE %s !]\n", OK);
+	// printf("[QUOTE %s !]\n", OK);
 	if (check_syntax(temp) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env);

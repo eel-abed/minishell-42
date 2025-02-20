@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 19:05:12 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:14:19 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,45 +26,45 @@ static t_env_var	*get_path_variable(t_env *env)
 	return (path_var);
 }
 
-static int	handle_child_failure(char *cmd_path, char **env_array)
-{
-	int	i;
+// static int	handle_child_failure(char *cmd_path, char **env_array)
+// {
+// 	int	i;
 
-	perror("malloc");
-	if (cmd_path)
-		free(cmd_path);
-	if (env_array)
-	{
-		i = 0;
-		while (env_array[i])
-			free(env_array[i++]);
-		free(env_array);
-	}
-	exit(1);
-}
+// 	perror("malloc");
+// 	if (cmd_path)
+// 		free(cmd_path);
+// 	if (env_array)
+// 	{
+// 		i = 0;
+// 		while (env_array[i])
+// 			free(env_array[i++]);
+// 		free(env_array);
+// 	}
+// 	exit(1);
+// }
 
-static void	child_process(char **args, t_command *cmd)
-{
-	char	*cmd_path;
-	char	**env_array;
+// static void	child_process(char **args, t_command *cmd)
+// {
+// 	char	*cmd_path;
+// 	char	**env_array;
 
-	cmd_path = find_command_path(args[0], cmd->env);
-	if (!cmd_path)
-	{
-		write(2, args[0], ft_strlen(args[0]));
-		write(2, ": command not found\n", 21);
-		exit(127);
-	}
-	env_array = env_to_array(cmd->env);
-	if (!env_array)
-		handle_child_failure(cmd_path, NULL);
-	if (execve(cmd_path, args, env_array) == -1)
-	{
-		perror(args[0]);
-		free(cmd_path);
-		handle_child_failure(NULL, env_array);
-	}
-}
+// 	cmd_path = find_command_path(args[0], cmd->env);
+// 	if (!cmd_path)
+// 	{
+// 		write(2, args[0], ft_strlen(args[0]));
+// 		write(2, ": command not found\n", 21);
+// 		exit(127);
+// 	}
+// 	env_array = env_to_array(cmd->env);
+// 	if (!env_array)
+// 		handle_child_failure(cmd_path, NULL);
+// 	if (execve(cmd_path, args, env_array) == -1)
+// 	{
+// 		perror(args[0]);
+// 		free(cmd_path);
+// 		handle_child_failure(NULL, env_array);
+// 	}
+// }
 
 char	*find_command_path(char *cmd, t_env *env)
 {
@@ -95,23 +95,6 @@ char	*find_command_path(char *cmd, t_env *env)
 	return (NULL);
 }
 
-int	execute_external_command(char **args, t_command *cmd)
-{
-	pid_t	pid;
-	int		status;
-	int		exit_status;
-
-	if (!args || !args[0])
-		return (1);
-	pid = fork();
-	if (pid == -1)
-		return (perror("fork"), 1);
-	if (pid == 0)
-		child_process(args, cmd);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		exit_status = WEXITSTATUS(status);
-	else
-		exit_status = 1;
-	return (exit_status);
-}
+// int	execute_external_command()
+// {
+// }

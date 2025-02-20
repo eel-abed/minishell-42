@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 18:38:08 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:12:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,69 +42,40 @@ void	execute_builtin(char *cmd, char **args, t_command *cmd_info)
 		unset_builtin(args, cmd_info->env, cmd_info);
 }
 
-/* Helper function to handle redirections */
-static void	handle_redirections(t_command *cmd_info)
+void execute_command(t_tokens *tokens, t_command *cmd_info)
 {
-	if (cmd_info->input_file)
-		redirect_input(cmd_info->input_file);
-	if (cmd_info->output_file && !cmd_info->heredoc_flag)
-		redirect_output(cmd_info->output_file);
-	if (cmd_info->heredoc_flag)
-		heredoc(cmd_info->delimiter);
-}
+	// Reset command info
+	ft_memset(cmd_info, 0, sizeof(t_command));
 
-/* Helper function to parse command arguments */
-static void	parse_command_args(char **args, t_command *cmd_info)
-{
-	int	i;
+	// Check if tokens are empty
+	if (!tokens)
+		return;
 
-	i = 0;
-	while (args[i])
+	// The first token's value is the command
+	char *cmd = tokens->value;
+
+	// Check if first token is a builtin
+	if (is_builtin(cmd))
 	{
-		if (!ft_strncmp(args[i], "<", 1))
-			i = handle_input_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], ">", 1))
-			i = handle_output_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], ">>", 2))
-			i = handle_append_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], "<<", 2))
-			i = handle_heredoc(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], "|", 1))
+		// Prepare arguments for builtin
+		char **builtin_args = malloc(sizeof(char *) * (mini_lstsize(tokens) + 1));
+		t_tokens *current = tokens;
+		int i = 0;
+
+		while (current)
 		{
-			args[i] = NULL;
-			cmd_info->cmd1 = args;
-			cmd_info->cmd2 = &args[i + 1];
-			break ;
-		}
-		else
+			builtin_args[i] = current->value;
+			current = current->next;
 			i++;
-	}
-}
+		}
+		builtin_args[i] = NULL;
 
-void	execute_command(char **args, t_command *cmd)
-{
-	int	status;
-
-	if (!args || !args[0])
-		return ;
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->delimiter = NULL;
-	cmd->heredoc_flag = false;
-	parse_command_args(args, cmd);
-	if (cmd->cmd1 && cmd->cmd2)
-	{
-		execute_pipe_commands(cmd);
-		waitpid(cmd->pid2, &status, 0);
-		if (WIFEXITED(status))
-			cmd->exit_status = WEXITSTATUS(status);
+		execute_builtin(cmd, builtin_args, cmd_info);
+		free(builtin_args);
 	}
 	else
 	{
-		handle_redirections(cmd);
-		if (is_builtin(args[0]))
-			execute_builtin(args[0], args, cmd);
-		else
-			cmd->exit_status = execute_external_command(args, cmd);
+		// Execute external command directly with tokens
+		// cmd_info->exit_status = execute_external_command(tokens, cmd_info);
 	}
 }

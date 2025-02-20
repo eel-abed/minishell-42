@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 20:09:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:13:28 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,25 @@
 // multiple pipes
 
 extern int g_signal_received; // Remplacez g_exit_status par g_signal_received
+
+
+typedef enum e_operator_kind
+{
+	kind_none,
+	kind_redir_left,
+	kind_redir_right,
+	kind_redir_2left,
+	kind_redir_2right,
+	kind_pipe
+}						t_operator_kind;
+
+typedef struct s_tokens
+{
+	t_operator_kind		type;
+	char				*value;
+	struct s_tokens		*next;
+	struct s_tokens		*prev;
+}						t_tokens;
 
 typedef struct s_env_var
 {
@@ -84,8 +103,8 @@ void					env_builtin(t_env *env);
 void					exit_builtin(char **args, t_command *cmd);
 void					export_builtin(char **args, t_env *env);
 int						unset_builtin(char **args, t_env *env, t_command *cmd);
-void					execute_command(char **args, t_command *cmd_info);
-int						execute_external_command(char **args, t_command *cmd);
+void					execute_command(t_tokens *tokens, t_command *cmd_info);
+// int						execute_external_command(t_tokens *tokens, t_command *cmd);
 int						redirect_input(const char *file);
 int						redirect_output(const char *file);
 int						redirect_append(const char *file);
@@ -112,24 +131,6 @@ void					free_paths(char **paths);
 char					*join_path(char *path, char *cmd);
 
 // MAXENCE
-
-typedef enum e_operator_kind
-{
-	kind_none,
-	kind_redir_left,
-	kind_redir_right,
-	kind_redir_2left,
-	kind_redir_2right,
-	kind_pipe
-}						t_operator_kind;
-
-typedef struct s_tokens
-{
-	t_operator_kind		type;
-	char				*value;
-	struct s_tokens		*next;
-	struct s_tokens		*prev;
-}						t_tokens;
 
 // LEXER
 char					*any_env(char *input, t_env *env);
