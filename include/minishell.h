@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/20 19:13:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:37:46 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,29 @@ typedef enum e_operator_kind
 	kind_redir_2right,
 	kind_pipe
 }						t_operator_kind;
-
-typedef struct s_tokens
-{
-	t_operator_kind		type;
-	char				*value;
-	struct s_tokens		*next;
-	struct s_tokens		*prev;
-}						t_tokens;
-
 typedef struct s_env_var
 {
 	char				*key;
 	char				*value;
 	struct s_env_var	*next;
 }						t_env_var;
-
 typedef struct s_env
 {
 	t_env_var			*vars;
 	int					size;
 }						t_env;
+typedef struct s_tokens
+{
+	t_operator_kind		type;
+	char				*value;
+	struct s_tokens		*next;
+	struct s_tokens		*prev;
+	t_env				*env;
+}						t_tokens;
+
+
+
+
 
 typedef struct s_command
 {
@@ -104,7 +106,7 @@ void					exit_builtin(char **args, t_command *cmd);
 void					export_builtin(char **args, t_env *env);
 int						unset_builtin(char **args, t_env *env, t_command *cmd);
 void					execute_command(t_tokens *tokens, t_command *cmd_info);
-// int						execute_external_command(t_tokens *tokens, t_command *cmd);
+int						execute_external_command(t_tokens *tokens, t_command *cmd);
 int						redirect_input(const char *file);
 int						redirect_output(const char *file);
 int						redirect_append(const char *file);

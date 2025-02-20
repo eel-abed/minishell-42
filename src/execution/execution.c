@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/20 19:12:12 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:40:50 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,17 @@ void	execute_builtin(char *cmd, char **args, t_command *cmd_info)
 
 void execute_command(t_tokens *tokens, t_command *cmd_info)
 {
-	// Reset command info
 	ft_memset(cmd_info, 0, sizeof(t_command));
+	
+	cmd_info->env = tokens->env;
 
-	// Check if tokens are empty
 	if (!tokens)
 		return;
 
-	// The first token's value is the command
 	char *cmd = tokens->value;
 
-	// Check if first token is a builtin
 	if (is_builtin(cmd))
 	{
-		// Prepare arguments for builtin
 		char **builtin_args = malloc(sizeof(char *) * (mini_lstsize(tokens) + 1));
 		t_tokens *current = tokens;
 		int i = 0;
@@ -75,7 +72,6 @@ void execute_command(t_tokens *tokens, t_command *cmd_info)
 	}
 	else
 	{
-		// Execute external command directly with tokens
-		// cmd_info->exit_status = execute_external_command(tokens, cmd_info);
+		cmd_info->exit_status = execute_external_command(tokens, cmd_info);
 	}
 }
