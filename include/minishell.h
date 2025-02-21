@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 18:23:23 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:08:47 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void					echo_builtin_tokens(t_tokens *tokens);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd);
 void					export_builtin(t_tokens *tokens, t_env *env);
-int						unset_builtin(char **args, t_env *env, t_command *cmd);
+int						unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd);
 void					execute_command(t_tokens *tokens, t_command *cmd_info);
 int						execute_external_command(t_tokens *tokens, t_command *cmd);
 int						redirect_input(const char *file);
