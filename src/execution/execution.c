@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 18:13:56 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:19:05 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info)
         env_builtin(cmd_info->env);
     else if (!ft_strncmp(cmd, "exit", 4))
         exit_builtin(tokens, cmd_info); // You'll need to update this function
-    // else if (!ft_strncmp(cmd, "export", 6))
-    //     export_builtin_tokens(tokens, cmd_info->env); // You'll need to update this function
+    else if (!ft_strncmp(cmd, "export", 6))
+        export_builtin(tokens, cmd_info->env); // You'll need to update this function
     // else if (!ft_strncmp(cmd, "unset", 5))
     //     unset_builtin_tokens(tokens, cmd_info->env, cmd_info); // You'll need to update this function
 }

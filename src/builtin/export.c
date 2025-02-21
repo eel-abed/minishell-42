@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 17:53:12 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:23:07 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,32 @@ static void	set_env_var(char *arg, t_env *env)
 	free(key);
 }
 
-void	export_builtin(char **args, t_env *env)
+void export_builtin(t_tokens *tokens, t_env *env)
 {
-	int	i;
+    char **args;
+    int i;
 
-	i = 1;
-	if (!args[1])
-	{
-		print_exported_vars(env);
-		return ;
-	}
-	while (args[i])
-	{
-		if (ft_isalpha(args[i][0]) || args[i][0] == '_')
-			set_env_var(args[i], env);
-		else
-			handle_export_error(args[i]);
-		i++;
-	}
+    // Split the token value into command and arguments
+    args = ft_split(tokens->value, ' ');
+    if (!args)
+        return;
+
+    i = 1;  // Skip "export" command
+    if (!args[1])
+    {
+        print_exported_vars(env);
+        free_paths(args);
+        return;
+    }
+
+    while (args[i])
+    {
+        if (ft_isalpha(args[i][0]) || args[i][0] == '_')
+            set_env_var(args[i], env);
+        else
+            handle_export_error(args[i]);
+        i++;
+    }
+    
+    free_paths(args);
 }
