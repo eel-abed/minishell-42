@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 16:17:02 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:56:55 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ typedef struct s_command
 t_env					*init_env(char **envp);
 void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
-void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info);
+void					execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info);
 void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd);
 void					pwd_builtin(void);
-void					echo_builtin(char **args);
+void					echo_builtin_tokens(t_tokens *tokens);
 void					env_builtin(t_env *env);
 void					exit_builtin(char **args, t_command *cmd);
 void					export_builtin(char **args, t_env *env);
