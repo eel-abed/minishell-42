@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/19 16:51:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:20:23 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static int	should_preserve_token(t_tokens *token)
+int	should_preserve_token(t_tokens *token)
 {
 	if (!token || !token->prev)
 		return (1);
@@ -21,7 +21,7 @@ static int	should_preserve_token(t_tokens *token)
 	return (0);
 }
 
-static void	remove_empty_head(t_tokens **list)
+void	remove_empty_head(t_tokens **list)
 {
 	t_tokens	*current;
 
@@ -64,7 +64,7 @@ void	remove_empty_tokens(t_tokens **list)
 	}
 }
 
-t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result)
+t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result, t_garbage **gc)
 {
 	t_tokens			*token_list;
 	t_operator_kind		type;
@@ -86,12 +86,12 @@ t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result)
 			type = kind_redir_2right;
 		else
 			type = kind_none;
-		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type));
+		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type, &gc));
 	}
 	return (token_list);
 }
 
-t_tokens	*lets_tokeninze(char *input)
+t_tokens	*lets_tokeninze(char *input, t_garbage **gc)
 {
 	t_tokens	*token_list;
 	char		**split_result;

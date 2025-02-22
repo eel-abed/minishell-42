@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 20:09:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:19:44 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_command
 	pid_t				pid1;
 	pid_t				pid2;
 	t_env				*env;
-	int exit_status; // Ajout du champ pour le status de sortie
+	int 				exit_status; // Ajout du champ pour le status de sortie
 }						t_command;
 
 t_env					*init_env(char **envp);
@@ -133,7 +133,7 @@ typedef struct s_tokens
 
 // LEXER
 char					*any_env(char *input, t_env *env);
-t_tokens				*ft_lexer(char *input, t_env *env);
+t_tokens				*ft_lexer(char *input, t_env *env, t_garbage **gc);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -149,7 +149,7 @@ bool					is_valid_pipe(char *string);
 void					mini_lstadd_back(t_tokens **lst, t_tokens *new);
 void					mini_lstadd_front(t_tokens **lst, t_tokens *new);
 t_tokens				*mini_lstlast(t_tokens *lst);
-t_tokens				*mini_lstnew(char *value, int kind);
+t_tokens				*mini_lstnew(t_garbage **gc,char *value, int kind);
 int						mini_lstsize(t_tokens *lst);
 // COUNT WORD FOR SPLIT
 int						count_tokens(char *input);
@@ -160,12 +160,17 @@ char					*extract_token(char *input, int *i, int *start);
 void					skip_quotes(char *input, int *i, char quote);
 void					handle_operator(char *input, int *i);
 int						is_empty_token(char *str);
+void					handle_quotes(char *input, int *i);
+void					process_token(char *input, int *i);
+
 
 // void remove_empty_tokens(t_tokens **list);
-t_tokens				*lets_tokeninze(char *input);
+t_tokens				*lets_tokeninze(char *input, t_garbage **gc);
 int						check_empty_quotes(char *str, int len);
 int						is_empty_or_quoted_empty(char *str);
 t_tokens				*ft_trim_all(t_tokens *tokens);
+int						should_preserve_token(t_tokens *token);
+void					remove_empty_head(t_tokens **list);
 
 // TRIM
 char					*trim_unquoted(char *str);
@@ -174,6 +179,9 @@ int						is_quote(char c);
 char					*remove_outer_quotes(char *str);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);
+int						is_matching_quote(char c, char quote_type);
+char					*get_clean_word(char *str);
+int						is_export_cmd(char *str);
 
 t_tokens				*token_with_pipe(t_tokens *tokens);
 

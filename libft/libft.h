@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:28:36 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 02:46:59 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:22:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+typedef struct s_garbage
+{
+	void			*ptr;
+	struct s_garbage	*next;
+}					t_garbage;
+
 
 typedef struct s_list
 {
@@ -61,7 +68,7 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 char				*ft_strrchr(const char *s, int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_substr(char const *s, unsigned int start, size_t len, t_garbage **gc);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
@@ -84,4 +91,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 
+void *gc_malloc(t_garbage **gc, size_t size); 
+
+void gc_free_all(t_garbage **gc);
 #endif

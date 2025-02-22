@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:02:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:43:32 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:10:14 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ t_tokens	*mini_lstlast(t_tokens *lst)
 	return (lst);
 }
 
-t_tokens	*mini_lstnew(char *value, int kind)
+t_tokens	*mini_lstnew(t_garbage **gc, char *value, int kind)
 {
 	t_tokens	*newlst;
 
-	newlst = malloc(sizeof (t_tokens));
+	newlst = gc_malloc(&gc, sizeof (t_tokens));
 	if (!newlst)
 		return (NULL);
 	newlst->prev = NULL;

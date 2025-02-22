@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/19 22:55:14 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:25:12 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static int	is_matching_quote(char c, char quote_type)
+int	is_matching_quote(char c, char quote_type)
 {
 	return (c == quote_type);
 }
@@ -93,7 +93,7 @@ int	has_attached_quotes(char *str)
 	return (0);
 }
 
-static char	*get_clean_word(char *str)
+char	*get_clean_word(char *str)
 {
 	char	*result;
 	int		i;
@@ -114,7 +114,7 @@ static char	*get_clean_word(char *str)
 	return (result);
 }
 
-static int	is_export_cmd(char *str)
+int	is_export_cmd(char *str)
 {
 	char	*outer_quotes_removed;
 	char	*clean_str;
@@ -160,75 +160,120 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 			else if (in_export && (has_attached_quotes(current->value)
 					|| should_trim_quotes(current->value)))
 			{
-				// export "diego=yes"'max=no'
-				// / export "diego=yes"'max=no''max=no'
-				// export "diego=yes"|export "max=no"
-				// export "quesp=hola      a12"'diego=goat' "|" export "quesp=hola      a12"'diego=goat'
-				// if (in_export){
-				// 	int i = 0;
-				// 	int x = 0;
-				// 	int y = 0;
-				// 	while (current->value[i] && current->value[i + 1])
-				// 	{
-				// 		if (current->value[i] == '"' && y == 0)
-				// 		{
-				// 			y = 1;
-				// 		}
-				// 		if (current->value[i] == '\'' && y == 0)
-				// 		{
-				// 			y = 2;
-				// 		}
-						
-				// 		if ((y == 1 && current->value[i] == '"') || (y == 2 && current->value[i] == '\''))
-				// 		{
-				// 			x++;	
-				// 		}
-						
-				// 		if (x % 2 == 0  && y != 0)
-				// 		{
-				// 			trimmed = ft_substr(current->value, i + 2, ft_strlen(current->value) - i);
-				// 			y = 0;
-				// 			if (current->value[i+1] == '"' && y == 0)
-				// 			{
-				// 				y = 1;
-				// 			}
-				// 			if (current->value[i+1] == '\'' && y == 0)
-				// 			{
-				// 				y = 2;
-				// 			}
-				// 			x= 1;
-				// 			char *clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i), trimmed);
-				// 			free(current->value);
-				// 			free(trimmed);
-				// 			current->value = clen_trimmed;
-			
-				// 		}
-				// 		i++;
-				// 	}
+				int i = 0;
+				int x = 0;
+				int y = 0;
 
-				// 	char * tem;
-				// 	tem= ft_substr(current->value, 1, ft_strlen(current->value) - 1);
-				// 	free(current->value);
-				// 	current->value = tem;
-
-				// 	tem= ft_substr(current->value, 0, ft_strlen(current->value) - 2);
-				// 	free(current->value);
-				// 	current->value = tem;
+				char* tem;
+				tem = NULL;
+				
+				while (current->value[i] && current->value[i + 1])
+				{
+					if (current->value[i] == '"' && y == 0)
+						y = 1;
+					if (current->value[i] == '\'' && y == 0)
+						y = 2;
+					if ((y == 1 && current->value[i] == '"') || (y == 2 && current->value[i] == '\''))
+						x++;
+					if (x % 2 == 0  && y != 0)
+					{
 						
-				// 	trimmed = ft_strjoin("\"", current->value);
-				// 	free(current->value);
-				// 	current->value = trimmed;
+						trimmed = ft_substr(current->value, i + 2, ft_strlen(current->value) - i);
+						y = 0;
+						if (current->value[i+1] == '"' && y == 0)
+							y = 1;
+						if (current->value[i+1] == '\'' && y == 0)
+							y = 2;
+						x = 1;
+						char *clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i), trimmed);
+						free(current->value);
+						free(trimmed);
+						current->value = clen_trimmed;
+		
+					}
+					i++;
+				}
+				// printf("diego ---> %s\n", current->value);
+				// ! "And a quote at the end y a quote at the start"
+				if (current->value[0] == '\'')
+				{
+					tem = ft_substr(current->value, 1, ft_strlen(current->value) - 1);
+					free(current->value);
+					current->value = tem;	
+				}
+				if (current->value[ft_strlen(current->value) - 1] != '"')
+				{
+					tem = ft_substr(current->value, 0, ft_strlen(current->value) - 1);
+					free(current->value);
+					current->value = tem;	
+				}				
+				if (current->value[0] != '"')
+				{
+					trimmed = ft_strjoin("\"", current->value);
+					free(current->value);
+					current->value = trimmed;
+				}
+				if (current->value[ft_strlen(current->value) - 1] != '"')
+				{
+					trimmed = ft_strjoin(current->value, "\"");
+					free(current->value);
+					current->value = trimmed;
+				}	
+				// Todo add the quotes to the start and the end of the string
+				i = 0;
+				x = 0;
+				y = 0;
 
-				// 	trimmed = ft_strjoin(current->value, "\"");
-				// 	free(current->value);
-				// 	current->value = trimmed;
-					
-				// }	
+				int find_equal = 0;
+				printf("diego ---> todo:%s\n", current->value);
+				while (current->value[i])
+				{
+					if (current->value[i] == '"' && y == 0)
+						y = 1;
+					if ((y == 1 && current->value[i] == '"') || (y == 2 && current->value[i] == '\''))
+						x++;
+					// Todo : add the quotes to after the =
+					if (current->value[i] == '=' &&  x == 1 && find_equal == 0)
+					{
+						char *before_s = ft_substr(current->value, 0, i + 1);
+						char *adfter_s = ft_substr(current->value, i + 1, ft_strlen(current->value) - i);
+						char *join_before = ft_strjoin(before_s, "\"");
+						char *result = ft_strjoin(join_before, adfter_s);
+						free(before_s);
+						free(adfter_s);
+						free(join_before);
+						free(current->value);
+						current->value = result;
+						x++;
+						y = 1;
+						printf("diego add new before  ---> %s\n", current->value);
+						find_equal = 1;
+						i++;
+					}
+					else if (find_equal == 1 && current->value[i] == '"') 
+					{
+						char *before_s = ft_substr(current->value, 0, i + 1);
+						char *adfter_s = ft_substr(current->value, i + 1, ft_strlen(current->value) - i);
+						char *join_before = ft_strjoin(before_s, "\"");
+						char *result = ft_strjoin(join_before, adfter_s);
+						free(before_s);
+						free(adfter_s);
+						free(join_before);
+						free(current->value);
+						current->value = result;
+						x++;
+						y = 1;
+						printf("diego add new after  ---> %s\n", current->value);
+						find_equal = 0;
+						
+					}
+					// Todo : add the quotes to the end the =
+					i++;
+				}
 			}
 			else if (!in_export && (has_attached_quotes(current->value)
 					|| should_trim_quotes(current->value)))
 			{
-				
 				trimmed = remove_outer_quotes(current->value);
 				free(current->value);
 				current->value = trimmed;
@@ -238,3 +283,157 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 	}
 	return (tokens);
 }
+
+// t_tokens	*ft_trim_all(t_tokens *tokens)
+// {
+// 	t_tokens	*current;
+// 	char		*trimmed;
+// 	int			in_export;
+
+// 	if (!tokens)
+// 		return (NULL);
+// 	current = tokens;
+// 	in_export = 0;
+// 	while (current)
+// 	{
+// 		if (current->value)
+// 		{
+// 			if (is_export_cmd(current->value))
+// 			{
+// 				trimmed = get_clean_word(current->value);
+// 				free(current->value);
+// 				current->value = trimmed;
+// 				in_export = 1;
+// 			}
+// 			else if (current->type == kind_pipe)
+// 				in_export = 0;
+// 			else if (in_export && (has_attached_quotes(current->value)
+// 					|| should_trim_quotes(current->value)))
+// 			{
+// 				// export "diego=yes"'max=no'
+// 				// / export "diego=yes"'max=no''max=no'
+// 				// export "diego=yes"|export "max=no"
+// 				// export "quesp=hola      a12"'diego=goat' "|" export "quesp=hola      a12"'diego=goat'
+// 				int i = 0;
+// 				int x = 0;
+// 				int y = 0;
+// 				// int ii = 0;
+
+// 				char* tem;
+// 				tem = NULL;
+				
+// 				// while ( (size_t)i < (ft_strlen(current->value)) && current->value[i] != '\0')
+// 				while (current->value[i] && current->value[i + 1])
+// 				{
+// 					printf("diego ---> carracter:%c\n", current->value[i]);
+// 					if (current->value[i] == '"' && y == 0)
+// 					{
+// 						y = 1;
+// 					}
+// 					if (current->value[i] == '\'' && y == 0)
+// 					{
+// 						y = 2;
+// 					}
+					
+// 					if ((y == 1 && current->value[i] == '"') || (y == 2 && current->value[i] == '\''))
+// 					{
+// 						x++;
+// 						// if (x % 2 == 1 && y == 2)
+// 						// {
+// 						// 	ii = i;	
+// 						// }
+// 					}
+					
+// 					if (x % 2 == 0  && y != 0)
+// 					{
+// 						// // ii = 0;
+// 						// printf("diego in if ---> %s\n", current->value);
+// 						// if ((size_t)(i + 2) <= ft_strlen(current->value) - 1)
+// 						// {
+// 						// 	trimmed = ft_substr(current->value, i + 2, ft_strlen(current->value) - i);
+// 						// }else{
+// 						// 	trimmed = ft_substr("\"\"", 0, 1);
+// 						// 	printf("diego in if if --->%s<\n", trimmed);
+// 						// }
+// 						// y = 0;
+// 						// if (current->value[i+1] == '"' && y == 0)
+// 						// {
+// 						// 	y = 1;
+// 						// }
+// 						// if (current->value[i+1] == '\'' && y == 0)
+// 						// {
+// 							// y = 2;
+// 						// }
+// 						// x= 0;
+// 						// char *before_str= ft_substr(current->value, 0, i );
+// 						// printf("diego in before_str --->%s<\n", before_str);
+// 						// char *clen_trimmed = ft_strjoin(before_str, trimmed);
+// 						// free(current->value);
+// 						// current->value = clen_trimmed;
+// 						// // free(trimmed);
+						
+// 						trimmed = ft_substr(current->value, i + 2, ft_strlen(current->value) - i);
+// 						y = 0;
+// 						if (current->value[i+1] == '"' && y == 0)
+// 						{
+// 							y = 1;
+// 						}
+// 						if (current->value[i+1] == '\'' && y == 0)
+// 						{
+// 							y = 2;
+// 						}
+// 						x= 1;
+// 						char *clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i), trimmed);
+// 						free(current->value);
+// 						free(trimmed);
+// 						current->value = clen_trimmed;
+		
+// 					}
+// 					i++;
+// 				}
+// 				printf("diego ---> %s\n", current->value);
+
+
+// 					// working
+// 				if (current->value[0] == '\'')
+// 				{
+// 					tem = ft_substr(current->value, 1, ft_strlen(current->value) - 1);
+// 					free(current->value);
+// 					current->value = tem;	
+// 				}
+
+// 				if (current->value[ft_strlen(current->value) - 1] != '"')
+// 				{
+// 					tem = ft_substr(current->value, 0, ft_strlen(current->value) - 1);
+// 					free(current->value);
+// 					current->value = tem;	
+// 				}
+				
+// 				if (current->value[0] != '"')
+// 				{
+// 					trimmed = ft_strjoin("\"", current->value);
+// 					free(current->value);
+// 					current->value = trimmed;
+// 				}
+
+// 				if (current->value[ft_strlen(current->value) - 1] != '"')
+// 				{
+// 					trimmed = ft_strjoin(current->value, "\"");
+// 					free(current->value);
+// 					current->value = trimmed;
+// 				}	
+				
+// 			}
+// 			else if (!in_export && (has_attached_quotes(current->value)
+// 					|| should_trim_quotes(current->value)))
+// 			{
+				
+// 				trimmed = remove_outer_quotes(current->value);
+// 				free(current->value);
+// 				current->value = trimmed;
+// 			}
+// 		}
+// 		current = current->next;
+// 	}
+// 	return (tokens);
+// }
