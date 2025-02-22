@@ -16,6 +16,7 @@ static bool	is_valid_n_flag(const char *str)
 {
 	int	i;
 
+	
 	if (!str || str[0] != '-')
 		return (false);
 	i = 1;
