@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:57:33 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:58:05 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 22:02:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,10 @@ void ft_if_loop(int *x, int *y, t_tokens *current, int i)
 
 void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed)
 {
-    // (void)current;
-    // (void)i;
-    // (void)trimmed;
-    // (void)clen_trimmed;
     clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i), trimmed);
     free(current->value);
     free(trimmed);
     current->value = clen_trimmed;
-    // return 1;
 }
 
 void ft_clean_words_export(t_tokens *current)
@@ -73,23 +68,19 @@ void ft_clean_words_export(t_tokens *current)
     }
 }
 
-// ! "And a quote at the end y a quote at the start"
 void ft_export_clean_and(t_tokens *current, char *trimmed, char *tem)
 {
-    printf("diego orriginal ---> %s\n", current->value);
     if (current->value[0] == '\'')
     {
         tem = ft_substr(current->value, 1, ft_strlen(current->value) - 1);
         free(current->value);
         current->value = tem;	
-        printf("diego first corte---> %s\n", current->value);
     }
     if (current->value[0] != '"')
     {
         trimmed = ft_strjoin("\"", current->value);
         free(current->value);
         current->value = trimmed;
-        printf("diego three corte---> %s\n", current->value);
     }
 
     if (current->value[ft_strlen(current->value) - 1] == '\'')
@@ -97,14 +88,12 @@ void ft_export_clean_and(t_tokens *current, char *trimmed, char *tem)
         tem = ft_substr(current->value, 0, ft_strlen(current->value) - 1);
         free(current->value);
         current->value = tem;	
-        printf("diego second corte---> %s\n", current->value);
     }
     if (current->value[ft_strlen(current->value) - 1] != '"')
     {
         trimmed = ft_strjoin(current->value, "\"");
         free(current->value);
         current->value = trimmed;
-        printf("diego 4 corte---> %s\n", current->value);
     }	
     
 }
@@ -126,7 +115,6 @@ void ft_clean(t_tokens *current, int i)
     free(join_before);
     free(current->value);
     current->value = result;
-    // printf("diego add new before  ---> %s\n", current->value);    
 }
 
 void ft_clean2(t_tokens *current, int i)
@@ -156,14 +144,12 @@ void ft_clean_wd(t_tokens *current, int y, int i)
     x = 0;
     while (current->value[i])
     {
-        printf("diego ---> %c\n", current->value[i]);
         if ((current->value[i] == '"' || current->value[i] == '=') && y == 0)
             y = 1;
         if ((y == 1 && current->value[i] == '"') || (y == 2 && current->value[i] == '\'') )
             x++;
         if (current->value[i] == '=' &&  (x == 1 || x == 0) && find_equal == 0)
         {
-            printf("diego in equal ---> %c\n", current->value[i]);
             ft_clean(current, i);
             y = 1;
             i++;
@@ -171,7 +157,6 @@ void ft_clean_wd(t_tokens *current, int y, int i)
         }
         else if (find_equal == 1 && current->value[i] == '"') 
         {
-            printf("finish equal ---> %c\n", current->value[i]);
             ft_clean2(current, i);
             y = 1;
             x++;
@@ -181,14 +166,8 @@ void ft_clean_wd(t_tokens *current, int y, int i)
     }
 }
 
-
-// export "diego=yes"'max=no'
-// / export "diego=yes"'max=no''max=no'
-// export "diego=yes"|export "max=no"
-// export "quesp=hola      a12"'diego=goat' "|" export "quesp=hola      a12"'diego=goat'
 void ft_trim_export(t_tokens *tokens)
 {
-    printf("diego in trimp export ---> %s\n", tokens->value);
     t_tokens	*current;
 	char		*trimmed;
 
@@ -205,9 +184,6 @@ void ft_trim_export(t_tokens *tokens)
     tem = NULL;
     trimmed = NULL;
     
-    
-    printf("diego ---> %s\n", current->value);
-
     ft_clean_words_export(current);
 
     while (current->value[i] && current->value[i + 1])
@@ -228,14 +204,8 @@ void ft_trim_export(t_tokens *tokens)
         
         i++;
     }
-    
-    
-    // ! "And a quote at the end y a quote at the start"
     ft_export_clean_and(current, trimmed, tem);
-
-    // Todo add the quotes to the start and the end of the string
     i = 0;
-    // x = 0;
     y = 0;
     ft_clean_wd(current, y, i);
 }
