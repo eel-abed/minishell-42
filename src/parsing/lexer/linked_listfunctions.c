@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   linked_listfunctions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:02:14 by mafourni          #+#    #+#             */
 /*   Updated: 2025/02/23 21:51:57 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/home/mafourni/Desktop/Minishell/include/minishell.h"
+#include "../../../include/minishell.h"
 
 void	mini_lstadd_back(t_tokens **lst, t_tokens *new)
 {
