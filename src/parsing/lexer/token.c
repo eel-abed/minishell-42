@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:46:51 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:52:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static int	should_preserve_token(t_tokens *token)
+int	should_preserve_token(t_tokens *token)
 {
 	if (!token || !token->prev)
 		return (1);
@@ -21,7 +21,7 @@ static int	should_preserve_token(t_tokens *token)
 	return (0);
 }
 
-static void	remove_empty_head(t_tokens **list)
+void	remove_empty_head(t_tokens **list)
 {
 	t_tokens	*current;
 
@@ -98,6 +98,12 @@ t_tokens	*lets_tokeninze(char *input)
 
 	token_list = NULL;
 	split_result = split_mini(input);
+	int i = 0;
+	while (split_result[i])
+	{
+		printf("split_result[%d] = %s\n", i, split_result[i]);
+		i++;
+	}
 	token_list = ft_tokenizer_cmd_or_ope(split_result);
 	remove_empty_tokens(&token_list);
 	return (token_list);

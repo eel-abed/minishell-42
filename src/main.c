@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/18 19:48:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:51:11 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
+	// t_garbage	*gc;
 
 	// char		**args;
 	// int			i;
+	// gc = NULL;
 	(void)argc;
 	(void)argv;
 	env = init_env(envp);

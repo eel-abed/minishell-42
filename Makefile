@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/18 19:26:23 by mafourni         ###   ########.fr        #
+#    Updated: 2025/02/23 21:57:40 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC_FILES = main.c \
 			parsing/lexer/split.c \
 			parsing/lexer/trim.c \
 			parsing/lexer/trim2.c \
+			parsing/lexer/trim3.c \
 			parsing/lexer/token_pipe.c \
 
 

@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 20:12:13 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:53:05 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	handle_quotes(char *input, int *i)
+void	handle_quotes(char *input, int *i)
 {
 	char	quote;
 
@@ -24,7 +24,7 @@ static void	handle_quotes(char *input, int *i)
 		(*i)++;
 }
 
-static void	process_token(char *input, int *i)
+void	process_token(char *input, int *i)
 {
 	while (input[*i] && input[*i] != ' ')
 	{
@@ -65,27 +65,51 @@ int	count_tokens(char *input)
 	return (count);
 }
 
+// char	*extract_token(char *input, int *i, int *start)
+// {
+// 	char	*token;
+// 	int		len;
+
+// 	if (detect_operator(input[*i]))
+// 	{
+// 		len = (input[*i + 1] && detect_operator(input[*i + 1])
+// 				&& input[*i] == input[*i + 1]) ? 2 : 1;
+// 		token = ft_substr(input, *start, len);
+// 		*i += len;
+// 		return (token);
+// 	}
+// 	while (input[*i] && !detect_operator(input[*i]) && input[*i] != ' ')
+// 	{
+// 		if (input[*i] == '\'' || input[*i] == '\"')
+// 			handle_quotes(input, i);
+// 		else
+// 			(*i)++;
+// 	}
+// 	return (ft_substr(input, *start, *i - *start));
+// }
 char	*extract_token(char *input, int *i, int *start)
 {
-	char	*token;
-	int		len;
+    char	*token;
+    int		len;
 
-	if (detect_operator(input[*i]))
-	{
-		len = (input[*i + 1] && detect_operator(input[*i + 1])
-				&& input[*i] == input[*i + 1]) ? 2 : 1;
-		token = ft_substr(input, *start, len);
-		*i += len;
-		return (token);
-	}
-	while (input[*i] && !detect_operator(input[*i]) && input[*i] != ' ')
-	{
-		if (input[*i] == '\'' || input[*i] == '\"')
-			handle_quotes(input, i);
-		else
-			(*i)++;
-	}
-	return (ft_substr(input, *start, *i - *start));
+    if (detect_operator(input[*i]))
+    {
+        len = 1;
+        if (input[*i + 1] && detect_operator(input[*i + 1]) 
+            && input[*i] == input[*i + 1])
+            len = 2;
+        token = ft_substr(input, *start, len);
+        *i += len;
+        return (token);
+    }
+    while (input[*i] && !detect_operator(input[*i]) && input[*i] != ' ')
+    {
+        if (input[*i] == '\'' || input[*i] == '\"')
+            handle_quotes(input, i);
+        else
+            (*i)++;
+    }
+    return (ft_substr(input, *start, *i - *start));
 }
 
 char	**split_mini(char *input)
@@ -95,7 +119,7 @@ char	**split_mini(char *input)
 	int		j;
 	int		start;
 
-	result = malloc(sizeof(char *) * (count_tokens(input)+ 1));
+	result = malloc(sizeof(char *) * (count_tokens(input) + 1));
 	if (!input || !result)
 		return (NULL);
 	i = 0;

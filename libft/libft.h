@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:28:36 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/13 02:46:59 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:49:56 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+typedef struct s_garbage
+{
+	void			*ptr;
+	struct s_garbage	*next;
+}					t_garbage;
+
 
 typedef struct s_list
 {
@@ -84,4 +91,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
 
+void *gc_malloc(t_garbage **gc, size_t size); 
+
+void gc_free_all(t_garbage **gc);
 #endif
