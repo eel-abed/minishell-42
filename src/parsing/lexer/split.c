@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/22 18:21:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:53:05 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	count_tokens(char *input)
 // 	}
 // 	return (ft_substr(input, *start, *i - *start));
 // }
-char	*extract_token(char *input, int *i, int *start, t_garbage **gc)
+char	*extract_token(char *input, int *i, int *start)
 {
     char	*token;
     int		len;
@@ -98,7 +98,7 @@ char	*extract_token(char *input, int *i, int *start, t_garbage **gc)
         if (input[*i + 1] && detect_operator(input[*i + 1]) 
             && input[*i] == input[*i + 1])
             len = 2;
-        token = ft_substr(input, *start, len, &gc);
+        token = ft_substr(input, *start, len);
         *i += len;
         return (token);
     }
@@ -109,10 +109,10 @@ char	*extract_token(char *input, int *i, int *start, t_garbage **gc)
         else
             (*i)++;
     }
-    return (ft_substr(input, *start, *i - *start, &gc));
+    return (ft_substr(input, *start, *i - *start));
 }
 
-char	**split_mini(char *input, t_garbage **gc)
+char	**split_mini(char *input)
 {
 	char	**result;
 	int		i;

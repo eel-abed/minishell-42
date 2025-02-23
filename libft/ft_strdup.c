@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:25:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/22 18:23:07 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:50:05 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src, t_garbage **gc)
+char	*ft_strdup(const char *src)
 {
 	int		leng;
 	int		i;

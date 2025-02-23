@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/22 18:19:44 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:58:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ typedef struct s_tokens
 
 // LEXER
 char					*any_env(char *input, t_env *env);
-t_tokens				*ft_lexer(char *input, t_env *env, t_garbage **gc);
+t_tokens				*ft_lexer(char *input, t_env *env);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -149,7 +149,7 @@ bool					is_valid_pipe(char *string);
 void					mini_lstadd_back(t_tokens **lst, t_tokens *new);
 void					mini_lstadd_front(t_tokens **lst, t_tokens *new);
 t_tokens				*mini_lstlast(t_tokens *lst);
-t_tokens				*mini_lstnew(t_garbage **gc,char *value, int kind);
+t_tokens				*mini_lstnew(char *value, int kind);
 int						mini_lstsize(t_tokens *lst);
 // COUNT WORD FOR SPLIT
 int						count_tokens(char *input);
@@ -165,7 +165,7 @@ void					process_token(char *input, int *i);
 
 
 // void remove_empty_tokens(t_tokens **list);
-t_tokens				*lets_tokeninze(char *input, t_garbage **gc);
+t_tokens				*lets_tokeninze(char *input);
 int						check_empty_quotes(char *str, int len);
 int						is_empty_or_quoted_empty(char *str);
 t_tokens				*ft_trim_all(t_tokens *tokens);
@@ -194,4 +194,7 @@ char					*might_replace(t_env *env, char *input, int j,
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
+
+void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed);
+void ft_trim_export(t_tokens *tokens);
 #endif

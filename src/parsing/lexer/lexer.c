@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/22 18:25:21 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:50:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc)
+t_tokens	*ft_lexer(char *input, t_env *env)
 {
 	t_tokens	*token_list;
 	char		*temp;
@@ -24,9 +24,9 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc)
 	printf("[QUOTE %s !]\n", OK);
 	if (check_syntax(temp) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
-	temp = any_env(temp, env, &gc);
+	temp = any_env(temp, env);
 	printf("TEMP = [%s]\n", temp);
-	token_list = lets_tokeninze(temp, &gc);
+	token_list = lets_tokeninze(temp);
 	printf("AFTER LETS TOKENINZE\n");
 	print_tokens(token_list);
 	token_list = ft_trim_all(token_list);
@@ -58,7 +58,7 @@ bool	check_syntax(char *input)
 	return (true);
 }
 
-char *any_env(char *input, t_env *env, t_garbage **gc)
+char *any_env(char *input, t_env *env)
 {
     t_env   *envi;
     char    *tmp;

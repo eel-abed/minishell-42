@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/22 18:20:23 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:52:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	remove_empty_tokens(t_tokens **list)
 	}
 }
 
-t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result, t_garbage **gc)
+t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result)
 {
 	t_tokens			*token_list;
 	t_operator_kind		type;
@@ -86,12 +86,12 @@ t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result, t_garbage **gc)
 			type = kind_redir_2right;
 		else
 			type = kind_none;
-		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type, &gc));
+		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type));
 	}
 	return (token_list);
 }
 
-t_tokens	*lets_tokeninze(char *input, t_garbage **gc)
+t_tokens	*lets_tokeninze(char *input)
 {
 	t_tokens	*token_list;
 	char		**split_result;
