@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:50:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:36:57 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	token_list = NULL;
 	if (quote_check(temp) == 1)
 		return (printf("Quote Syntax %s !\n", ERROR), NULL);
-	printf("[QUOTE %s !]\n", OK);
+	// printf("[QUOTE %s !]\n", OK);
 	if (check_syntax(temp) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env);
@@ -33,7 +33,15 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	printf("AFTER TRIM ALL\n");
 	print_tokens(token_list);
 	token_list = token_with_pipe(token_list);
-	printf("AFTER TOKE WITH PIPE\n");
+
+	// Set the environment pointer for each token
+	t_tokens *current = token_list;
+	while (current)
+	{
+		current->env = env;
+		current = current->next;
+	}
+
 	return (token_list);
 }
 

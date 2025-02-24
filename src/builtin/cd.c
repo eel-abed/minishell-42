@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 17:53:43 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:39:10 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,41 @@ void	update_env_vars(t_env *env)
 		update_env_var(env, "PWD", cwd);
 }
 
-void	cd_builtin(char **args, t_env *env, t_command *cmd)
+void cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd)
 {
-	t_env_var	*home_var;
-	const char	*target_dir;
+    t_env_var *home_var;
+    const char *target_dir;
+    char **args;
 
-	if (!args[1])
-	{
-		home_var = find_env_var(env, "HOME");
-		if (!home_var || !home_var->value)
-		{
-			ft_putstr_fd("cd: HOME not set\n", 2);
-			cmd->exit_status = 1;
-			return ;
-		}
-		target_dir = home_var->value;
-	}
-	else
-		target_dir = args[1];
-	if (chdir(target_dir) != 0)
-	{
-		perror("cd");
-		cmd->exit_status = 1;
-		return ;
-	}
-	update_env_vars(env);
-	cmd->exit_status = 0;
+    // Split the command line into args
+    args = ft_split(tokens->value, ' ');
+    if (!args)
+        return;
+
+    // If no directory argument (just "cd")
+    if (!args[1])
+    {
+        home_var = find_env_var(env, "HOME");
+        if (!home_var || !home_var->value)
+        {
+            ft_putstr_fd("cd: HOME not set\n", 2);
+            cmd->exit_status = 1;
+            free_paths(args);
+            return;
+        }
+        target_dir = home_var->value;
+    }
+    else
+        target_dir = args[1];
+
+    if (chdir(target_dir) != 0)
+    {
+        perror("cd");
+        cmd->exit_status = 1;
+        free_paths(args);
+        return;
+    }
+    update_env_vars(env);
+    cmd->exit_status = 0;
+    free_paths(args);
 }

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 18:38:08 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:12:49 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,87 +24,36 @@ bool	is_builtin(char *cmd)
 	return (false);
 }
 
-void	execute_builtin(char *cmd, char **args, t_command *cmd_info)
+void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info)
 {
-	if (!ft_strncmp(cmd, "cd", 2))
-		cd_builtin(args, cmd_info->env, cmd_info);
-	else if (!ft_strncmp(cmd, "pwd", 3))
-		pwd_builtin();
-	else if (!ft_strncmp(cmd, "echo", 4))
-		echo_builtin(args);
-	else if (!ft_strncmp(cmd, "env", 3))
-		env_builtin(cmd_info->env);
-	else if (!ft_strncmp(cmd, "exit", 4))
-		exit_builtin(args, cmd_info);
-	else if (!ft_strncmp(cmd, "export", 6))
-		export_builtin(args, cmd_info->env);
-	else if (!ft_strncmp(cmd, "unset", 5))
-		unset_builtin(args, cmd_info->env, cmd_info);
+    if (!ft_strncmp(cmd, "cd", 2))
+        cd_builtin(tokens, cmd_info->env, cmd_info);
+    else if (!ft_strncmp(cmd, "pwd", 3))
+        pwd_builtin();
+    else if (!ft_strncmp(cmd, "echo", 4))
+        echo_builtin_tokens(tokens);
+    else if (!ft_strncmp(cmd, "env", 3))
+        env_builtin(cmd_info->env);
+    else if (!ft_strncmp(cmd, "exit", 4))
+        exit_builtin(tokens, cmd_info);
+    else if (!ft_strncmp(cmd, "export", 6))
+        export_builtin(tokens, cmd_info->env); 
+    else if (!ft_strncmp(cmd, "unset", 5))
+        unset_builtin(tokens, cmd_info->env, cmd_info);
 }
 
-/* Helper function to handle redirections */
-static void	handle_redirections(t_command *cmd_info)
+void execute_command(t_tokens *tokens, t_command *cmd_info)
 {
-	if (cmd_info->input_file)
-		redirect_input(cmd_info->input_file);
-	if (cmd_info->output_file && !cmd_info->heredoc_flag)
-		redirect_output(cmd_info->output_file);
-	if (cmd_info->heredoc_flag)
-		heredoc(cmd_info->delimiter);
-}
+    ft_memset(cmd_info, 0, sizeof(t_command));
+    cmd_info->env = tokens->env;
 
-/* Helper function to parse command arguments */
-static void	parse_command_args(char **args, t_command *cmd_info)
-{
-	int	i;
+    if (!tokens)
+        return;
 
-	i = 0;
-	while (args[i])
-	{
-		if (!ft_strncmp(args[i], "<", 1))
-			i = handle_input_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], ">", 1))
-			i = handle_output_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], ">>", 2))
-			i = handle_append_redirect(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], "<<", 2))
-			i = handle_heredoc(args, i, cmd_info);
-		else if (!ft_strncmp(args[i], "|", 1))
-		{
-			args[i] = NULL;
-			cmd_info->cmd1 = args;
-			cmd_info->cmd2 = &args[i + 1];
-			break ;
-		}
-		else
-			i++;
-	}
-}
+    char *cmd = tokens->value;
 
-void	execute_command(char **args, t_command *cmd)
-{
-	int	status;
-
-	if (!args || !args[0])
-		return ;
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->delimiter = NULL;
-	cmd->heredoc_flag = false;
-	parse_command_args(args, cmd);
-	if (cmd->cmd1 && cmd->cmd2)
-	{
-		execute_pipe_commands(cmd);
-		waitpid(cmd->pid2, &status, 0);
-		if (WIFEXITED(status))
-			cmd->exit_status = WEXITSTATUS(status);
-	}
-	else
-	{
-		handle_redirections(cmd);
-		if (is_builtin(args[0]))
-			execute_builtin(args[0], args, cmd);
-		else
-			cmd->exit_status = execute_external_command(args, cmd);
-	}
+    if (is_builtin(cmd))
+        execute_builtin(cmd, tokens, cmd_info);
+    else
+        cmd_info->exit_status = execute_external_command(tokens, cmd_info);
 }

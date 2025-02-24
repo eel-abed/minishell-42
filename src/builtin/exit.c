@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:21:40 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:15:05 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,39 @@ static long long	ft_atoll(const char *str)
 	return (result * sign);
 }
 
-void	exit_builtin(char **args, t_command *cmd)
+void exit_builtin(t_tokens *tokens, t_command *cmd)
 {
-	int	exit_status;
+    int exit_status;
+    char **args;
 
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	if (!args[1])
-	{
-		exit_status = cmd->exit_status;
-		exit(exit_status);
-	}
-	if (!is_valid_number(args[1]))
-	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(args[1], STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		exit(2);
-	}
-	if (args[2])
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		cmd->exit_status = 1;
-		return ;
-	}
-	exit_status = (unsigned char)ft_atoll(args[1]);
-	exit(exit_status);
+    // Split the token value into command and arguments
+    args = ft_split(tokens->value, ' ');
+    if (!args)
+        return;
+
+    ft_putstr_fd("exit\n", STDOUT_FILENO);
+    if (!args[1])
+    {
+        exit_status = cmd->exit_status;
+        free_paths(args);
+        exit(exit_status);
+    }
+    if (!is_valid_number(args[1]))
+    {
+        ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+        ft_putstr_fd(args[1], STDERR_FILENO);
+        ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+        free_paths(args);
+        exit(2);
+    }
+    if (args[2])
+    {
+        ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+        cmd->exit_status = 1;
+        free_paths(args);
+        return;
+    }
+    exit_status = (unsigned char)ft_atoll(args[1]);
+    free_paths(args);
+    exit(exit_status);
 }
