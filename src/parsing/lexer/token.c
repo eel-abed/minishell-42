@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:52:33 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:02:00 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_tokens	*lets_tokeninze(char *input)
 	int i = 0;
 	while (split_result[i])
 	{
-		printf("split_result[%d] = %s\n", i, split_result[i]);
+		// printf("split_result[%d] = %s\n", i, split_result[i]);
 		i++;
 	}
 	token_list = ft_tokenizer_cmd_or_ope(split_result);
