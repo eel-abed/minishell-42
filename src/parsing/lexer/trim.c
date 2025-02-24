@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:57:21 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:09 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 				free(current->value);
 				current->value = trimmed;
 				in_export = 1;
-				printf("is export");
+				// printf("is export");
 			}
 			else if (current->type == kind_pipe)
 				in_export = 0;
@@ -162,7 +162,7 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 			// else if (in_export && (has_attached_quotes(current->value)
 			// 		|| should_trim_quotes(current->value)))
 			{
-				printf("diego furea del trim export ---> %s\n", current->value);
+				// printf("diego furea del trim export ---> %s\n", current->value);
 				ft_trim_export(current);
 				
 			}

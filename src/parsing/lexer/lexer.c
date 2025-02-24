@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/24 17:03:17 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:49 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	token_list = NULL;
 	if (quote_check(temp) == 1)
 		return (printf("Quote Syntax %s !\n", ERROR), NULL);
-	// printf("[QUOTE %s !]\n", OK);
+	printf("[QUOTE %s !]\n", OK);
 	if (check_syntax(temp) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env);
-	// printf("TEMP = [%s]\n", temp);
+	printf("TEMP = [%s]\n", temp);
 	token_list = lets_tokeninze(temp);
-	// printf("AFTER LETS TOKENINZE\n");
+	printf("AFTER LETS TOKENINZE\n");
 	print_tokens(token_list);
 	token_list = ft_trim_all(token_list);
-	// printf("AFTER TRIM ALL\n");
+	printf("AFTER TRIM ALL\n");
 	print_tokens(token_list);
 	token_list = token_with_pipe(token_list);
 
