@@ -51,6 +51,7 @@ SRC_FILES = main.c \
 			parsing/lexer/split.c \
 			parsing/lexer/trim.c \
 			parsing/lexer/trim2.c \
+			parsing/lexer/trim3.c \
 			parsing/lexer/token_pipe.c \
 
 

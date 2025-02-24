@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
+	// t_garbage	*gc;
 
 	(void)argc;
 	(void)argv;

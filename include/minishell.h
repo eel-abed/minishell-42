@@ -90,7 +90,7 @@ typedef struct s_command
 	pid_t				pid1;
 	pid_t				pid2;
 	t_env				*env;
-	int exit_status; // Ajout du champ pour le status de sortie
+	int 				exit_status; // Ajout du champ pour le status de sortie
 }						t_command;
 
 t_env					*init_env(char **envp);
@@ -162,12 +162,17 @@ char					*extract_token(char *input, int *i, int *start);
 void					skip_quotes(char *input, int *i, char quote);
 void					handle_operator(char *input, int *i);
 int						is_empty_token(char *str);
+void					handle_quotes(char *input, int *i);
+void					process_token(char *input, int *i);
+
 
 // void remove_empty_tokens(t_tokens **list);
 t_tokens				*lets_tokeninze(char *input);
 int						check_empty_quotes(char *str, int len);
 int						is_empty_or_quoted_empty(char *str);
 t_tokens				*ft_trim_all(t_tokens *tokens);
+int						should_preserve_token(t_tokens *token);
+void					remove_empty_head(t_tokens **list);
 
 // TRIM
 char					*trim_unquoted(char *str);
@@ -176,6 +181,9 @@ int						is_quote(char c);
 char					*remove_outer_quotes(char *str);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);
+int						is_matching_quote(char c, char quote_type);
+char					*get_clean_word(char *str);
+int						is_export_cmd(char *str);
 
 t_tokens				*token_with_pipe(t_tokens *tokens);
 
@@ -188,4 +196,7 @@ char					*might_replace(t_env *env, char *input, int j,
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
+
+void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed);
+void ft_trim_export(t_tokens *tokens);
 #endif
