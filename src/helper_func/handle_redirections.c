@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/17 17:22:07 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:36:42 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,28 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info)
 	}
 	cmd_info->heredoc_flag = true;
 	return (i + 2);
+}
+void handle_redirectionnn(char **parts, t_command *cmd_info)
+{
+    int i = 0;
+    while (parts[i])
+    {
+        if (!ft_strcmp(parts[i], ">"))
+        {
+            if (parts[i + 1])
+            {
+                cmd_info->output_file = ft_strdup(parts[i + 1]);
+                int fd = open(parts[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                if (fd < 0)
+                {
+                    perror("minishell");
+                    return;
+                }
+                dup2(fd, STDOUT_FILENO);
+                close(fd);
+            }
+            break;
+        }
+        i++;
+    }
 }

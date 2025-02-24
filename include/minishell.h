@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 19:08:47 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:38:57 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ pid_t					fork_and_execute_first(t_command *cmd_info);
 pid_t					fork_and_execute_second(t_command *cmd_info);
 int						handle_input_redirect(char **args, int i,
 							t_command *cmd_info);
+void					handle_redirectionnn(char **parts, t_command *cmd_info);
 int						handle_output_redirect(char **args, int i,
 							t_command *cmd_info);
 int						handle_append_redirect(char **args, int i,
