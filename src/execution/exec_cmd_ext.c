@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:07:12 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,30 @@ static t_env_var	*get_path_variable(t_env *env)
 
 char	*find_command_path(char *cmd, t_env *env,t_garbage **gc)
 {
+    t_env_var *path_var;
+    char *full_path;
+
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return ft_strdup(cmd,gc);
 	if (!env)
 		return NULL;
-
-	t_env_var *path_var = get_path_variable(env);
+	path_var = get_path_variable(env);
 	if (!path_var)
 		return NULL;
-
 	if (!path_var->value)
 		return NULL;
-
 	char **paths = ft_split(path_var->value, ':',gc);
 	if (!paths)
 		return NULL;
-
-	char *full_path = NULL;
+	full_path = NULL;
 	for (int i = 0; paths[i]; i++)
 	{
 		full_path = join_path(paths[i], cmd,gc);
 		if (!full_path)
 			continue;
-
 		if (access(full_path, F_OK | X_OK) == 0)
-		{
-			free_paths(paths);
 			return full_path;
-		}
-		// free(full_path);
 	}
-
-	// free_paths(paths);
 	return NULL;
 }
 
