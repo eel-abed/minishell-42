@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_listfunctions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:02:14 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:51:57 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:03:59 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ t_tokens	*mini_lstlast(t_tokens *lst)
 	return (lst);
 }
 
-t_tokens	*mini_lstnew(char *value, int kind)
+t_tokens	*mini_lstnew(char *value, int kind,t_garbage **gc)
 {
 	t_tokens	*newlst;
 
-	// newlst = gc_malloc(&gc, sizeof (t_tokens));
-	newlst = malloc(sizeof(t_tokens));
+	newlst = gc_malloc(gc, sizeof (t_tokens));
+	// newlst = malloc(sizeof(t_tokens));
 	if (!newlst)
 		return (NULL);
 	newlst->prev = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 16:39:10 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:15:47 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env_var	*find_env_var(t_env *env, const char *key)
 	return (NULL);
 }
 
-static void	update_env_var(t_env *env, const char *key, const char *value)
+static void	update_env_var(t_env *env, const char *key, const char *value,t_garbage **gc)
 {
 	t_env_var	*var;
 	t_env_var	*new_var;
@@ -41,44 +41,43 @@ static void	update_env_var(t_env *env, const char *key, const char *value)
 	{
 		if (var->value)
 			free(var->value);
-		var->value = ft_strdup(value);
+		var->value = ft_strdup(value,gc);
 	}
 	else
 	{
 		new_var = malloc(sizeof(t_env_var));
 		if (!new_var)
 			return ;
-		new_var->key = ft_strdup(key);
-		new_var->value = ft_strdup(value);
+		new_var->key = ft_strdup(key,gc);
+		new_var->value = ft_strdup(value,gc);
 		new_var->next = env->vars;
 		env->vars = new_var;
 		env->size++;
 	}
 }
 
-void	update_env_vars(t_env *env)
+void	update_env_vars(t_env *env,t_garbage **gc)
 {
 	char		cwd[PATH_MAX];
 	t_env_var	*pwd_var;
 
 	pwd_var = find_env_var(env, "PWD");
 	if (pwd_var && pwd_var->value)
-		update_env_var(env, "OLDPWD", pwd_var->value);
+		update_env_var(env, "OLDPWD", pwd_var->value,gc);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		update_env_var(env, "PWD", cwd);
+		update_env_var(env, "PWD", cwd,gc);
 }
 
-void cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd)
+void cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
 {
     t_env_var *home_var;
     const char *target_dir;
     char **args;
 
     // Split the command line into args
-    args = ft_split(tokens->value, ' ');
+    args = ft_split(tokens->value, ' ',gc);
     if (!args)
         return;
-
     // If no directory argument (just "cd")
     if (!args[1])
     {
@@ -102,7 +101,7 @@ void cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd)
         free_paths(args);
         return;
     }
-    update_env_vars(env);
+    update_env_vars(env,gc);
     cmd->exit_status = 0;
     free_paths(args);
 }

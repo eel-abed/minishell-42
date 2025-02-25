@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 17:55:04 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:32:10 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	append_env_var(t_env *env, t_env_var *new_var)
 	current->next = new_var;
 }
 
-void	handle_export_error(char *arg)
+void	handle_export_error(char *arg,t_garbage **gc)
 {
 	char	*error_msg;
 	char	*temp;
 
-	error_msg = ft_strjoin("minishell: export: '", arg);
+	error_msg = ft_strjoin("minishell: export: '", arg,gc);
 	temp = error_msg;
-	error_msg = ft_strjoin(error_msg, "': not a valid identifier");
+	error_msg = ft_strjoin(error_msg, "': not a valid identifier",gc);
 	free(temp);
 	ft_putendl_fd(error_msg, STDERR_FILENO);
 	free(error_msg);
