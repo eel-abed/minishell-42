@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/24 19:38:57 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:06:46 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ void					export_builtin(t_tokens *tokens, t_env *env);
 int						unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd);
 void					execute_command(t_tokens *tokens, t_command *cmd_info);
 int						execute_external_command(t_tokens *tokens, t_command *cmd);
-int						redirect_input(const char *file);
-int						redirect_output(const char *file);
-int						redirect_append(const char *file);
+int						redirect_output(const char *filename, int append_mode);
 int						heredoc(const char *delimiter);
 pid_t					fork_and_execute_first(t_command *cmd_info);
 pid_t					fork_and_execute_second(t_command *cmd_info);
