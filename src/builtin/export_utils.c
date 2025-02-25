@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 14:32:10 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:08:12 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ void	handle_export_error(char *arg,t_garbage **gc)
 	error_msg = ft_strjoin("minishell: export: '", arg,gc);
 	temp = error_msg;
 	error_msg = ft_strjoin(error_msg, "': not a valid identifier",gc);
-	free(temp);
 	ft_putendl_fd(error_msg, STDERR_FILENO);
-	free(error_msg);
 }

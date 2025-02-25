@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 17:01:46 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:00:38 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static void	print_exported_vars(t_env *env)
 
 static void	update_env_var(t_env_var *var, const char *value,t_garbage **gc)
 {
-	if (var->value)
-		free(var->value);
 	if (value)
 		var->value = ft_strdup(value,gc);
 	else
@@ -47,7 +45,7 @@ static void	add_env_var(t_env *env, const char *key, const char *value,t_garbage
 {
 	t_env_var	*new_var;
 
-	new_var = malloc(sizeof(t_env_var));
+	new_var = gc_malloc(gc,sizeof(t_env_var));
 	if (!new_var)
 		return ;
 	new_var->key = ft_strdup(key,gc);
@@ -93,7 +91,7 @@ static void	set_env_var(char *arg, t_env *env,t_garbage **gc)
 		update_env_var(existing, value,gc);
 	else
 		add_env_var(env, key, value,gc);
-	free(key);
+	// free(key);
 }
 
 void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
@@ -111,7 +109,7 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
     if (!args[1])
     {
         print_exported_vars(env);
-        free_paths(args);
+        // free_paths(args);
         return;
     }
 
@@ -130,9 +128,9 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
         else
             handle_export_error(unquoted_arg,gc);
             
-        free(unquoted_arg);
+        // free(unquoted_arg);
         i++;
     }
     
-    free_paths(args);
+    // free_paths(args);
 }
