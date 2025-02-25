@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/24 19:36:36 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:00:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,32 @@ void execute_command(t_tokens *tokens, t_command *cmd_info,t_garbage **gc)
         return;
 
     // Split the token value into parts
-    parts = ft_split(tokens->value, ' ');
+    parts = ft_split(tokens->value, ' ',gc);
     if (!parts)
         return;
 
     // Handle redirection first
-    handle_redirectionnn(parts, cmd_info);
+    handle_redirectionnn(parts, cmd_info,gc);
 
     // Create command string without redirection
     if (cmd_info->output_file)
     {
         size_t cmd_len = ft_strlen(tokens->value) - ft_strlen(" > ") - 
                          ft_strlen(cmd_info->output_file);
-        cmd_only = ft_substr(tokens->value, 0, cmd_len);
+        cmd_only = ft_substr(tokens->value, 0, cmd_len,gc);
     }
     else
-        cmd_only = ft_strdup(tokens->value);
+        cmd_only = ft_strdup(tokens->value,gc);
 
     // Create new token with command only
-    t_tokens *cmd_token = mini_lstnew(cmd_only, kind_none);
+    t_tokens *cmd_token = mini_lstnew(cmd_only, kind_none,gc);
     if (cmd_token)
     {
         cmd_token->env = tokens->env;
         if (is_builtin(parts[0]))
-            execute_builtin(parts[0], cmd_token, cmd_info);
+            execute_builtin(parts[0], cmd_token, cmd_info,gc);
         else
-            cmd_info->exit_status = execute_external_command(cmd_token, cmd_info);
+            cmd_info->exit_status = execute_external_command(cmd_token, cmd_info,gc);
         free(cmd_token);
     }
 

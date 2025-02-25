@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/24 18:42:52 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:02:29 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env);
 	// printf("TEMP = [%s]\n", temp);
-	token_list = lets_tokeninze(temp);
+	token_list = lets_tokeninze(temp,gc);
 	// printf("AFTER LETS TOKENINZE\n");
 	print_tokens(token_list);
-	token_list = ft_trim_all(token_list);
+	token_list = ft_trim_all(token_list,gc);
 	// printf("AFTER TRIM ALL\n");
 	print_tokens(token_list);
 	token_list = token_with_pipe(token_list,gc);
@@ -40,7 +40,6 @@ t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
 		current->env = env;
 		current = current->next;
 	}
-
 	return (token_list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/24 17:27:21 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:01:46 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
     while (args[i])
     {
         // Remove quotes from argument
-        unquoted_arg = remove_outer_quotes(args[i]);
+        unquoted_arg = remove_outer_quotes(args[i],gc);
         if (!unquoted_arg)
         {
             i++;
@@ -126,9 +126,9 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
         }
 
         if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
-            set_env_var(unquoted_arg, env);
+            set_env_var(unquoted_arg, env,gc);
         else
-            handle_export_error(unquoted_arg);
+            handle_export_error(unquoted_arg,gc);
             
         free(unquoted_arg);
         i++;

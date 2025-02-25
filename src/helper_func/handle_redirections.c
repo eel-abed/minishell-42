@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 16:06:33 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:00:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info,t_garbage **gc)
 	return (i + 2);
 }
 
-void handle_redirectionnn(char **parts, t_command *cmd_info)
+void handle_redirectionnn(char **parts, t_command *cmd_info,t_garbage **gc)
 {
     int i = 0;
     while (parts[i])
@@ -89,7 +89,7 @@ void handle_redirectionnn(char **parts, t_command *cmd_info)
         {
             if (parts[i + 1])
             {
-                cmd_info->output_file = ft_strdup(parts[i + 1]);
+                cmd_info->output_file = ft_strdup(parts[i + 1],gc);
                 if (redirect_output(parts[i + 1], 0) < 0)
                 {
                     cmd_info->exit_status = 1;
@@ -102,7 +102,7 @@ void handle_redirectionnn(char **parts, t_command *cmd_info)
         {
             if (parts[i + 1])
             {
-                cmd_info->output_file = ft_strdup(parts[i + 1]);
+                cmd_info->output_file = ft_strdup(parts[i + 1],gc);
                 if (redirect_output(parts[i + 1], 1) < 0)
                 {
                     cmd_info->exit_status = 1;
