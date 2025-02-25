@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:09:14 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:07:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:14:46 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	**env_to_array(t_env *env)
+char	**env_to_array(t_env *env,t_garbage **gc)
 {
 	char		**array;
 	t_env_var	*current;
@@ -28,7 +28,7 @@ char	**env_to_array(t_env *env)
 	{
 		if (current->value)
 		{
-			temp = ft_strjoin(current->key, "=");
+			temp = ft_strjoin(current->key, "=",gc);
 			if (!temp)
 			{
 				while (--i >= 0)
@@ -36,7 +36,7 @@ char	**env_to_array(t_env *env)
 				free(array);
 				return (NULL);
 			}
-			array[i] = ft_strjoin(temp, current->value);
+			array[i] = ft_strjoin(temp, current->value,gc);
 			free(temp);
 			if (!array[i])
 			{
@@ -53,26 +53,26 @@ char	**env_to_array(t_env *env)
 	return (array);
 }
 
-static t_env_var	*create_env_var(const char *env_str)
+static t_env_var	*create_env_var(const char *env_str,t_garbage **gc)
 {
 	t_env_var	*var;
 	char		*equals;
 	size_t		key_len;
 
-	var = malloc(sizeof(t_env_var));
+	var = gc_malloc(gc,sizeof(t_env_var));
 	if (!var)
 		return (NULL);
 	equals = ft_strchr(env_str, '=');
 	if (!equals)
 	{
-		var->key = ft_strdup(env_str);
+		var->key = ft_strdup(env_str,gc);
 		var->value = NULL;
 	}
 	else
 	{
 		key_len = equals - env_str;
-		var->key = ft_substr(env_str, 0, key_len);
-		var->value = ft_strdup(equals + 1);
+		var->key = ft_substr(env_str, 0, key_len,gc);
+		var->value = ft_strdup(equals + 1,gc);
 		if (!var->key || !var->value)
 		{
 			free(var->key);
@@ -85,14 +85,14 @@ static t_env_var	*create_env_var(const char *env_str)
 	return (var);
 }
 
-t_env	*init_env(char **envp)
+t_env	*init_env(char **envp,t_garbage **gc)
 {
 	t_env		*env;
 	t_env_var	*current;
 	t_env_var	*new_var;
 	int			i;
 
-	env = malloc(sizeof(t_env));
+	env = gc_malloc(gc,sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->vars = NULL;
@@ -100,7 +100,7 @@ t_env	*init_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		new_var = create_env_var(envp[i]);
+		new_var = create_env_var(envp[i],gc);
 		if (!new_var)
 		{
 			free_env(env);

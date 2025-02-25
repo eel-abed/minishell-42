@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 19:08:21 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:02:17 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ static void	remove_env_var(t_env *env, const char *key)
 	}
 }
 
-int unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd)
+int unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
 {
     char **args;
     int i;
     int exit_status;
 
     // Split the token value into command and arguments
-    args = ft_split(tokens->value, ' ');
+    args = ft_split(tokens->value, ' ',gc);
     if (!args)
         return (1);
 

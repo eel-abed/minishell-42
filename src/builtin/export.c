@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 18:23:07 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:16:49 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,26 @@ static void	print_exported_vars(t_env *env)
 	}
 }
 
-static void	update_env_var(t_env_var *var, const char *value)
+static void	update_env_var(t_env_var *var, const char *value,t_garbage **gc)
 {
 	if (var->value)
 		free(var->value);
 	if (value)
-		var->value = ft_strdup(value);
+		var->value = ft_strdup(value,gc);
 	else
 		var->value = NULL;
 }
 
-static void	add_env_var(t_env *env, const char *key, const char *value)
+static void	add_env_var(t_env *env, const char *key, const char *value,t_garbage **gc)
 {
 	t_env_var	*new_var;
 
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
 		return ;
-	new_var->key = ft_strdup(key);
+	new_var->key = ft_strdup(key,gc);
 	if (value)
-		new_var->value = ft_strdup(value);
+		new_var->value = ft_strdup(value,gc);
 	else
 		new_var->value = NULL;
 	new_var->next = NULL;
@@ -67,7 +67,7 @@ static void	add_env_var(t_env *env, const char *key, const char *value)
 	env->size++;
 }
 
-static void	set_env_var(char *arg, t_env *env)
+static void	set_env_var(char *arg, t_env *env,t_garbage **gc)
 {
 	char		*equal_sign;
 	char		*key;
@@ -80,29 +80,29 @@ static void	set_env_var(char *arg, t_env *env)
 	{
 		existing = find_env_var(env, arg);
 		if (!existing)
-			add_env_var(env, arg, NULL);
+			add_env_var(env, arg, NULL,gc);
 		return ;
 	}
 	key_len = equal_sign - arg;
-	key = ft_substr(arg, 0, key_len);
+	key = ft_substr(arg, 0, key_len,gc);
 	value = equal_sign + 1;
 	if (!key)
 		return ;
 	existing = find_env_var(env, key);
 	if (existing)
-		update_env_var(existing, value);
+		update_env_var(existing, value,gc);
 	else
-		add_env_var(env, key, value);
+		add_env_var(env, key, value,gc);
 	free(key);
 }
 
-void export_builtin(t_tokens *tokens, t_env *env)
+void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
 {
     char **args;
     int i;
 
     // Split the token value into command and arguments
-    args = ft_split(tokens->value, ' ');
+    args = ft_split(tokens->value, ' ',gc);
     if (!args)
         return;
 
@@ -117,9 +117,9 @@ void export_builtin(t_tokens *tokens, t_env *env)
     while (args[i])
     {
         if (ft_isalpha(args[i][0]) || args[i][0] == '_')
-            set_env_var(args[i], env);
+            set_env_var(args[i], env,gc);
         else
-            handle_export_error(args[i]);
+            handle_export_error(args[i],gc);
         i++;
     }
     

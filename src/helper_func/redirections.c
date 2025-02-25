@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 19:11:59 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:30:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ int	redirect_append(const char *file)
 	return (0);
 }
 
-static char	*get_temp_filename(void)
+static char	*get_temp_filename(t_garbage **gc)
 {
 	static int	count = 0;
 	char		*filename;
 	char		num[32];
 
 	snprintf(num, sizeof(num), "%d", count++);
-	filename = ft_strjoin("/tmp/minishell_heredoc_", num);
+	filename = ft_strjoin("/tmp/minishell_heredoc_", num,gc);
 	if (!filename)
 		return (NULL);
 	return (filename);
@@ -101,7 +101,7 @@ static int	write_to_heredoc(int fd, const char *str)
 	return (0);
 }
 
-int	heredoc(const char *delimiter)
+int	heredoc(const char *delimiter, t_garbage **gc)
 {
 	char	*line;
 	char	*filename;
@@ -114,7 +114,7 @@ int	heredoc(const char *delimiter)
 		ft_putendl_fd("minishell: heredoc: delimiter cannot be empty", 2);
 		return (-1);
 	}
-	filename = get_temp_filename();
+	filename = get_temp_filename(gc);
 	if (!filename)
 	{
 		ft_putendl_fd("minishell: heredoc: memory allocation error", 2);

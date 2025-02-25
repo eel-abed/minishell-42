@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:53:05 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:03:55 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	count_tokens(char *input)
 // 	}
 // 	return (ft_substr(input, *start, *i - *start));
 // }
-char	*extract_token(char *input, int *i, int *start)
+char	*extract_token(char *input, int *i, int *start,t_garbage **gc)
 {
     char	*token;
     int		len;
@@ -98,7 +98,7 @@ char	*extract_token(char *input, int *i, int *start)
         if (input[*i + 1] && detect_operator(input[*i + 1]) 
             && input[*i] == input[*i + 1])
             len = 2;
-        token = ft_substr(input, *start, len);
+        token = ft_substr(input, *start, len,gc);
         *i += len;
         return (token);
     }
@@ -109,17 +109,17 @@ char	*extract_token(char *input, int *i, int *start)
         else
             (*i)++;
     }
-    return (ft_substr(input, *start, *i - *start));
+    return (ft_substr(input, *start, *i - *start,gc));
 }
 
-char	**split_mini(char *input)
+char	**split_mini(char *input,t_garbage **gc)
 {
 	char	**result;
 	int		i;
 	int		j;
 	int		start;
 
-	result = malloc(sizeof(char *) * (count_tokens(input) + 1));
+	result = gc_malloc(gc,sizeof(char *) * (count_tokens(input) + 1));
 	if (!input || !result)
 		return (NULL);
 	i = 0;
@@ -129,7 +129,7 @@ char	**split_mini(char *input)
 		while (input[i] && input[i] == ' ')
 			i++;
 		start = i;
-		result[j] = extract_token(input, &i, &start);
+		result[j] = extract_token(input, &i, &start,gc);
 		if (!result[j])
 		{
 			while (j > 0)

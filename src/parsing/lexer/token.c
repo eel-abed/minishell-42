@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/23 21:52:33 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:04:07 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	remove_empty_tokens(t_tokens **list)
 	}
 }
 
-t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result)
+t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result, t_garbage **gc)
 {
 	t_tokens			*token_list;
 	t_operator_kind		type;
@@ -86,25 +86,25 @@ t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result)
 			type = kind_redir_2right;
 		else
 			type = kind_none;
-		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type));
+		mini_lstadd_back(&token_list, mini_lstnew(split_result[i], type,gc));
 	}
 	return (token_list);
 }
 
-t_tokens	*lets_tokeninze(char *input)
+t_tokens	*lets_tokeninze(char *input, t_garbage **gc)
 {
 	t_tokens	*token_list;
 	char		**split_result;
 
 	token_list = NULL;
-	split_result = split_mini(input);
+	split_result = split_mini(input,gc);
 	int i = 0;
 	while (split_result[i])
 	{
 		printf("split_result[%d] = %s\n", i, split_result[i]);
 		i++;
 	}
-	token_list = ft_tokenizer_cmd_or_ope(split_result);
+	token_list = ft_tokenizer_cmd_or_ope(split_result, gc);
 	remove_empty_tokens(&token_list);
 	return (token_list);
 }

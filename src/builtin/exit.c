@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/21 18:15:05 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:01:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static long long	ft_atoll(const char *str)
 	return (result * sign);
 }
 
-void exit_builtin(t_tokens *tokens, t_command *cmd)
+void exit_builtin(t_tokens *tokens, t_command *cmd,t_garbage **gc)
 {
     int exit_status;
     char **args;
 
     // Split the token value into command and arguments
-    args = ft_split(tokens->value, ' ');
+    args = ft_split(tokens->value, ' ',gc);
     if (!args)
         return;
 
