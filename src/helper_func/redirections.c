@@ -6,43 +6,40 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 16:07:19 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:12:02 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int redirect_output(const char *filename, int append_mode)
+int	redirect_output(const char *filename, int append_mode)
 {
-    int flags;
-    int fd;
+	int	flags;
+	int	fd;
 
-    // Set flags based on append mode
-    flags = O_WRONLY | O_CREAT;
-    flags |= (append_mode ? O_APPEND : O_TRUNC);
-
-    // Open file with proper permissions
-    fd = open(filename, flags, 0644);
-    if (fd < 0)
-    {
-        ft_putstr_fd("minishell: ", 2);
-        ft_putstr_fd(filename, 2);
-        ft_putstr_fd(": ", 2);
-        ft_putendl_fd(strerror(errno), 2);
-        return (-1);
-    }
-
-    // Redirect stdout to the file
-    if (dup2(fd, STDOUT_FILENO) < 0)
-    {
-        ft_putstr_fd("minishell: ", 2);
-        ft_putendl_fd(strerror(errno), 2);
-        close(fd);
-        return (-1);
-    }
-
-    close(fd);
-    return (0);
+	flags = O_WRONLY | O_CREAT;
+	if (append_mode)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	fd = open(filename, flags, 0644);
+	if (fd < 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		return (-1);
+	}
+	if (dup2(fd, STDOUT_FILENO) < 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		close(fd);
+		return (-1);
+	}
+	close(fd);
+	return (0);
 }
 
 // static char	*get_temp_filename(void)
