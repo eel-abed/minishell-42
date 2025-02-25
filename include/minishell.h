@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/02/25 16:06:46 by eel-abed         ###   ########.fr       */
@@ -93,13 +93,13 @@ typedef struct s_command
 	int 				exit_status; // Ajout du champ pour le status de sortie
 }						t_command;
 
-t_env					*init_env(char **envp);
+t_env					*init_env(char **envp,t_garbage **gc);
 void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
-void					execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info);
-void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd);
+void					execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info,t_garbage **gc);
+void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc);
 void					pwd_builtin(void);
-void					echo_builtin_tokens(t_tokens *tokens);
+void					echo_builtin_tokens(t_tokens *tokens,t_garbage **gc);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd);
 void					export_builtin(t_tokens *tokens, t_env *env);
@@ -117,24 +117,24 @@ int						handle_output_redirect(char **args, int i,
 							t_command *cmd_info);
 int						handle_append_redirect(char **args, int i,
 							t_command *cmd_info);
-int						handle_heredoc(char **args, int i, t_command *cmd_info);
+int						handle_heredoc(char **args, int i, t_command *cmd_info,t_garbage **gc);
 void					setup_signals(void);
-char					*find_command_path(char *cmd, t_env *env);
-void					update_env_vars(t_env *env);
-char					**env_to_array(t_env *env);
+char					*find_command_path(char *cmd, t_env *env,t_garbage **gc);
+void					update_env_vars(t_env *env,t_garbage **gc);
+char					**env_to_array(t_env *env,t_garbage **gc);
 int						quote_check(char *input);
 t_env_var				*find_env_var(t_env *env, const char *key);
 void					append_env_var(t_env *env, t_env_var *new_var);
-void					handle_export_error(char *arg);
+void					handle_export_error(char *arg,t_garbage **gc);
 void					execute_pipe_commands(t_command *cmd_info);
 void					free_paths(char **paths);
-char					*join_path(char *path, char *cmd);
+char					*join_path(char *path, char *cmd,t_garbage **gc);
 
 // MAXENCE
 
 // LEXER
 char					*any_env(char *input, t_env *env);
-t_tokens				*ft_lexer(char *input, t_env *env);
+t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc);
 int						quote_check(char *input);
 
 bool					check_syntax(char *input);
@@ -150,14 +150,14 @@ bool					is_valid_pipe(char *string);
 void					mini_lstadd_back(t_tokens **lst, t_tokens *new);
 void					mini_lstadd_front(t_tokens **lst, t_tokens *new);
 t_tokens				*mini_lstlast(t_tokens *lst);
-t_tokens				*mini_lstnew(char *value, int kind);
+t_tokens				*mini_lstnew(char *value, int kind,t_garbage **gc);
 int						mini_lstsize(t_tokens *lst);
 // COUNT WORD FOR SPLIT
 int						count_tokens(char *input);
 int						detect_operator(char c);
 // SPLIT MINI
-char					**split_mini(char *input);
-char					*extract_token(char *input, int *i, int *start);
+char					**split_mini(char *input,t_garbage **gc);
+char					*extract_token(char *input, int *i, int *start,t_garbage **gc);
 void					skip_quotes(char *input, int *i, char quote);
 void					handle_operator(char *input, int *i);
 int						is_empty_token(char *str);
@@ -166,10 +166,10 @@ void					process_token(char *input, int *i);
 
 
 // void remove_empty_tokens(t_tokens **list);
-t_tokens				*lets_tokeninze(char *input);
+t_tokens				*lets_tokeninze(char *input,t_garbage **gc);
 int						check_empty_quotes(char *str, int len);
 int						is_empty_or_quoted_empty(char *str);
-t_tokens				*ft_trim_all(t_tokens *tokens);
+t_tokens				*ft_trim_all(t_tokens *tokens,t_garbage **gc);
 int						should_preserve_token(t_tokens *token);
 void					remove_empty_head(t_tokens **list);
 
@@ -177,14 +177,14 @@ void					remove_empty_head(t_tokens **list);
 char					*trim_unquoted(char *str);
 int						has_empty_quotes_at_start(char *str);
 int						is_quote(char c);
-char					*remove_outer_quotes(char *str);
+char					*remove_outer_quotes(char *str,t_garbage **gc);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);
 int						is_matching_quote(char c, char quote_type);
 char					*get_clean_word(char *str);
-int						is_export_cmd(char *str);
+int						is_export_cmd(char *str,t_garbage **gc);
 
-t_tokens				*token_with_pipe(t_tokens *tokens);
+t_tokens				*token_with_pipe(t_tokens *tokens,t_garbage **gc);
 
 // UTILS
 bool					is_space(char *input, int i);
@@ -196,6 +196,6 @@ char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
 
-void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed);
-void ft_trim_export(t_tokens *tokens);
+void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed,t_garbage **gc);
+void ft_trim_export(t_tokens *tokens,t_garbage **gc);
 #endif

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
 /*   Updated: 2025/02/24 18:42:52 by eel-abed         ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "../../../include/minishell.h"
 
-t_tokens	*ft_lexer(char *input, t_env *env)
+t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
 {
 	t_tokens	*token_list;
 	char		*temp;
@@ -32,8 +32,7 @@ t_tokens	*ft_lexer(char *input, t_env *env)
 	token_list = ft_trim_all(token_list);
 	// printf("AFTER TRIM ALL\n");
 	print_tokens(token_list);
-	token_list = token_with_pipe(token_list);
-
+	token_list = token_with_pipe(token_list,gc);
 	// Set the environment pointer for each token
 	t_tokens *current = token_list;
 	while (current)

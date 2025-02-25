@@ -16,7 +16,7 @@ int	is_matching_quote(char c, char quote_type)
 {
 	return (c == quote_type);
 }
-char *remove_outer_quotes(char *str)
+char *remove_outer_quotes(char *str,t_garbage **gc)
 {
     char *result;
     int i;
@@ -24,8 +24,8 @@ char *remove_outer_quotes(char *str)
     char current_quote;
 
     if (!str || !str[0])
-        return (ft_strdup(str));
-    result = malloc(ft_strlen(str) + 1);
+        return (ft_strdup(str,gc));
+    result = gc_malloc(gc,ft_strlen(str) + 1);
     if (!result)
         return (NULL);
     i = 0;
@@ -114,7 +114,7 @@ char	*get_clean_word(char *str)
 	return (result);
 }
 
-int	is_export_cmd(char *str)
+int	is_export_cmd(char *str,t_garbage **gc)
 {
 	char	*outer_quotes_removed;
 	char	*clean_str;
@@ -122,11 +122,11 @@ int	is_export_cmd(char *str)
 
 	if (!str)
 		return (0);
-	outer_quotes_removed = remove_outer_quotes(str);
+	outer_quotes_removed = remove_outer_quotes(str,gc);
 	if (!outer_quotes_removed)
 		return (0);
 	clean_str = get_clean_word(outer_quotes_removed);
-	free(outer_quotes_removed);
+	// free(outer_quotes_removed);
 	if (!clean_str)
 		return (0);
 	result = !ft_strcmp(clean_str, "export");
@@ -134,7 +134,7 @@ int	is_export_cmd(char *str)
 	return (result);
 }
 
-t_tokens	*ft_trim_all(t_tokens *tokens)
+t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 {
 	t_tokens	*current;
 	char		*trimmed;
@@ -148,7 +148,7 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 	{
 		if (current->value)
 		{
-			if (is_export_cmd(current->value))
+			if (is_export_cmd(current->value,gc))
 			{
 				trimmed = get_clean_word(current->value);
 				free(current->value);
@@ -163,15 +163,14 @@ t_tokens	*ft_trim_all(t_tokens *tokens)
 			// 		|| should_trim_quotes(current->value)))
 			{
 				// printf("diego furea del trim export ---> %s\n", current->value);
-				ft_trim_export(current);
-				
+				ft_trim_export(current,gc);				
 			}
 			else if (!in_export && (has_attached_quotes(current->value)
 					|| should_trim_quotes(current->value)))
 			{
 				
-				trimmed = remove_outer_quotes(current->value);
-				free(current->value);
+				trimmed = remove_outer_quotes(current->value,gc);
+				// free(current->value);
 				current->value = trimmed;
 			}
 		}

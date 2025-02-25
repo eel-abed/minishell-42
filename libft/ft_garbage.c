@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:52:45 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/22 18:04:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:51:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void gc_free_all(t_garbage **gc)
     while (current)
     {
         next = current->next;
-        free(current->ptr);
-        free(current);
+        if(current->ptr != NULL)
+            free(current->ptr);
+        if(current != NULL)
+            free(current);
         current = next;
     }
     *gc = NULL;

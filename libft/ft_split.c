@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 17:22:03 by eel-abed          #+#    #+#             */
-/*   Updated: 2023/11/01 15:05:32 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:58:46 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static size_t	ft_wordcount(char const *s, char c)
 	return (count);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c,t_garbage **gc)
 {
 	size_t	i;
 	size_t	j;
 	size_t	k;
 	char	**str;
 
-	str = (char **)malloc(sizeof(char *) * (ft_wordcount(s, c) + 1));
+	str = (char **)gc_malloc(gc,sizeof(char *) * (ft_wordcount(s, c) + 1));
 	if (!s || !str)
 		return (NULL);
 	i = 0;
@@ -52,7 +52,7 @@ char	**ft_split(char const *s, char c)
 			j = i;
 			while (s[i] != c && s[i])
 				i++;
-			str[k] = ft_substr(s, j, i - j);
+			str[k] = ft_substr(s, j, i - j,gc);
 			k++;
 		}
 		else

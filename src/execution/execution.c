@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/02/24 19:36:36 by eel-abed         ###   ########.fr       */
@@ -24,25 +24,25 @@ bool	is_builtin(char *cmd)
 	return (false);
 }
 
-void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info)
+void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info,t_garbage **gc)
 {
     if (!ft_strncmp(cmd, "cd", 2))
-        cd_builtin(tokens, cmd_info->env, cmd_info);
+        cd_builtin(tokens, cmd_info->env, cmd_info,gc);
     else if (!ft_strncmp(cmd, "pwd", 3))
         pwd_builtin();
     else if (!ft_strncmp(cmd, "echo", 4))
-        echo_builtin_tokens(tokens);
+        echo_builtin_tokens(tokens,gc);
     else if (!ft_strncmp(cmd, "env", 3))
         env_builtin(cmd_info->env);
     else if (!ft_strncmp(cmd, "exit", 4))
-        exit_builtin(tokens, cmd_info);
+        exit_builtin(tokens, cmd_info,gc);
     else if (!ft_strncmp(cmd, "export", 6))
-        export_builtin(tokens, cmd_info->env); 
+        export_builtin(tokens, cmd_info->env,gc); 
     else if (!ft_strncmp(cmd, "unset", 5))
-        unset_builtin(tokens, cmd_info->env, cmd_info);
+        unset_builtin(tokens, cmd_info->env, cmd_info,gc);
 }
 
-void execute_command(t_tokens *tokens, t_command *cmd_info)
+void execute_command(t_tokens *tokens, t_command *cmd_info,t_garbage **gc)
 {
     int original_stdout = dup(STDOUT_FILENO);
     char **parts;
@@ -50,7 +50,6 @@ void execute_command(t_tokens *tokens, t_command *cmd_info)
     
     ft_memset(cmd_info, 0, sizeof(t_command));
     cmd_info->env = tokens->env;
-
     if (!tokens)
         return;
 

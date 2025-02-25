@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:25:10 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/23 21:50:05 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:13:33 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *src,t_garbage **gc)
 {
 	int		leng;
 	int		i;
@@ -25,7 +25,7 @@ char	*ft_strdup(const char *src)
 	{
 		leng++;
 	}
-	dest = malloc(sizeof(char) * (leng + 1));
+	dest = gc_malloc(gc,sizeof(char) * (leng + 1));
 	if (dest == NULL)
 	{
 		return (NULL);

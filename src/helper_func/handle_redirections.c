@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/02/25 16:06:33 by eel-abed         ###   ########.fr       */
@@ -53,7 +53,7 @@ int	handle_append_redirect(char **args, int i, t_command *cmd_info)
 	return (i + 2);
 }
 
-int	handle_heredoc(char **args, int i, t_command *cmd_info)
+int	handle_heredoc(char **args, int i, t_command *cmd_info,t_garbage **gc)
 {
 	if (!args[i + 1])
 	{
@@ -69,7 +69,7 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info)
 		return (i);
 	}
 	// Save the delimiter
-	cmd_info->delimiter = ft_strdup(args[i + 1]);
+	cmd_info->delimiter = ft_strdup(args[i + 1],gc);
 	if (!cmd_info->delimiter)
 	{
 		ft_putendl_fd("minishell: memory allocation error", 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/24 14:43:43 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:23:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	echo_builtin(char **args)
 		write(STDOUT_FILENO, "\n", 1);
 }
 
-void echo_builtin_tokens(t_tokens *tokens)
+void echo_builtin_tokens(t_tokens *tokens,t_garbage **gc)
 {
     bool    newline;
     char    **args;
     int     i;
     char    *cmd;
 
-    args = ft_split(tokens->value, ' ');
+    args = ft_split(tokens->value, ' ',gc);
     if (!args)
         return;
 
@@ -87,5 +87,5 @@ void echo_builtin_tokens(t_tokens *tokens)
     if (newline)
         write(STDOUT_FILENO, "\n", 1);
 
-    free_paths(args);
+    // free_paths(args);
 }
