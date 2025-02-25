@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 17:02:29 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:08:55 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
 	temp = input;
 	token_list = NULL;
 	if (quote_check(temp) == 1)
-		return (printf("Quote Syntax %s !\n", ERROR), NULL);
+		return (printf("Syntax %s !\n", ERROR), NULL);
 	// printf("[QUOTE %s !]\n", OK);
 	if (check_syntax(temp) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
-	temp = any_env(temp, env);
+	temp = any_env(temp, env,gc);
 	// printf("TEMP = [%s]\n", temp);
 	token_list = lets_tokeninze(temp,gc);
 	// printf("AFTER LETS TOKENINZE\n");
@@ -64,7 +64,7 @@ bool	check_syntax(char *input)
 	return (true);
 }
 
-char *any_env(char *input, t_env *env)
+char *any_env(char *input, t_env *env,t_garbage **gc)
 {
     t_env   *envi;
     char    *tmp;
@@ -94,7 +94,7 @@ char *any_env(char *input, t_env *env)
                 continue;
             tmp = ft_strcpy(tmp, input, i, j);
             h = ft_strlen(input);
-            input = might_replace(envi, input, j, tmp);
+            input = might_replace(envi, input, j, tmp,gc);
             if ((int)ft_strlen(input) < h)
                 i = i - (h - (int)ft_strlen(input));
             free(tmp);
@@ -140,7 +140,7 @@ char *any_env(char *input, t_env *env)
 // 	return (input);
 // }
 
-void	replace_NULL(char *input, int j, char *tmp)
+void	replace_NULL(char *input, int j, char *tmp,t_garbage **gc)
 {
 	char *new_input;
 	int len;
@@ -149,7 +149,7 @@ void	replace_NULL(char *input, int j, char *tmp)
 	len = 0;
 
 	len = ft_strlen(input);
-	new_input = ft_calloc(len + 1, 1);
+	new_input = ft_calloc(len + 1, 1,gc);
 	if (!new_input)
 		return ;
 	new_input = ft_strncpy(new_input, input, j - 1);
@@ -157,7 +157,7 @@ void	replace_NULL(char *input, int j, char *tmp)
 	input = new_input;
 }
 
-char	*might_replace(t_env *env, char *input, int j, char *tmp)
+char	*might_replace(t_env *env, char *input, int j, char *tmp,t_garbage **gc)
 {
 	t_env_var	*head;
 	char		*new_input;
@@ -171,7 +171,7 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp)
 		if (ft_strcmp(env->vars->key, tmp) == 0)
 		{
 			len = ft_strlen(input) + ft_strlen(env->vars->value);
-			new_input = ft_calloc(len + 1, 1);
+			new_input = ft_calloc(len + 1, 1,gc);
 			new_input = ft_strncpy(new_input, input, j);
 			ft_strlcat_mini(new_input, env->vars->value, len);
 			ft_strlcat(new_input, input + j + ft_strlen(tmp), len);
@@ -182,6 +182,6 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp)
 		env->vars = env->vars->next;
 	}
 	if (env->vars == NULL)
-		return(replace_NULL(input, j, tmp),env->vars = head,input);
+		return(replace_NULL(input, j, tmp,gc),env->vars = head,input);
 	return (input);
 }

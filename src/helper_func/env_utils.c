@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:09:14 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:14:46 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:57:00 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**env_to_array(t_env *env,t_garbage **gc)
 	char		*temp;
 	int			i;
 
-	array = malloc(sizeof(char *) * (env->size + 1));
+	array = gc_malloc(gc,sizeof(char *) * (env->size + 1));
 	if (!array)
 		return (NULL);
 	current = env->vars;
@@ -37,7 +37,7 @@ char	**env_to_array(t_env *env,t_garbage **gc)
 				return (NULL);
 			}
 			array[i] = ft_strjoin(temp, current->value,gc);
-			free(temp);
+			// free(temp);
 			if (!array[i])
 			{
 				while (--i >= 0)

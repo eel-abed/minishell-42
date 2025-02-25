@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 05:30:27 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 15:03:55 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:01:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,6 @@ int	count_tokens(char *input)
 	return (count);
 }
 
-// char	*extract_token(char *input, int *i, int *start)
-// {
-// 	char	*token;
-// 	int		len;
-
-// 	if (detect_operator(input[*i]))
-// 	{
-// 		len = (input[*i + 1] && detect_operator(input[*i + 1])
-// 				&& input[*i] == input[*i + 1]) ? 2 : 1;
-// 		token = ft_substr(input, *start, len);
-// 		*i += len;
-// 		return (token);
-// 	}
-// 	while (input[*i] && !detect_operator(input[*i]) && input[*i] != ' ')
-// 	{
-// 		if (input[*i] == '\'' || input[*i] == '\"')
-// 			handle_quotes(input, i);
-// 		else
-// 			(*i)++;
-// 	}
-// 	return (ft_substr(input, *start, *i - *start));
-// }
 char	*extract_token(char *input, int *i, int *start,t_garbage **gc)
 {
     char	*token;

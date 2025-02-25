@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 15:24:24 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:34:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*build_cmd_str(t_tokens *cmd_start, t_tokens *current, t_tokens *tokens,t_g
 		{
 			tmp = cmd_str;
 			cmd_str = ft_strjoin(cmd_str, " ",gc);
-			free(tmp);
+			// free(tmp);
 		}
 		tmp = cmd_str;
 		cmd_str = ft_strjoin(cmd_str, cmd_start->value,gc);

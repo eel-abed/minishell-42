@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:02:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:00:49 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ static void	remove_env_var(t_env *env, const char *key)
 			else
 				env->vars = current->next;
 			to_free = current;
-			free(to_free->key);
-			free(to_free->value);
-			free(to_free);
 			env->size--;
 			return ;
 		}
@@ -69,7 +66,7 @@ int unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
     
     if (!args[i])
     {
-        free_paths(args);
+        // free_paths(args);
         return (0);
     }
 
@@ -88,6 +85,5 @@ int unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
     }
 
     cmd->exit_status = exit_status;
-    free_paths(args);
     return (exit_status);
 }

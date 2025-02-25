@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 17:00:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:03:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char					*join_path(char *path, char *cmd,t_garbage **gc);
 // MAXENCE
 
 // LEXER
-char					*any_env(char *input, t_env *env);
+char					*any_env(char *input, t_env *env,t_garbage **gc);
 t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc);
 int						quote_check(char *input);
 
@@ -174,14 +174,14 @@ int						should_preserve_token(t_tokens *token);
 void					remove_empty_head(t_tokens **list);
 
 // TRIM
-char					*trim_unquoted(char *str);
+char					*trim_unquoted(char *str,t_garbage **gc);
 int						has_empty_quotes_at_start(char *str);
 int						is_quote(char c);
 char					*remove_outer_quotes(char *str,t_garbage **gc);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);
 int						is_matching_quote(char c, char quote_type);
-char					*get_clean_word(char *str);
+char					*get_clean_word(char *str,t_garbage **gc);
 int						is_export_cmd(char *str,t_garbage **gc);
 
 t_tokens				*token_with_pipe(t_tokens *tokens,t_garbage **gc);
@@ -191,11 +191,13 @@ bool					is_space(char *input, int i);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strcpy(char *dest, char *src, int i, int j);
 char					*might_replace(t_env *env, char *input, int j,
-							char *tmp);
+							char *tmp,t_garbage **gc);
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
 
 void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *clen_trimmed,t_garbage **gc);
 void ft_trim_export(t_tokens *tokens,t_garbage **gc);
+
+void	if_found(char *input, int *i, int *flag, char to_found);
 #endif
