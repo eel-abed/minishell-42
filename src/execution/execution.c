@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:05:15 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:36:36 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,51 @@ void execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info,t_garbage 
 
 void execute_command(t_tokens *tokens, t_command *cmd_info,t_garbage **gc)
 {
+    int original_stdout = dup(STDOUT_FILENO);
+    char **parts;
+    char *cmd_only;
+    
     ft_memset(cmd_info, 0, sizeof(t_command));
     cmd_info->env = tokens->env;
     if (!tokens)
         return;
 
-    char *cmd = tokens->value;
+    // Split the token value into parts
+    parts = ft_split(tokens->value, ' ');
+    if (!parts)
+        return;
 
-    if (is_builtin(cmd))
-        execute_builtin(cmd, tokens, cmd_info,gc);
+    // Handle redirection first
+    handle_redirectionnn(parts, cmd_info);
+
+    // Create command string without redirection
+    if (cmd_info->output_file)
+    {
+        size_t cmd_len = ft_strlen(tokens->value) - ft_strlen(" > ") - 
+                         ft_strlen(cmd_info->output_file);
+        cmd_only = ft_substr(tokens->value, 0, cmd_len);
+    }
     else
-        cmd_info->exit_status = execute_external_command(tokens, cmd_info,gc);
+        cmd_only = ft_strdup(tokens->value);
+
+    // Create new token with command only
+    t_tokens *cmd_token = mini_lstnew(cmd_only, kind_none);
+    if (cmd_token)
+    {
+        cmd_token->env = tokens->env;
+        if (is_builtin(parts[0]))
+            execute_builtin(parts[0], cmd_token, cmd_info);
+        else
+            cmd_info->exit_status = execute_external_command(cmd_token, cmd_info);
+        free(cmd_token);
+    }
+
+    // Cleanup
+    if (cmd_only)
+        free(cmd_only);
+    if (cmd_info->output_file)
+        free(cmd_info->output_file);
+    dup2(original_stdout, STDOUT_FILENO);
+    close(original_stdout);
+    free_paths(parts);
 }

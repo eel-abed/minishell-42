@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:16:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:27:21 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
 {
     char **args;
     int i;
+    char *unquoted_arg;
 
     // Split the token value into command and arguments
     args = ft_split(tokens->value, ' ',gc);
@@ -116,10 +117,20 @@ void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
 
     while (args[i])
     {
-        if (ft_isalpha(args[i][0]) || args[i][0] == '_')
-            set_env_var(args[i], env,gc);
+        // Remove quotes from argument
+        unquoted_arg = remove_outer_quotes(args[i]);
+        if (!unquoted_arg)
+        {
+            i++;
+            continue;
+        }
+
+        if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
+            set_env_var(unquoted_arg, env);
         else
-            handle_export_error(args[i],gc);
+            handle_export_error(unquoted_arg);
+            
+        free(unquoted_arg);
         i++;
     }
     

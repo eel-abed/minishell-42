@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 15:17:44 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:06:46 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,18 @@ void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
 void					pwd_builtin(void);
 void					echo_builtin_tokens(t_tokens *tokens,t_garbage **gc);
 void					env_builtin(t_env *env);
-void					exit_builtin(t_tokens *tokens, t_command *cmd,t_garbage **gc);
-void					export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc);
-int						unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc);
-void					execute_command(t_tokens *tokens, t_command *cmd_info,t_garbage **gc);
-int						execute_external_command(t_tokens *tokens, t_command *cmd,t_garbage **gc);
-int						redirect_input(const char *file);
-int						redirect_output(const char *file);
-int						redirect_append(const char *file);
-int						heredoc(const char *delimiter,t_garbage **gc);
+void					exit_builtin(t_tokens *tokens, t_command *cmd);
+void					export_builtin(t_tokens *tokens, t_env *env);
+int						unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd);
+void					execute_command(t_tokens *tokens, t_command *cmd_info);
+int						execute_external_command(t_tokens *tokens, t_command *cmd);
+int						redirect_output(const char *filename, int append_mode);
+int						heredoc(const char *delimiter);
 pid_t					fork_and_execute_first(t_command *cmd_info);
 pid_t					fork_and_execute_second(t_command *cmd_info);
 int						handle_input_redirect(char **args, int i,
 							t_command *cmd_info);
+void					handle_redirectionnn(char **parts, t_command *cmd_info);
 int						handle_output_redirect(char **args, int i,
 							t_command *cmd_info);
 int						handle_append_redirect(char **args, int i,
