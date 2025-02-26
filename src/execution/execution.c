@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 16:22:40 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:39:47 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	if (!parts)
 		return ;
 	// Handle redirection first
-	handle_redirectionnn(parts, cmd_info, gc);
+	if (!handle_redirectionnn(parts, cmd_info, gc))
+	{
+		// If redirection failed, cleanup and return without executing the command
+		dup2(original_stdout, STDOUT_FILENO);
+		dup2(original_stdin, STDIN_FILENO);
+		close(original_stdout);
+		close(original_stdin);
+		return;
+	}
 	
 	// Create command string without redirection
 	if (cmd_info->output_file)

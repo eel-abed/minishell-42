@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 16:13:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:39:13 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	handle_heredoc(char **args, int i, t_command *cmd_info,t_garbage **gc)
 	return (i + 2);
 }
 
-void handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc)
+bool handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc)
 {
     int i = 0;
     while (parts[i])
@@ -93,7 +93,7 @@ void handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc)
                 if (redirect_input(parts[i + 1]) < 0)
                 {
                     cmd_info->exit_status = 1;
-                    return;
+                    return false;
                 }
             }
         }
@@ -105,7 +105,7 @@ void handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc)
                 if (redirect_output(parts[i + 1], 0) < 0)
                 {
                     cmd_info->exit_status = 1;
-                    return;
+                    return false;
                 }
             }
             break;
@@ -118,11 +118,12 @@ void handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc)
                 if (redirect_output(parts[i + 1], 1) < 0)
                 {
                     cmd_info->exit_status = 1;
-                    return;
+                    return false;
                 }
             }
             break;
         }
         i++;
     }
+	return true;
 }
