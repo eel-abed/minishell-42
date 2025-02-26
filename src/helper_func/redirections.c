@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 16:12:02 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:12:48 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,32 @@ int	redirect_output(const char *filename, int append_mode)
 	}
 	close(fd);
 	return (0);
+}
+
+int redirect_input(const char *filename)
+{
+    int fd;
+
+    fd = open(filename, O_RDONLY);
+    if (fd < 0)
+    {
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(filename, 2);
+        ft_putstr_fd(": ", 2);
+        ft_putendl_fd(strerror(errno), 2);
+        return (-1);
+    }
+    
+    if (dup2(fd, STDIN_FILENO) < 0)
+    {
+        ft_putstr_fd("minishell: ", 2);
+        ft_putendl_fd(strerror(errno), 2);
+        close(fd);
+        return (-1);
+    }
+    
+    close(fd);
+    return (0);
 }
 
 // static char	*get_temp_filename(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 19:29:25 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:39:47 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ void	execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info,
 void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 {
 	int			original_stdout;
+	int			original_stdin;
 	char		**parts;
 	char		*cmd_only;
 	size_t		cmd_len;
 	t_tokens	*cmd_token;
 
 	original_stdout = dup(STDOUT_FILENO);
+	original_stdin = dup(STDIN_FILENO);
 	ft_memset(cmd_info, 0, sizeof(t_command));
 	cmd_info->env = tokens->env;
 	if (!tokens)
@@ -61,7 +63,16 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	if (!parts)
 		return ;
 	// Handle redirection first
-	handle_redirectionnn(parts, cmd_info, gc);
+	if (!handle_redirectionnn(parts, cmd_info, gc))
+	{
+		// If redirection failed, cleanup and return without executing the command
+		dup2(original_stdout, STDOUT_FILENO);
+		dup2(original_stdin, STDIN_FILENO);
+		close(original_stdout);
+		close(original_stdin);
+		return;
+	}
+	
 	// Create command string without redirection
 	if (cmd_info->output_file)
 	{
@@ -69,8 +80,15 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 			- ft_strlen(cmd_info->output_file);
 		cmd_only = ft_substr(tokens->value, 0, cmd_len, gc);
 	}
+	else if (cmd_info->input_file)
+	{
+		cmd_len = ft_strlen(tokens->value) - ft_strlen(" < ")
+			- ft_strlen(cmd_info->input_file);
+		cmd_only = ft_substr(tokens->value, 0, cmd_len, gc);
+	}
 	else
 		cmd_only = ft_strdup(tokens->value, gc);
+	
 	cmd_token = mini_lstnew(cmd_only, kind_none, gc);
 	if (cmd_token)
 	{
@@ -82,5 +100,7 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 					cmd_info, gc);
 	}
 	dup2(original_stdout, STDOUT_FILENO);
+	dup2(original_stdin, STDIN_FILENO);
 	close(original_stdout);
+	close(original_stdin);
 }
