@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 19:03:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:13:24 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int						execute_external_command(t_tokens *tokens, t_command *cmd,t_garbage **g
 int						redirect_output(const char *filename, int append_mode);
 int						heredoc(const char *delimiter);
 pid_t					fork_and_execute_first(t_command *cmd_info);
+int						redirect_input(const char *filename);
 pid_t					fork_and_execute_second(t_command *cmd_info);
 int						handle_input_redirect(char **args, int i,
 							t_command *cmd_info);
