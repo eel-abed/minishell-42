@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 18:14:09 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:05:01 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,19 @@ typedef struct s_command
 	int 				exit_status; // Ajout du champ pour le status de sortie
 }						t_command;
 
+
+typedef struct s_pipe_data
+{
+    int			i;
+    int			pipe_count;
+    int			cmd_count;
+    int			**pipes;
+    pid_t		*pids;
+    t_tokens	*current;
+    t_command	*cmd_info;
+    t_garbage	**gc;
+}	t_pipe_data;
+
 t_env					*init_env(char **envp,t_garbage **gc);
 void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
@@ -113,6 +126,13 @@ int						redirect_input(const char *filename);
 pid_t					fork_and_execute_second(t_command *cmd_info);
 int						handle_input_redirect(char **args, int i,
 							t_command *cmd_info);
+int						count_commands(t_tokens *tokens);
+int						setup_pipes(int **pipes, int pipe_count);
+void					close_all_pipes(int **pipes, int pipe_count);
+void					child_process(t_pipe_data *data);
+void					wait_for_children(pid_t *pids, int cmd_count,
+							t_command *cmd_info);
+t_tokens				*find_next_command(t_tokens *current);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,t_garbage **gc);
 int						handle_output_redirect(char **args, int i,
 							t_command *cmd_info);
