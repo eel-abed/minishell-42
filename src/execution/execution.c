@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 16:39:47 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:26:22 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	int			original_stdin;
 	char		**parts;
 	char		*cmd_only;
-	size_t		cmd_len;
 	t_tokens	*cmd_token;
 
 	original_stdout = dup(STDOUT_FILENO);
@@ -74,20 +73,29 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	}
 	
 	// Create command string without redirection
-	if (cmd_info->output_file)
+	cmd_only = NULL;
+	int i = 0;
+	while (parts[i] && 
+	       ft_strcmp(parts[i], ">") != 0 && 
+	       ft_strcmp(parts[i], ">>") != 0 && 
+	       ft_strcmp(parts[i], "<") != 0 && 
+	       ft_strcmp(parts[i], "<<") != 0)
 	{
-		cmd_len = ft_strlen(tokens->value) - ft_strlen(" > ")
-			- ft_strlen(cmd_info->output_file);
-		cmd_only = ft_substr(tokens->value, 0, cmd_len, gc);
+	    if (cmd_only == NULL)
+	    {
+	        cmd_only = ft_strdup(parts[i], gc);
+	    }
+	    else
+	    {
+	        char *temp = cmd_only;
+	        cmd_only = ft_strjoin(temp, " ", gc);
+	        cmd_only = ft_strjoin(cmd_only, parts[i], gc);
+	    }
+	    i++;
 	}
-	else if (cmd_info->input_file)
-	{
-		cmd_len = ft_strlen(tokens->value) - ft_strlen(" < ")
-			- ft_strlen(cmd_info->input_file);
-		cmd_only = ft_substr(tokens->value, 0, cmd_len, gc);
-	}
-	else
-		cmd_only = ft_strdup(tokens->value, gc);
+
+	if (!cmd_only)
+	    cmd_only = ft_strdup("", gc);
 	
 	cmd_token = mini_lstnew(cmd_only, kind_none, gc);
 	if (cmd_token)
