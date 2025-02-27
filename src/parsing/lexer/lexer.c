@@ -119,7 +119,30 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
     }
     return (input);
 }
-
+char *replace_substring(char *str, int start, int end, char *replacement, t_garbage **gc)
+{
+    char *result;
+    int len;
+    
+    if (!str || !replacement)
+        return (NULL);
+        
+    len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
+    result = gc_malloc(gc, sizeof(char) * (len + 1));
+    if (!result)
+        return (NULL);
+        
+    // Copy first part
+    ft_strncpy(result, str, start);
+    
+    // Copy replacement
+    ft_strlcat(result, replacement, len + 1);
+    
+    // Copy rest of string
+    ft_strlcat(result, str + end, len + 1);
+    
+    return (result);
+}
 // char	*any_env(char *input, t_env *env)
 // {
 // 	t_env	*envi;
