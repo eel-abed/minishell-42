@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 21:19:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:43:23 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,9 +153,14 @@ int	is_echo_cmd(char *str,t_garbage **gc)
 t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 {
 	t_tokens	*current;
+	size_t		i;
 	char		*trimmed;
 	int			in_export;
 	int			is_echo;
+	char		*before;
+	char		*after;
+	int closed;
+	int y;
 
 	if (!tokens)
 		return (NULL);
@@ -178,9 +183,9 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 				ft_trim_export(current,gc);	
 			else if (is_echo == 1)
 			{
-				size_t i = 1;
-				int closed = -1;
-				int y = 0;
+				i = 1;
+				closed = -1;
+				y = 0;
 				while (current->value[i])
 				{
 					if (current->value[i] == '\'' && y == 0 )
@@ -201,19 +206,12 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 							(closed == 1 && ((y == 1 && current->value[i] == '\'') || (y == 2 && current->value[i] == '"')) )
 						)
 						{
-							char *before = ft_substr(current->value, 0, i, gc);
-							printf("BEFORE %s\n",before);
-							char *after = ft_substr(current->value, i + 1, ft_strlen(current->value) - i, gc);
-							printf("AFTER %s\n",after);
+							before = ft_substr(current->value, 0, i, gc);
+							after = ft_substr(current->value, i + 1, ft_strlen(current->value) - i, gc);
 							trimmed = ft_strjoin(before, after, gc);
-							free(current->value);
-							free(before);
-							free(after);
 							current->value = trimmed;
 							if (closed == 0)
-							{
 								closed = 1;
-							}
 							else
 							{
 								closed = -1;
