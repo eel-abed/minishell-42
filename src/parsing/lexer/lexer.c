@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 19:04:19 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:31:17 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,16 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,t_garbage **gc)
 	{
 		if (ft_strcmp(env->vars->key, tmp) == 0)
 		{
+			if (!env->vars->value)
+            {
+                len = ft_strlen(input) - (ft_strlen(tmp) + 1);
+                new_input = ft_calloc(len + 1, 1, gc);
+                ft_strncpy(new_input, input, j - 1);
+                ft_strlcat(new_input, input + j + ft_strlen(tmp), len + 1);
+				input = new_input;
+				env->vars = head;
+                break;
+            }
 			len = ft_strlen(input) + ft_strlen(env->vars->value);
 			new_input = ft_calloc(len + 1, 1,gc);
 			new_input = ft_strncpy(new_input, input, j);

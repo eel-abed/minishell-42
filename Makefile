@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/26 19:02:38 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/02/27 22:19:44 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 # Directories
 SRC_DIR = src
