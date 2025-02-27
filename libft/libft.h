@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:28:36 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 18:21:20 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:46:43 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len,t_garbage **gc)
 char				*ft_strjoin(char const *s1, char const *s2,t_garbage **gc);
 char				*ft_strtrim(char const *s1, char const *set,t_garbage **gc);
 char				**ft_split(char const *s, char c,t_garbage **gc);
-char				*ft_itoa(int n);
+char				*ft_itoa(int n,t_garbage **gc);
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putchar_fd(char c, int fd);

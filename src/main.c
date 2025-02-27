@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/27 16:38:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:35:15 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		if (strlen(input) > 0)
 		{
 			add_history(input);
-			token_clean = ft_lexer(input, env,&gc);
+			token_clean = ft_lexer(input, env,&gc,&cmd);
 			if (token_clean)
 				handle_command_line(token_clean, &cmd,&gc);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:43:22 by eel-abed          #+#    #+#             */
-/*   Updated: 2023/11/03 16:58:25 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:46:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_nbrlen(int n)
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, t_garbage **gc)
 {
 	char	*str;
 	int		len;
@@ -35,7 +35,7 @@ char	*ft_itoa(int n)
 
 	nbr = n;
 	len = ft_nbrlen(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	str = (char *)gc_malloc(gc,sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	str[len] = '\0';
