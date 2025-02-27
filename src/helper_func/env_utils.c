@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:09:14 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 17:57:00 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:37:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@ char	**env_to_array(t_env *env,t_garbage **gc)
 				return (NULL);
 			}
 			array[i] = ft_strjoin(temp, current->value,gc);
-			// free(temp);
-			if (!array[i])
-			{
-				while (--i >= 0)
-					free(array[i]);
-				free(array);
-				return (NULL);
-			}
 			i++;
 		}
 		current = current->next;

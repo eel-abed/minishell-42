@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/26 18:08:29 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:38:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,16 @@ int	g_signal_received = 0;
 void handle_command_line(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 {
     t_tokens *current = tokens;
-    
-    // Check for pipe tokens
+
     while (current)
     {
         if (current->type == kind_pipe)
         {
-            // Found a pipe, use the pipe execution function
             execute_piped_commands(tokens, cmd_info, gc);
             return;
         }
         current = current->next;
     }
-    
-    // No pipes found, execute as a normal command
     execute_command(tokens, cmd_info, gc);
 }
 
