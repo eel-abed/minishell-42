@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 17:45:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:08:56 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,64 +119,6 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
     }
     return (input);
 }
-char *replace_substring(char *str, int start, int end, char *replacement, t_garbage **gc)
-{
-    char *result;
-    int len;
-    
-    if (!str || !replacement)
-        return (NULL);
-        
-    len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
-    result = gc_malloc(gc, sizeof(char) * (len + 1));
-    if (!result)
-        return (NULL);
-        
-    // Copy first part
-    ft_strncpy(result, str, start);
-    
-    // Copy replacement
-    ft_strlcat(result, replacement, len + 1);
-    
-    // Copy rest of string
-    ft_strlcat(result, str + end, len + 1);
-    
-    return (result);
-}
-// char	*any_env(char *input, t_env *env)
-// {
-// 	t_env	*envi;
-// 	char	*tmp;
-// 	int		i;
-// 	int		j;
-// 	int		h;
-
-// 	envi = env;
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		if (input[i] == '$')
-// 		{
-// 			i ++;
-// 			j = i;
-// 			while (ft_isalnum(input[i]) && input[i])
-// 				i ++;
-// 			if (i == j)
-// 				continue ;
-// 			tmp = ft_strcpy(tmp, input, i, j);
-// 			printf("--> i = %i, j = %i\n", i, j);
-// 			printf("--> TMP = %s\n", tmp);
-// 			h = ft_strlen(input);
-// 			input = might_replace(envi, input, j, tmp);
-// 			if ((int)ft_strlen(input) < h)
-// 				i = i - (h - (int)ft_strlen(input));
-// 			free(tmp);
-// 		}
-// 		if (input[i] && input[i] != '$')
-// 			i ++;
-// 	}
-// 	return (input);
-// }
 
 void	replace_NULL(char *input, int j, char *tmp,t_garbage **gc)
 {
