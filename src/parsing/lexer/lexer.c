@@ -6,25 +6,25 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 19:08:55 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:25:12 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
+t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc,t_command *cmd)
 {
 	t_tokens	*token_list;
 	char		*temp;
 
 	temp = input;
 	token_list = NULL;
-	if (quote_check(temp) == 1)
+	if (quote_check(temp,cmd) == 1)
 		return (printf("Syntax %s !\n", ERROR), NULL);
 	// printf("[QUOTE %s !]\n", OK);
-	if (check_syntax(temp) == 0)
+	if (check_syntax(temp,cmd) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
-	temp = any_env(temp, env,gc);
+	temp = any_env(temp, env,gc,cmd);
 	// printf("TEMP = [%s]\n", temp);
 	token_list = lets_tokeninze(temp,gc);
 	// printf("AFTER LETS TOKENINZE\n");
@@ -43,7 +43,7 @@ t_tokens	*ft_lexer(char *input, t_env *env,t_garbage **gc)
 	return (token_list);
 }
 
-bool	check_syntax(char *input)
+bool	check_syntax(char *input,t_command *cmd)
 {
 	size_t			i;
 	size_t			len;
@@ -57,14 +57,17 @@ bool	check_syntax(char *input)
 		if (is_operator(input[i], &maybe_kind))
 		{
 			if (is_valid_operator(&input[i], len - i, maybe_kind) == false)
-				return (false);
+				{
+					cmd->exit_status = 2;
+					return (false);
+				}
 		}
 		++i;
 	}
 	return (true);
 }
 
-char *any_env(char *input, t_env *env,t_garbage **gc)
+char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
 {
     t_env   *envi;
     char    *tmp;
@@ -86,6 +89,18 @@ char *any_env(char *input, t_env *env,t_garbage **gc)
         // Only process $ if not in single quotes
         else if (input[i] == '$' && current_quote != '\'')
         {
+			if (input[i + 1] == '?')
+			{
+				char *exit_status = ft_itoa(cmd->exit_status);
+				if (!exit_status)
+					return (NULL);
+				h = ft_strlen(input);
+				input = replace_substring(input, i, i + 2, exit_status,gc);
+				if (!input)
+					return (NULL);
+				i += ft_strlen(exit_status - 1);
+				continue;
+			}
             i++;
             j = i;
             while (ft_isalnum(input[i]) && input[i])
@@ -104,7 +119,30 @@ char *any_env(char *input, t_env *env,t_garbage **gc)
     }
     return (input);
 }
-
+char *replace_substring(char *str, int start, int end, char *replacement, t_garbage **gc)
+{
+    char *result;
+    int len;
+    
+    if (!str || !replacement)
+        return (NULL);
+        
+    len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
+    result = gc_malloc(gc, sizeof(char) * (len + 1));
+    if (!result)
+        return (NULL);
+        
+    // Copy first part
+    ft_strncpy(result, str, start);
+    
+    // Copy replacement
+    ft_strlcat(result, replacement, len + 1);
+    
+    // Copy rest of string
+    ft_strlcat(result, str + end, len + 1);
+    
+    return (result);
+}
 // char	*any_env(char *input, t_env *env)
 // {
 // 	t_env	*envi;

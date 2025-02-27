@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 19:15:46 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:25:49 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ void					setup_signals(void);
 char					*find_command_path(char *cmd, t_env *env,t_garbage **gc);
 void					update_env_vars(t_env *env,t_garbage **gc);
 char					**env_to_array(t_env *env,t_garbage **gc);
-int						quote_check(char *input);
 t_env_var				*find_env_var(t_env *env, const char *key);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg,t_garbage **gc);
@@ -145,11 +144,11 @@ char					*join_path(char *path, char *cmd,t_garbage **gc);
 // MAXENCE
 
 // LEXER
-char					*any_env(char *input, t_env *env,t_garbage **gc);
-t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc);
-int						quote_check(char *input);
+char					*any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd);
+t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc, t_command *cmd);
+int						quote_check(char *input,t_command *cmd);
 
-bool					check_syntax(char *input);
+bool					check_syntax(char *input,t_command *cmd);
 bool					is_operator(char ch, t_operator_kind *out_kind);
 bool					is_valid_operator(char *str, size_t remain,
 							t_operator_kind kind);
@@ -212,4 +211,5 @@ void ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed, char *c
 void ft_trim_export(t_tokens *tokens,t_garbage **gc);
 
 void	if_found(char *input, int *i, int *flag, char to_found);
+char *replace_substring(char *str, int start, int end, char *replacement, t_garbage **gc);
 #endif

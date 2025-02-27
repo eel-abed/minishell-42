@@ -6,13 +6,13 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 19:01:46 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 19:06:51 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:24:15 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	quote_check(char *input)
+int	quote_check(char *input,t_command *cmd)
 {
 	int		i;
 	int		flag;
@@ -32,7 +32,10 @@ int	quote_check(char *input)
 		i++;
 	}
 	if (flag != -1)
-		return (1);
+		{
+			cmd->exit_status = 2;
+			return (1);
+		}
 	else
 		return (0);
 }
