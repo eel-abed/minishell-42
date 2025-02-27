@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/24 18:41:58 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:43:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	print_tokens(t_tokens *list)
 	current = list;
 	while (list)
 	{
-		// printf("Token[%d]:\n", i);
-		// printf("  Value: [%s]\n", list->value);
-		// printf("  Type:  [%d]\n", list->type);
-		// printf("------------------------\n");
+		printf("Token[%d]:\n", i);
+		printf("  Value: [%s]\n", list->value);
+		printf("  Type:  [%d]\n", list->type);
+		printf("------------------------\n");
 		list = list->next;
 		i++;
 	}
