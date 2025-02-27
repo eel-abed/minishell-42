@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 18:08:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:58:18 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,15 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
     char    current_quote;
 
     envi = env;
+	tmp = NULL;
     i = 0;
     current_quote = 0;
     while (input[i])
     {
-        // Handle quotes
         if ((input[i] == '\'' || input[i] == '"') && !current_quote)
             current_quote = input[i];
         else if (input[i] == current_quote)
             current_quote = 0;
-        // Only process $ if not in single quotes
         else if (input[i] == '$' && current_quote != '\'')
         {
 			if (input[i + 1] == '?')
@@ -110,6 +109,8 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
             tmp = ft_strcpy(tmp, input, i, j);
             h = ft_strlen(input);
             input = might_replace(envi, input, j, tmp,gc);
+			if (!input)
+				return (NULL);
             if ((int)ft_strlen(input) < h)
                 i = i - (h - (int)ft_strlen(input));
             free(tmp);
@@ -120,21 +121,19 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
     return (input);
 }
 
-void	replace_NULL(char *input, int j, char *tmp,t_garbage **gc)
+char *replace_NULL(char *input, int j, char *tmp,t_garbage **gc)
 {
 	char *new_input;
 	int len;
-	new_input = input;
-
-	len = 0;
 
 	len = ft_strlen(input);
 	new_input = ft_calloc(len + 1, 1,gc);
 	if (!new_input)
-		return ;
+		return (NULL) ;
 	new_input = ft_strncpy(new_input, input, j - 1);
-	ft_strlcat(new_input, input + ft_strlen(tmp) + j, len);
-	input = new_input;
+	ft_strlcat(new_input, input + ft_strlen(tmp) + j, len + 1);
+    input = new_input;
+	return (input);
 }
 
 char	*might_replace(t_env *env, char *input, int j, char *tmp,t_garbage **gc)
@@ -162,7 +161,10 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,t_garbage **gc)
 		env->vars = env->vars->next;
 	}
 	if (env->vars == NULL)
-		return(replace_NULL(input, j, tmp,gc),env->vars = head,input);
+	{
+		input = replace_NULL(input, j, tmp,gc);
+		env->vars = head;
+	}
 	return (input);
 }
 
