@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 18:58:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:04:19 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,13 @@ char *any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd)
                 i++;
             if (i == j)
                 continue;
-            tmp = ft_strcpy(tmp, input, i, j);
+            tmp = ft_strcpy(tmp, input, i, j,gc);
             h = ft_strlen(input);
             input = might_replace(envi, input, j, tmp,gc);
 			if (!input)
 				return (NULL);
             if ((int)ft_strlen(input) < h)
                 i = i - (h - (int)ft_strlen(input));
-            free(tmp);
             continue;
         }
         i++;

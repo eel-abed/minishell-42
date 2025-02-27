@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/27 17:31:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:34:27 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	setup_signals(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
+	struct sigaction	sa_tstp;
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
@@ -35,4 +36,10 @@ void	setup_signals(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &sa_quit, NULL);
+
+	sa_tstp.sa_handler = SIG_IGN;
+	sigemptyset(&sa_tstp.sa_mask);
+	sa_tstp.sa_flags = SA_RESTART;
+	sigaction(SIGTSTP, &sa_tstp, NULL);
 }
+
