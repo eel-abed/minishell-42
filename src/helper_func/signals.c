@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/18 19:13:07 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:35:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-// eviter warning du compile et imiter comportement de bash.
 static void	handle_sigquit(int sig)
 {
-	g_signal_received = sig;
+	(void)sig;
 }
 
 void	setup_signals(void)
@@ -36,6 +35,7 @@ void	setup_signals(void)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
+
 	sa_quit.sa_handler = handle_sigquit;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
