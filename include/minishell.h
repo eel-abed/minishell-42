@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/27 17:25:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:43:45 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char					*join_path(char *path, char *cmd,t_garbage **gc);
 
 // LEXER
 char					*any_env(char *input, t_env *env,t_garbage **gc,t_command *cmd);
-t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc, t_command *cmd);
+t_tokens				*ft_lexer(char *input, t_env *env,t_garbage **gc,t_command *cmd);
 int						quote_check(char *input,t_command *cmd);
 
 bool					check_syntax(char *input,t_command *cmd);
