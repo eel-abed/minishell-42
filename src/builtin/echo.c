@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 18:07:18 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:24:50 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static bool	is_valid_n_flag(const char *str)
 	return (i > 1);
 }
 
-static void print_echo_args(char **args, int i, bool newline)
+static void	print_echo_args(char **args, int i, bool newline)
 {
-    while (args[i])
-    {
-        write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
-        if (args[i + 1])
-            write(STDOUT_FILENO, " ", 1);
-        i++;
-    }
-    if (newline)
-        write(STDOUT_FILENO, "\n", 1);
+	while (args[i])
+	{
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+		if (args[i + 1])
+			write(STDOUT_FILENO, " ", 1);
+		i++;
+	}
+	if (newline)
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 void	echo_builtin(char **args)
