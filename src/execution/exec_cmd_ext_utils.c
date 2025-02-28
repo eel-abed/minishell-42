@@ -3,38 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:04:52 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 14:55:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:22:43 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_paths(char **paths)
-{
-	int	i;
-
-	i = 0;
-	while (paths[i])
-	{
-		free(paths[i]);
-		i++;
-	}
-	free(paths);
-}
-
-char	*join_path(char *path, char *cmd,t_garbage **gc)
+char	*join_path(char *path, char *cmd, t_garbage **gc)
 {
 	char	*temp;
 	char	*full;
 
-	temp = ft_strjoin(path, "/",gc);
+	temp = ft_strjoin(path, "/", gc);
 	if (!temp)
 		return (NULL);
-	full = ft_strjoin(temp, cmd,gc);
-	// printf("full : %p\n", full);
-	// free(temp);
+	full = ft_strjoin(temp, cmd, gc);
 	return (full);
+}
+
+int	handle_command_not_found(char *cmd)
+{
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": command not found\n", 20);
+	return (127);
+}
+
+void	execute_child(char *cmd_path, char **cmd_args, char **env_array)
+{
+	execve(cmd_path, cmd_args, env_array);
+	perror(cmd_args[0]);
+	exit(126);
 }

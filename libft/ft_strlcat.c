@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:58:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/14 01:19:54 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:05:17 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		return (srclen + dstsize);
 	while (src[i] && dstlen + i < dstsize - 1)
 	{
-		// printf("src[%ld] = [%c]\n",i,src[i]);
 		dst[dstlen + i] = src[i];
 		i++;
 	}

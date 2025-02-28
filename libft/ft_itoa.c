@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:43:22 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/27 17:46:28 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:02:45 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_itoa(int n, t_garbage **gc)
 
 	nbr = n;
 	len = ft_nbrlen(n);
-	str = (char *)gc_malloc(gc,sizeof(char) * (len + 1));
+	str = (char *)gc_malloc(gc, sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	str[len] = '\0';
