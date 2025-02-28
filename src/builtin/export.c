@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 19:00:38 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:07:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,25 @@ static void	print_exported_vars(t_env *env)
 	}
 }
 
-static void	update_env_var(t_env_var *var, const char *value,t_garbage **gc)
+static void	update_env_var(t_env_var *var, const char *value, t_garbage **gc)
 {
 	if (value)
-		var->value = ft_strdup(value,gc);
+		var->value = ft_strdup(value, gc);
 	else
 		var->value = NULL;
 }
 
-static void	add_env_var(t_env *env, const char *key, const char *value,t_garbage **gc)
+static void	add_env_var(t_env *env, const char *key, const char *value,
+		t_garbage **gc)
 {
 	t_env_var	*new_var;
 
-	new_var = gc_malloc(gc,sizeof(t_env_var));
+	new_var = gc_malloc(gc, sizeof(t_env_var));
 	if (!new_var)
 		return ;
-	new_var->key = ft_strdup(key,gc);
+	new_var->key = ft_strdup(key, gc);
 	if (value)
-		new_var->value = ft_strdup(value,gc);
+		new_var->value = ft_strdup(value, gc);
 	else
 		new_var->value = NULL;
 	new_var->next = NULL;
@@ -65,7 +66,7 @@ static void	add_env_var(t_env *env, const char *key, const char *value,t_garbage
 	env->size++;
 }
 
-static void	set_env_var(char *arg, t_env *env,t_garbage **gc)
+static void	set_env_var(char *arg, t_env *env, t_garbage **gc)
 {
 	char		*equal_sign;
 	char		*key;
@@ -78,59 +79,48 @@ static void	set_env_var(char *arg, t_env *env,t_garbage **gc)
 	{
 		existing = find_env_var(env, arg);
 		if (!existing)
-			add_env_var(env, arg, NULL,gc);
+			add_env_var(env, arg, NULL, gc);
 		return ;
 	}
 	key_len = equal_sign - arg;
-	key = ft_substr(arg, 0, key_len,gc);
+	key = ft_substr(arg, 0, key_len, gc);
 	value = equal_sign + 1;
 	if (!key)
 		return ;
 	existing = find_env_var(env, key);
 	if (existing)
-		update_env_var(existing, value,gc);
+		update_env_var(existing, value, gc);
 	else
-		add_env_var(env, key, value,gc);
-	// free(key);
+		add_env_var(env, key, value, gc);
 }
 
-void export_builtin(t_tokens *tokens, t_env *env,t_garbage **gc)
+void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 {
-    char **args;
-    int i;
-    char *unquoted_arg;
+	char	**args;
+	int		i;
+	char	*unquoted_arg;
 
-    // Split the token value into command and arguments
-    args = ft_split(tokens->value, ' ',gc);
-    if (!args)
-        return;
-
-    i = 1;  // Skip "export" command
-    if (!args[1])
-    {
-        print_exported_vars(env);
-        // free_paths(args);
-        return;
-    }
-
-    while (args[i])
-    {
-        // Remove quotes from argument
-        unquoted_arg = remove_outer_quotes(args[i],gc);
-        if (!unquoted_arg)
-        {
-            i++;
-            continue;
-        }
-
-        if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
-            set_env_var(unquoted_arg, env,gc);
-        else
-            handle_export_error(unquoted_arg,gc);
-            
-        // free(unquoted_arg);
-        i++;
-    }
-    
-    // free_paths(args);
+	args = ft_split(tokens->value, ' ', gc);
+	if (!args)
+		return ;
+	i = 1;
+	if (!args[1])
+	{
+		print_exported_vars(env);
+		return ;
+	}
+	while (args[i])
+	{
+		unquoted_arg = remove_outer_quotes(args[i], gc);
+		if (!unquoted_arg)
+		{
+			i++;
+			continue ;
+		}
+		if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
+			set_env_var(unquoted_arg, env, gc);
+		else
+			handle_export_error(unquoted_arg, gc);
+		i++;
+	}
 }
