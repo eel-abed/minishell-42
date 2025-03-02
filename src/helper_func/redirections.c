@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/27 22:46:55 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:27:11 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putendl_fd("minishell: warning: here-document delimited by end-of-file",
+			ft_putendl_fd("minishell: warning: here-document delimited by EOF",
 				2);
 			break ;
 		}
@@ -153,6 +153,6 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 			ft_putendl_fd(strerror(errno), 2);
 		}
 	}
-	unlink(filename); // Delete the temporary file
+	unlink(filename);
 	return (status);
 }
