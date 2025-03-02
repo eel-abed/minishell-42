@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:49:40 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:17:14 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ void	handle_export_error(char *arg, t_garbage **gc)
 	ft_putendl_fd(error_msg, STDERR_FILENO);
 }
 
+static int	is_valid_identifier_name(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+		return (0);
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	process_export_arg(char *arg, t_env *env, t_garbage **gc)
 {
 	char	*unquoted_arg;
@@ -45,7 +61,7 @@ void	process_export_arg(char *arg, t_env *env, t_garbage **gc)
 	unquoted_arg = remove_outer_quotes(arg, gc);
 	if (!unquoted_arg)
 		return ;
-	if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
+	if (is_valid_identifier_name(unquoted_arg))
 		set_env_var(unquoted_arg, env, gc);
 	else
 		handle_export_error(unquoted_arg, gc);
