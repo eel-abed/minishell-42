@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:48 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 19:00:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:53:41 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,40 +50,40 @@ static void	remove_env_var(t_env *env, const char *key)
 	}
 }
 
-int unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd,t_garbage **gc)
+static int	process_unset_args(char **args, t_env *env)
 {
-    char **args;
-    int i;
-    int exit_status;
+	int	i;
+	int	exit_status;
 
-    // Split the token value into command and arguments
-    args = ft_split(tokens->value, ' ',gc);
-    if (!args)
-        return (1);
+	i = 1;
+	exit_status = 0;
+	if (!args[i])
+		return (0);
+	while (args[i])
+	{
+		if (!is_valid_identifier(args[i]))
+		{
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			exit_status = 1;
+		}
+		else
+			remove_env_var(env, args[i]);
+		i++;
+	}
+	return (exit_status);
+}
 
-    i = 1;  // Skip "unset" command
-    exit_status = 0;
-    
-    if (!args[i])
-    {
-        // free_paths(args);
-        return (0);
-    }
+int	unset_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
+{
+	char	**args;
+	int		exit_status;
 
-    while (args[i])
-    {
-        if (!is_valid_identifier(args[i]))
-        {
-            ft_putstr_fd("minishell: unset: `", 2);
-            ft_putstr_fd(args[i], 2);
-            ft_putstr_fd("': not a valid identifier\n", 2);
-            exit_status = 1;
-        }
-        else
-            remove_env_var(env, args[i]);
-        i++;
-    }
-
-    cmd->exit_status = exit_status;
-    return (exit_status);
+	args = ft_split(tokens->value, ' ', gc);
+	if (!args)
+		return (1);
+	exit_status = process_unset_args(args, env);
+	cmd->exit_status = exit_status;
+	return (exit_status);
 }

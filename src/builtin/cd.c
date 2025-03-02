@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/25 18:51:55 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:29:49 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,11 @@ void	update_env_vars(t_env *env, t_garbage **gc)
 		update_env_var(env, "PWD", cwd, gc);
 }
 
-void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
+static const char	*get_target_directory(char **args, t_env *env,
+		t_command *cmd)
 {
 	t_env_var	*home_var;
-	const char	*target_dir;
-	char		**args;
 
-	args = ft_split(tokens->value, ' ', gc);
-	if (!args)
-		return ;
 	if (!args[1])
 	{
 		home_var = find_env_var(env, "HOME");
@@ -81,12 +77,24 @@ void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
 		{
 			ft_putstr_fd("cd: HOME not set\n", 2);
 			cmd->exit_status = 1;
-			return ;
+			return (NULL);
 		}
-		target_dir = home_var->value;
+		return (home_var->value);
 	}
-	else
-		target_dir = args[1];
+	return (args[1]);
+}
+
+void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
+{
+	char		**args;
+	const char	*target_dir;
+
+	args = ft_split(tokens->value, ' ', gc);
+	if (!args)
+		return ;
+	target_dir = get_target_directory(args, env, cmd);
+	if (!target_dir)
+		return ;
 	if (chdir(target_dir) != 0)
 	{
 		perror("cd");

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/03/02 14:39:42 by mafourni         ###   ########.fr       */
@@ -130,7 +130,9 @@ void					wait_for_children(pid_t *pids, int cmd_count,
 t_tokens				*find_next_command(t_tokens *current);
 int						heredoc(const char *delimiter, t_garbage **gc);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,t_garbage **gc);
+int						handle_command_not_found(char *cmd);
 void					execute_piped_commands(t_tokens *tokens, t_command *cmd_info, t_garbage **gc);
+void					execute_child(char *cmd_path, char **cmd_args, char **env_array);
 void					setup_signals(void);
 char					*find_command_path(char *cmd, t_env *env,t_garbage **gc);
 void					update_env_vars(t_env *env,t_garbage **gc);
@@ -138,7 +140,6 @@ char					**env_to_array(t_env *env,t_garbage **gc);
 t_env_var				*find_env_var(t_env *env, const char *key);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg,t_garbage **gc);
-void					free_paths(char **paths);
 char					*join_path(char *path, char *cmd,t_garbage **gc);
 
 // MAXENCE
