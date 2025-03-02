@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/27 19:04:10 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:39:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,4 +212,5 @@ void ft_trim_export(t_tokens *tokens,t_garbage **gc);
 
 void	if_found(char *input, int *i, int *flag, char to_found);
 char *replace_substring(char *str, int start, int end, char *replacement, t_garbage **gc);
+void everything(t_tokens *token_clean, t_command cmd, t_garbage **gc, char *input,t_env *env);
 #endif
