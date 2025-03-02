@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:57:33 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/27 16:12:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:36:57 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void ft_trim_export(t_tokens *tokens,t_garbage **gc)
         i++;
     }
     ft_export_clean_and(current, trimmed, tem,gc);
-    i = 0;
-    y = 0;
-    ft_clean_wd(current, y, i,gc);
+    // i = 0;
+    // y = 0;
+    // ft_clean_wd(current, y, i,gc);
 }

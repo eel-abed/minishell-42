@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 19:07:12 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:39:44 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,13 @@ void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 	int		i;
 	char	*unquoted_arg;
 
-	args = ft_split(tokens->value, ' ', gc);
+	//printf tokens->value
+	printf("tokens->value: %s\n", tokens->value);
+	// Use split_mini instead of ft_split
+	args = split_mini(tokens->value, gc);
 	if (!args)
 		return ;
-	i = 1;
+	i = 1; // Skip "export" command
 	if (!args[1])
 	{
 		print_exported_vars(env);
