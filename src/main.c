@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/27 22:48:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/02 14:37:39 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,38 @@ void handle_command_line(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
         current = current->next;
     }
     execute_command(tokens, cmd_info, gc);
+}
+int	main(int argc, char **argv, char **envp)
+{
+	t_tokens	*token_clean;
+	char		*input;
+	t_env		*env;
+	t_command	cmd;
+	t_garbage	*gc;
+
+	gc = NULL;
+	token_clean = NULL;
+	(void)argc;
+	(void)argv;
+	env = init_env(envp,&gc);
+	if (!env)
+		return (1);
+	setup_signals();
+	ft_memset(&cmd, 0, sizeof(t_command));
+	cmd.env = env;
+	cmd.exit_status = 0;
+	while (1)
+	{
+		input = readline("minishell> ");
+		if (!input)
+			break;
+		if (strlen(input) > 0)
+			everything(token_clean, cmd, &gc, input,env);
+		if(input)
+			free(input);
+	}
+	gc_free_all(&gc);
+	return (printf("\nExiting minishell...\n"),0);
 }
 
 int	main(int argc, char **argv, char **envp)
