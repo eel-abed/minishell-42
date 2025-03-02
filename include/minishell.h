@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:42:39 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:50:42 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern int	g_signal_received;
+extern int				g_signal_received;
 
 typedef enum e_operator_kind
 {
@@ -197,4 +197,8 @@ void					ft_trim_export(t_tokens *tokens, t_garbage **gc);
 void					if_found(char *input, int *i, int *flag, char to_found);
 char					*replace_substring(char *str, int start, int end,
 							char *replacement, t_garbage **gc);
+void					process_export_arg(char *arg, t_env *env,
+							t_garbage **gc);
+void					set_env_var(char *arg, t_env *env, t_garbage **gc);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 14:39:44 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:50:27 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	add_env_var(t_env *env, const char *key, const char *value,
 	env->size++;
 }
 
-static void	set_env_var(char *arg, t_env *env, t_garbage **gc)
+void	set_env_var(char *arg, t_env *env, t_garbage **gc)
 {
 	char		*equal_sign;
 	char		*key;
@@ -98,15 +98,11 @@ void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 {
 	char	**args;
 	int		i;
-	char	*unquoted_arg;
 
-	//printf tokens->value
-	printf("tokens->value: %s\n", tokens->value);
-	// Use split_mini instead of ft_split
 	args = split_mini(tokens->value, gc);
 	if (!args)
 		return ;
-	i = 1; // Skip "export" command
+	i = 1;
 	if (!args[1])
 	{
 		print_exported_vars(env);
@@ -114,16 +110,7 @@ void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 	}
 	while (args[i])
 	{
-		unquoted_arg = remove_outer_quotes(args[i], gc);
-		if (!unquoted_arg)
-		{
-			i++;
-			continue ;
-		}
-		if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
-			set_env_var(unquoted_arg, env, gc);
-		else
-			handle_export_error(unquoted_arg, gc);
+		process_export_arg(args[i], env, gc);
 		i++;
 	}
 }

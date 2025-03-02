@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 17:45:03 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:49:40 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,17 @@ void	handle_export_error(char *arg, t_garbage **gc)
 	temp = error_msg;
 	error_msg = ft_strjoin(error_msg, "': not a valid identifier", gc);
 	ft_putendl_fd(error_msg, STDERR_FILENO);
+}
+
+void	process_export_arg(char *arg, t_env *env, t_garbage **gc)
+{
+	char	*unquoted_arg;
+
+	unquoted_arg = remove_outer_quotes(arg, gc);
+	if (!unquoted_arg)
+		return ;
+	if (ft_isalpha(unquoted_arg[0]) || unquoted_arg[0] == '_')
+		set_env_var(unquoted_arg, env, gc);
+	else
+		handle_export_error(unquoted_arg, gc);
 }
