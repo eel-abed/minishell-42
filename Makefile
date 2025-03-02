@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/02/27 22:19:44 by mafourni         ###   ########.fr        #
+#    Updated: 2025/03/02 17:04:49 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES = main.c \
 			execution/exec_cmd_ext.c \
 			execution/exec_cmd_ext_utils.c \
 			helper_func/redirections.c \
+			helper_func/redirection_helper.c \
 			helper_func/pipe.c \
 			helper_func/pipe_extra.c \
 			helper_func/handle_redirections.c \

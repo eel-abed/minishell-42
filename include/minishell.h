@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:50:42 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:04:07 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,7 @@ char					*replace_substring(char *str, int start, int end,
 void					process_export_arg(char *arg, t_env *env,
 							t_garbage **gc);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
+bool					process_redirection(char **parts, int i,
+							t_command *cmd_info, t_garbage **gc);
 
 #endif
