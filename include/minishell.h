@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 15:09:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:53:45 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
 							t_garbage **gc);
 void					export_builtin(t_tokens *tokens, t_env *env,
-							t_garbage **gc);
+							t_garbage **gc, t_command *cmd);
 int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
@@ -198,7 +198,7 @@ void					if_found(char *input, int *i, int *flag, char to_found);
 char					*replace_substring(char *str, int start, int end,
 							char *replacement, t_garbage **gc);
 void					process_export_arg(char *arg, t_env *env,
-							t_garbage **gc);
+							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
 							t_command *cmd_info, t_garbage **gc);
@@ -211,8 +211,5 @@ int						finalize_heredoc(int fd, char *filename, int status);
 char					*get_temp_filename(t_garbage **gc);
 char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
-
-
-
 
 #endif
