@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/28 19:47:58 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:34:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 	}
 	gc_free_all(&gc);
-	printf("\nExiting minishell...\n");
 	return (0);
 }
 
