@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 16:45:03 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:54:16 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int	is_valid_identifier_name(const char *str)
 	return (1);
 }
 
-void	process_export_arg(char *arg, t_env *env, t_garbage **gc, t_command *cmd)
+void	process_export_arg(char *arg, t_env *env, t_garbage **gc,
+		t_command *cmd)
 {
 	char	*unquoted_arg;
 

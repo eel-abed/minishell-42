@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 16:45:35 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:54:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	set_env_var(char *arg, t_env *env, t_garbage **gc)
 		add_env_var(env, key, value, gc);
 }
 
-void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc, t_command *cmd)
+void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc,
+		t_command *cmd)
 {
 	char	**args;
 	int		i;
