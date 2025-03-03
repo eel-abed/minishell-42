@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:09:14 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:54:01 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:08:54 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	**env_to_array(t_env *env, t_garbage **gc)
 {
 	char		**array;
 	t_env_var	*current;
-	char		*temp;
 	int			i;
 
 	array = gc_malloc(gc, sizeof(char *) * (env->size + 1));
@@ -28,16 +27,9 @@ char	**env_to_array(t_env *env, t_garbage **gc)
 	{
 		if (current->value)
 		{
-			temp = ft_strjoin(current->key, "=", gc);
-			if (!temp)
-			{
-				while (--i >= 0)
-					free(array[i]);
-				free(array);
+			array[i] = join_env_var(current, gc);
+			if (!array[i++])
 				return (NULL);
-			}
-			array[i] = ft_strjoin(temp, current->value, gc);
-			i++;
 		}
 		current = current->next;
 	}
@@ -51,7 +43,7 @@ static t_env_var	*create_env_var(const char *env_str, t_garbage **gc)
 	char		*equals;
 	size_t		key_len;
 
-	var = gc_malloc(gc, sizeof(t_env_var));
+	var = init_env_var(gc);
 	if (!var)
 		return (NULL);
 	equals = ft_strchr(env_str, '=');
@@ -59,36 +51,58 @@ static t_env_var	*create_env_var(const char *env_str, t_garbage **gc)
 	{
 		var->key = ft_strdup(env_str, gc);
 		var->value = NULL;
+		return (var);
 	}
-	else
+	key_len = equals - env_str;
+	var->key = ft_substr(env_str, 0, key_len, gc);
+	var->value = ft_strdup(equals + 1, gc);
+	if (!var->key || !var->value)
 	{
-		key_len = equals - env_str;
-		var->key = ft_substr(env_str, 0, key_len, gc);
-		var->value = ft_strdup(equals + 1, gc);
-		if (!var->key || !var->value)
-		{
-			free(var->key);
-			free(var->value);
-			free(var);
-			return (NULL);
-		}
+		free(var->key);
+		free(var->value);
+		free(var);
+		return (NULL);
 	}
-	var->next = NULL;
 	return (var);
 }
 
-t_env	*init_env(char **envp, t_garbage **gc)
+static void	append_env_var_to_env(t_env *env, t_env_var *new_var)
 {
-	t_env		*env;
 	t_env_var	*current;
-	t_env_var	*new_var;
-	int			i;
+
+	if (!env->vars)
+		env->vars = new_var;
+	else
+	{
+		current = env->vars;
+		while (current->next)
+			current = current->next;
+		current->next = new_var;
+	}
+	env->size++;
+}
+
+static t_env	*init_empty_env(t_garbage **gc)
+{
+	t_env	*env;
 
 	env = gc_malloc(gc, sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->vars = NULL;
 	env->size = 0;
+	return (env);
+}
+
+t_env	*init_env(char **envp, t_garbage **gc)
+{
+	t_env		*env;
+	t_env_var	*new_var;
+	int			i;
+
+	env = init_empty_env(gc);
+	if (!env)
+		return (NULL);
 	i = 0;
 	while (envp[i])
 	{
@@ -98,36 +112,8 @@ t_env	*init_env(char **envp, t_garbage **gc)
 			free_env(env);
 			return (NULL);
 		}
-		if (!env->vars)
-			env->vars = new_var;
-		else
-		{
-			current = env->vars;
-			while (current->next)
-				current = current->next;
-			current->next = new_var;
-		}
-		env->size++;
+		append_env_var_to_env(env, new_var);
 		i++;
 	}
 	return (env);
-}
-
-void	free_env(t_env *env)
-{
-	t_env_var	*current;
-	t_env_var	*next;
-
-	if (!env)
-		return ;
-	current = env->vars;
-	while (current)
-	{
-		next = current->next;
-		free(current->key);
-		free(current->value);
-		free(current);
-		current = next;
-	}
-	free(env);
 }

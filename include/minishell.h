@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 14:56:02 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:09:28 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,10 @@ int						process_heredoc_line(int fd, char *line,
 							const char *delimiter);
 int						finalize_heredoc(int fd, char *filename, int status);
 char					*get_temp_filename(t_garbage **gc);
+char					*join_env_var(t_env_var *current, t_garbage **gc);
+t_env_var				*init_env_var(t_garbage **gc);
+
+
 
 
 #endif
