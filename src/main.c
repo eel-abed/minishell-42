@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/02/28 19:47:58 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:27:41 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			token_clean = ft_lexer(input, env,&gc,&cmd);
+			printf("--HERE--\n");
 			print_tokens(token_clean);
 			if (token_clean)
 				handle_command_line(token_clean, &cmd,&gc);

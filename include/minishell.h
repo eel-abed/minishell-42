@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 15:09:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:15:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ char					*get_temp_filename(t_garbage **gc);
 char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
 
-
+int	is_echo_cmd(char *str,t_garbage **gc);
 
 
 #endif

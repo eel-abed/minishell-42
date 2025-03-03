@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:54:17 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:50:27 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:00:59 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,14 @@ void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 {
 	char	**args;
 	int		i;
+	i = 0;
 
 	args = split_mini(tokens->value, gc);
+	while (args[i])
+	{
+		printf("aloors = %s\n", args[i]);
+		i++;
+	}
 	if (!args)
 		return ;
 	i = 1;

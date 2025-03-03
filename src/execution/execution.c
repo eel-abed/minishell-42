@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 20:00:54 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:56:23 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static t_tokens	*prepare_cmd_token(char **parts, t_tokens *tokens,
 static void	execute_cmd(t_tokens *cmd_token, char **parts, t_command *cmd_info,
 		t_garbage **gc)
 {
+	printf("OUI\n");
 	if (is_builtin(parts[0]))
 		execute_builtin(parts[0], cmd_token, cmd_info, gc);
 	else
