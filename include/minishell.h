@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 17:04:07 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:56:02 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,13 @@ void					process_export_arg(char *arg, t_env *env,
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
 							t_command *cmd_info, t_garbage **gc);
+int						write_to_heredoc(int fd, const char *str);
+int						init_heredoc(const char *delimiter, char **filename,
+							int *fd, t_garbage **gc);
+int						process_heredoc_line(int fd, char *line,
+							const char *delimiter);
+int						finalize_heredoc(int fd, char *filename, int status);
+char					*get_temp_filename(t_garbage **gc);
+
 
 #endif
