@@ -94,7 +94,8 @@ void	set_env_var(char *arg, t_env *env, t_garbage **gc)
 		add_env_var(env, key, value, gc);
 }
 
-void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
+void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc,
+		t_command *cmd)
 {
 	char	**args;
 	int		i;
@@ -115,7 +116,7 @@ void	export_builtin(t_tokens *tokens, t_env *env, t_garbage **gc)
 	}
 	while (args[i])
 	{
-		process_export_arg(args[i], env, gc);
+		process_export_arg(args[i], env, gc, cmd);
 		i++;
 	}
 }

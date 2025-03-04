@@ -26,7 +26,7 @@ void	execute_builtin(char *cmd, t_tokens *tokens, t_command *cmd_info,
 	else if (!ft_strncmp(cmd, "exit", 4))
 		exit_builtin(tokens, cmd_info, gc);
 	else if (!ft_strncmp(cmd, "export", 6))
-			export_builtin(tokens, cmd_info->env, gc);
+		export_builtin(tokens, cmd_info->env, gc, cmd_info);
 	else if (!ft_strncmp(cmd, "unset", 5))
 		unset_builtin(tokens, cmd_info->env, cmd_info, gc);
 }

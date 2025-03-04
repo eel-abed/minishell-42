@@ -106,7 +106,7 @@ void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
 							t_garbage **gc);
 void					export_builtin(t_tokens *tokens, t_env *env,
-							t_garbage **gc);
+							t_garbage **gc, t_command *cmd);
 int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
@@ -198,7 +198,7 @@ void					if_found(char *input, int *i, int *flag, char to_found);
 char					*replace_substring(char *str, int start, int end,
 							char *replacement, t_garbage **gc);
 void					process_export_arg(char *arg, t_env *env,
-							t_garbage **gc);
+							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
 							t_command *cmd_info, t_garbage **gc);
@@ -213,6 +213,7 @@ char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
 
 int	is_echo_cmd(char *str,t_garbage **gc);
+
 
 
 #endif

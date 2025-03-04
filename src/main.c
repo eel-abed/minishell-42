@@ -57,7 +57,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			token_clean = ft_lexer(input, env,&gc,&cmd);
-			print_tokens(token_clean);
 			if (token_clean)
 				handle_command_line(token_clean, &cmd,&gc);
 		}
