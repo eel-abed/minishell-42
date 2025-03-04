@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/03 22:57:56 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:46:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 	}
 	gc_free_all(&gc);
-	printf("\nExiting minishell...\n");
 	return (0);
 }
 

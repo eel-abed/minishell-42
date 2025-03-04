@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/03 22:51:34 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:48:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	print_tokens(t_tokens *list)
 	current = list;
 	while (list)
 	{
-		// printf("Token[%d]:\n", i);
-		// printf("  Value: [%s]\n", list->value);
-		// printf("  Type:  [%d]\n", list->type);
-		// printf("------------------------\n");
+		printf("Token[%d]:\n", i);
+		printf("  Value: [%s]\n", list->value);
+		printf("  Type:  [%d]\n", list->type);
+		printf("------------------------\n");
 		list = list->next;
 		i++;
 	}
