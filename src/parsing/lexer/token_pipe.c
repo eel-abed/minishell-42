@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/25 18:34:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:44:03 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ char	*handle_last_token(char *cmd_str, t_tokens *cmd_start,
 		}
 		tmp = cmd_str;
 		cmd_str = ft_strjoin(cmd_str, current->value,gc);
-		// if(tmp)
-		// 	free(tmp);
 	}
 	return (cmd_str);
 }
@@ -78,19 +76,43 @@ t_tokens	*token_with_pipe(t_tokens *tokens,t_garbage **gc)
 	if (!tokens)
 		return (NULL);
 	result = NULL;
+	cmd_str = NULL;
+	new_token = NULL;
 	current = tokens;
 	cmd_start = tokens;
+	int isEcho = 0;
 	while (current)
 	{
-		if (current->type == kind_pipe || !current->next)
+		if(is_echo_cmd(current->value,gc) == 1)
+			isEcho = 1;
+		if (current->type == kind_pipe || (!current->next && isEcho == 0))
 		{
-			cmd_str = build_cmd_str(cmd_start, current, tokens,gc);
-			cmd_str = handle_last_token(cmd_str, cmd_start, current, tokens,gc);
-			new_token = mini_lstnew(cmd_str, kind_none,gc);
+			if (isEcho == 0)
+			{
+				cmd_str = build_cmd_str(cmd_start, current, tokens,gc);
+				cmd_str = handle_last_token(cmd_str, cmd_start, current, tokens,gc);
+				new_token = mini_lstnew(cmd_str, kind_none,gc);
+				mini_lstadd_back(&result, new_token);
+				add_pipe_token(&result, &cmd_start, current,gc);
+				cmd_start = current->next;
+			}
+			else
+			{
+				add_pipe_token(&result, &cmd_start, current,gc);
+				cmd_start = current->next;
+			}
+			isEcho = 0;
+		}
+		else if (isEcho == 1)
+		{
+			new_token = mini_lstnew(ft_strdup(current->value,gc), current->type,gc);
 			mini_lstadd_back(&result, new_token);
 			add_pipe_token(&result, &cmd_start, current,gc);
+			cmd_start = current->next;
 		}
 		current = current->next;
 	}
+	if (result == NULL)
+		return(tokens);
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/28 19:54:30 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:36:26 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,20 +153,14 @@ int	is_echo_cmd(char *str,t_garbage **gc)
 t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 {
 	t_tokens	*current;
-	size_t		i;
 	char		*trimmed;
 	int			in_export;
-	int			is_echo;
-	char		*before;
-	char		*after;
-	int closed;
-	int y;
 
 	if (!tokens)
 		return (NULL);
 	current = tokens;
 	in_export = 0;
-	is_echo = is_echo_cmd(current->value,gc);
+	// is_echo = is_echo_cmd(current->value,gc);
 	while (current)
 	{
 		if (current->value)
@@ -181,50 +175,11 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 				in_export = 0;
 			else if (in_export)
 				ft_trim_export(current,gc);	
-			else if (is_echo == 1)
+			else if (!in_export && (has_attached_quotes(current->value)|| should_trim_quotes(current->value))/* && current->type == kind_none*/)
 			{
-				i = 1;
-				closed = -1;
-				y = 0;
-				while (current->value[i])
-				{
-					if (current->value[i] == '\'' && y == 0 )
-					{
-						y = 1;
-						closed = 0;
-					}
-					if (current->value[i] == '"' && y == 0 )
-					{
-						y = 2;
-						closed = 0;
-					}
-					if (current->value[i] && y > 0 )
-					{
-						if ( 
-							(closed == 0 && i < ft_strlen(current->value)  - 1 && ((y == 1 && current->value[i] == '\'') || (y == 2 && current->value[i] == '"')) ) 
-							|| 
-							(closed == 1 && ((y == 1 && current->value[i] == '\'') || (y == 2 && current->value[i] == '"')) )
-						)
-						{
-							before = ft_substr(current->value, 0, i, gc);
-							after = ft_substr(current->value, i + 1, ft_strlen(current->value) - i, gc);
-							trimmed = ft_strjoin(before, after, gc);
-							current->value = trimmed;
-							if (closed == 0)
-								closed = 1;
-							else
-							{
-								closed = -1;
-								y = 0;
-							}
-							i--;
-						}
-					}
-					i++;
-				}
-			}			
-			else if (!in_export && is_echo == 0 && (has_attached_quotes(current->value)
-					|| should_trim_quotes(current->value)))
+				trimmed = remove_outer_quotes(current->value,gc);
+				current->value = trimmed;
+			}
 			{
 				trimmed = remove_outer_quotes(current->value,gc);
 				current->value = trimmed;
