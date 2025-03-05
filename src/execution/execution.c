@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/03/05 17:02:41 by mafourni         ###   ########.fr       */
@@ -92,13 +92,31 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	if (!tokens)
 		return ;
 	parts = ft_split(tokens->value, ' ', gc);
-	if (!parts || !handle_redirectionnn(parts, cmd_info, gc))
+	if (!parts)
 	{
 		save_restore_fd(&original_stdout, &original_stdin, 1);
 		return ;
 	}
-	cmd_token = prepare_cmd_token(parts, tokens, gc);
-	if (cmd_token)
-		execute_cmd(cmd_token, parts, cmd_info, gc);
+	if (parts[0] && !ft_strcmp(parts[0], "echo"))
+	{
+		// Handle redirections for echo with tokens directly
+		if (!handle_redirection_tokens(tokens, cmd_info, gc))
+		{
+			save_restore_fd(&original_stdout, &original_stdin, 1);
+			return ;
+		}
+		execute_builtin(parts[0], tokens, cmd_info, gc);
+	}
+	else
+	{
+		if (!handle_redirectionnn(parts, cmd_info, gc))
+		{
+			save_restore_fd(&original_stdout, &original_stdin, 1);
+			return ;
+		}
+		cmd_token = prepare_cmd_token(parts, tokens, gc);
+		if (cmd_token)
+			execute_cmd(cmd_token, parts, cmd_info, gc);
+	}
 	save_restore_fd(&original_stdout, &original_stdin, 1);
 }

@@ -12,70 +12,92 @@
 
 #include "../../include/minishell.h"
 
-static bool	is_valid_n_flag(const char *str)
+static bool	is_valid_n_flag(char *arg)
 {
 	int	i;
 
-	if (!str || str[0] != '-')
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
 		return (false);
-	i = 1;
-	while (str[i])
+	i = 2;
+	while (arg[i])
 	{
-		if (str[i] != 'n')
+		if (arg[i] != 'n')
 			return (false);
 		i++;
 	}
-	return (i > 1);
+	return (true);
 }
 
-static void	print_echo_args(char **args, int i, bool newline)
+static void print_echo_args(t_tokens *tokens, bool newline)
 {
-	while (args[i])
-	{
-		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
-		if (args[i + 1])
-			write(STDOUT_FILENO, " ", 1);
-		i++;
-	}
-	if (newline)
-		write(STDOUT_FILENO, "\n", 1);
+    t_tokens    *current;
+    bool        first;
+    bool        found_echo;
+
+    current = tokens;
+    first = true;
+    found_echo = false;
+
+    // Skip the echo command itself
+    while (current && !found_echo)
+    {
+        if (ft_strcmp(current->value, "echo") == 0)
+            found_echo = true;
+        current = current->next;
+    }
+
+    // Print arguments until we hit a pipe or redirection
+    while (current && current->type != kind_pipe && 
+           current->type != kind_redir_right && 
+           current->type != kind_redir_2right &&
+           current->type != kind_redir_left &&
+           current->type != kind_redir_2left)
+    {
+        // Don't print the -n flag(s)
+        if (!is_valid_n_flag(current->value))
+        {
+            if (!first)
+                ft_putchar_fd(' ', STDOUT_FILENO);
+            else
+                first = false;
+            ft_putstr_fd(current->value, STDOUT_FILENO);
+        }
+        current = current->next;
+    }
+    
+    if (newline)
+        ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void	echo_builtin(char **args)
+void	echo_builtin_tokens(t_tokens *tokens)
 {
-	int		i;
-	bool	newline;
+	t_tokens	*current;
+	bool		newline;
+	bool		found_echo;
 
-	i = 1;
+	current = tokens;
 	newline = true;
-	while (args[i] && is_valid_n_flag(args[i]))
+	found_echo = false;
+	// Find the echo command in tokens
+	while (current && !found_echo)
 	{
-		newline = false;
-		i++;
+		if (ft_strcmp(current->value, "echo") == 0)
+			found_echo = true;
+		else
+			current = current->next;
 	}
-	print_echo_args(args, i, newline);
-}
-
-void	echo_builtin_tokens(t_tokens *tokens, t_garbage **gc)
-{
-	bool	newline;
-	char	**args;
-	int		i;
-	char	*cmd;
-
-	args = ft_split(tokens->value, ' ', gc);
-	if (!args)
+	if (!found_echo || !current->next)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		return ;
-	cmd = args[0];
-	if (ft_strncmp(cmd, "echo", 4) == 0)
-		i = 1;
-	else
-		i = 0;
-	newline = true;
-	while (args[i] && is_valid_n_flag(args[i]))
+	}
+	// Check for -n flag
+	current = current->next;
+	while (current && is_valid_n_flag(current->value))
 	{
 		newline = false;
-		i++;
+		current = current->next;
 	}
-	print_echo_args(args, i, newline);
+	// Print arguments
+	print_echo_args(tokens, newline);
 }
