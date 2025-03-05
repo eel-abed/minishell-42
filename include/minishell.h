@@ -132,6 +132,8 @@ void					execute_piped_commands(t_tokens *tokens,
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
 void					setup_signals(void);
+char	*replace_substring(char *str, int start, int end, char *replacement,
+	t_garbage **gc);
 char					*find_command_path(char *cmd, t_env *env,
 							t_garbage **gc);
 void					update_env_vars(t_env *env, t_garbage **gc);
@@ -196,8 +198,6 @@ void					ft_error_export_clean_loop(t_tokens *current, int i,
 							char *trimmed, char *clen_trimmed, t_garbage **gc);
 void					ft_trim_export(t_tokens *tokens, t_garbage **gc);
 void					if_found(char *input, int *i, int *flag, char to_found);
-char					*replace_substring(char *str, int start, int end,
-							char *replacement, t_garbage **gc);
 void					process_export_arg(char *arg, t_env *env,
 							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
@@ -214,7 +214,15 @@ char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
 
 int	is_echo_cmd(char *str,t_garbage **gc);
+void	ft_clean_words_export(t_tokens *current, t_garbage **gc);
 
-
+typedef struct s_quote_params
+{
+    char	*str;
+    int		*i;
+    int		*j;
+    char	quote;
+    char	*result;
+}	t_quote_params;
 
 #endif
