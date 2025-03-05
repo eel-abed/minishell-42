@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/04 19:48:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:35:13 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	token_list = ft_trim_all(token_list, gc);
 	// print_tokens(token_list);
 	token_list = token_with_pipe(token_list, gc);
-	print_tokens(token_list);
+	// print_tokens(token_list);
 	// token_list = clean_if_echo(token_list,gc);
 	// Set the environment pointer for each token
 	current = token_list;
