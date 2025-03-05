@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/03 22:36:26 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:04:54 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 		return (NULL);
 	current = tokens;
 	in_export = 0;
-	// is_echo = is_echo_cmd(current->value,gc);
 	while (current)
 	{
 		if (current->value)
@@ -176,10 +175,6 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 			else if (in_export)
 				ft_trim_export(current,gc);	
 			else if (!in_export && (has_attached_quotes(current->value)|| should_trim_quotes(current->value))/* && current->type == kind_none*/)
-			{
-				trimmed = remove_outer_quotes(current->value,gc);
-				current->value = trimmed;
-			}
 			{
 				trimmed = remove_outer_quotes(current->value,gc);
 				current->value = trimmed;
