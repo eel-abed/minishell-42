@@ -160,7 +160,6 @@ t_tokens	*ft_trim_all(t_tokens *tokens,t_garbage **gc)
 		return (NULL);
 	current = tokens;
 	in_export = 0;
-	// is_echo = is_echo_cmd(current->value,gc);
 	while (current)
 	{
 		if (current->value)

@@ -26,13 +26,8 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env, gc, cmd);
 	token_list = lets_tokeninze(temp, gc);
-	// print_tokens(token_list);
 	token_list = ft_trim_all(token_list, gc);
-	// print_tokens(token_list);
 	token_list = token_with_pipe(token_list, gc);
-	// print_tokens(token_list);
-	// token_list = clean_if_echo(token_list,gc);
-	// Set the environment pointer for each token
 	current = token_list;
 	while (current)
 	{
