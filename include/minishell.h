@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 21:15:40 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:48:46 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void					execute_builtin(char *cmd, t_tokens *tokens,
 void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
 							t_garbage **gc);
 void					pwd_builtin(void);
-void					echo_builtin_tokens(t_tokens *tokens, t_garbage **gc);
+void					echo_builtin_tokens(t_tokens *tokens);
+bool					handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
 							t_garbage **gc);
