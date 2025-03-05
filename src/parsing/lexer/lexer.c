@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/04 19:48:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:29:44 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,15 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 
 	temp = input;
 	token_list = NULL;
+	add_history(input);
 	if (quote_check(temp, cmd) == 1)
 		return (printf("Syntax %s !\n", ERROR), NULL);
 	if (check_syntax(temp, cmd) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env, gc, cmd);
 	token_list = lets_tokeninze(temp, gc);
-	// print_tokens(token_list);
 	token_list = ft_trim_all(token_list, gc);
-	// print_tokens(token_list);
 	token_list = token_with_pipe(token_list, gc);
-	print_tokens(token_list);
-	// token_list = clean_if_echo(token_list,gc);
-	// Set the environment pointer for each token
 	current = token_list;
 	while (current)
 	{
@@ -64,6 +60,23 @@ bool	check_syntax(char *input, t_command *cmd)
 		++i;
 	}
 	return (true);
+}
+char	*replace_substring(char *str, int start, int end, char *replacement,
+	t_garbage **gc)
+{
+int			len;
+char	*result;
+
+if (!str || !replacement)
+	return (NULL);
+len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
+result = gc_malloc(gc, sizeof(char) * (len + 1));
+if (!result)
+	return (NULL);
+ft_strncpy(result, str, start);
+ft_strlcat(result, replacement, len + 1);
+ft_strlcat(result, str + end, len + 1);
+return (result);
 }
 
 char	*any_env(char *input, t_env *env, t_garbage **gc, t_command *cmd)
@@ -120,7 +133,7 @@ char	*any_env(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	return (input);
 }
 
-char	*replace_NULL(char *input, int j, char *tmp, t_garbage **gc)
+char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
 {
 	char	*new_input;
 	int		len;
@@ -172,26 +185,8 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,
 	}
 	if (env->vars == NULL)
 	{
-		input = replace_NULL(input, j, tmp, gc);
+		input = replace_null(input, j, tmp, gc);
 		env->vars = head;
 	}
 	return (input);
-}
-
-char	*replace_substring(char *str, int start, int end, char *replacement,
-		t_garbage **gc)
-{
-	char	*result;
-	int		len;
-
-	if (!str || !replacement)
-		return (NULL);
-	len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
-	result = gc_malloc(gc, sizeof(char) * (len + 1));
-	if (!result)
-		return (NULL);
-	ft_strncpy(result, str, start);
-	ft_strlcat(result, replacement, len + 1);
-	ft_strlcat(result, str + end, len + 1);
-	return (result);
 }
