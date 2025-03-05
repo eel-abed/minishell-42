@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 14:49:04 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:48:28 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,69 @@ int	finalize_heredoc(int fd, char *filename, int status)
 		ft_putstr_fd("minishell: heredoc: failed to redirect input: ", 2);
 	unlink(filename);
 	return (status);
+}
+bool handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
+{
+    t_tokens *current = tokens;
+    bool found_redirection = false;
+
+    while (current)
+    {
+        // Check for redirection operators
+        if (current->type == kind_redir_right)
+        {
+            found_redirection = true;
+            if (current->next)
+            {
+                cmd_info->output_file = ft_strdup(current->next->value, gc);
+                if (redirect_output(current->next->value, 0) < 0)
+                {
+                    cmd_info->exit_status = 1;
+                    return false;
+                }
+            }
+        }
+        else if (current->type == kind_redir_2right)
+        {
+            found_redirection = true;
+            if (current->next)
+            {
+                cmd_info->output_file = ft_strdup(current->next->value, gc);
+                if (redirect_output(current->next->value, 1) < 0)
+                {
+                    cmd_info->exit_status = 1;
+                    return false;
+                }
+            }
+        }
+        else if (current->type == kind_redir_left)
+        {
+            found_redirection = true;
+            if (current->next)
+            {
+                cmd_info->input_file = ft_strdup(current->next->value, gc);
+                if (redirect_input(current->next->value) < 0)
+                {
+                    cmd_info->exit_status = 1;
+                    return false;
+                }
+            }
+        }
+        else if (current->type == kind_redir_2left)
+        {
+            found_redirection = true;
+            if (current->next)
+            {
+                cmd_info->delimiter = ft_strdup(current->next->value, gc);
+                cmd_info->heredoc_flag = true;
+                if (heredoc(current->next->value, gc) < 0)
+                {
+                    cmd_info->exit_status = 1;
+                    return false;
+                }
+            }
+        }
+        current = current->next;
+    }
+    return true;
 }
