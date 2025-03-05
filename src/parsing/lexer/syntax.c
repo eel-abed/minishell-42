@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:57:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:44:32 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:40:48 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,18 @@ bool	is_valid_operator(char *str, size_t remain, t_operator_kind kind)
 
 bool	is_operator(char ch, t_operator_kind *out_kind)
 {
+	static char	quote = 0;
+
+    if (ch == '"' || ch == '\'')
+    {
+        if (!quote)
+            quote = ch;
+        else if (ch == quote)
+            quote = 0;
+        return (false);
+    }
+    if (quote)
+		return (false);
 	if (ch == '|')
 	{
 		*out_kind = kind_pipe;

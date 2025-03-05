@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 17:48:19 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:14:03 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	}
 	if (parts[0] && !ft_strcmp(parts[0], "echo"))
 	{
-		// Handle redirections for echo with tokens directly
 		if (!handle_redirection_tokens(tokens, cmd_info, gc))
 		{
 			save_restore_fd(&original_stdout, &original_stdin, 1);
