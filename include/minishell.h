@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 17:48:46 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:05:59 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
 							t_garbage **gc);
 void					pwd_builtin(void);
 void					echo_builtin_tokens(t_tokens *tokens);
-bool					handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc);
+bool					handle_redirection_tokens(t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
 							t_garbage **gc);
@@ -132,8 +133,8 @@ void					execute_piped_commands(t_tokens *tokens,
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
 void					setup_signals(void);
-char	*replace_substring(char *str, int start, int end, char *replacement,
-	t_garbage **gc);
+char					*replace_substring(char *str, int start, int end,
+							char *replacement, t_garbage **gc);
 char					*find_command_path(char *cmd, t_env *env,
 							t_garbage **gc);
 void					update_env_vars(t_env *env, t_garbage **gc);
@@ -213,16 +214,17 @@ char					*get_temp_filename(t_garbage **gc);
 char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
 
-int	is_echo_cmd(char *str,t_garbage **gc);
-void	ft_clean_words_export(t_tokens *current, t_garbage **gc);
+int						is_echo_cmd(char *str, t_garbage **gc);
+void					ft_clean_words_export(t_tokens *current,
+							t_garbage **gc);
 
 typedef struct s_quote_params
 {
-    char	*str;
-    int		*i;
-    int		*j;
-    char	quote;
-    char	*result;
-}	t_quote_params;
+	char				*str;
+	int					*i;
+	int					*j;
+	char				quote;
+	char				*result;
+}						t_quote_params;
 
 #endif
