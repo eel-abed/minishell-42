@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/06 19:56:01 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 21:00:39 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
 		if (current->type == kind_pipe)
 		{
 			execute_piped_commands(tokens, cmd_info, gc);
+			gc_free_all(gc);
 			return ;
 		}
 		current = current->next;
