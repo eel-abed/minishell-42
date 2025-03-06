@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/05 16:25:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:56:14 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,40 @@ static void	handle_quote_char(t_quote_params *params)
 		(*params->j)++;
 	}
 }
-
-char	*remove_outer_quotes(char *str, t_garbage **gc)
+char *remove_outer_quotes(char *str,t_garbage **gc)
 {
-	char	*result;
-	int		i;
-	int		j;
-	char	quote;
+    char *result;
+    int i;
+    int j;
+    char current_quote;
 
-	if (!str || !str[0])
-		return (ft_strdup(str, gc));
-	if (!(result = gc_malloc(gc, ft_strlen(str) + 1)))
-		return (NULL);
-	i = 0;
-	j = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if ((str[i] == '"' || str[i] == '\''))
-			handle_quote_char(&(t_quote_params){str, &i, &j, quote, result});
-		else
-			result[j++] = str[i++];
-	}
-	result[j] = '\0';
-	return (result);
+    if (!str || !str[0])
+        return (ft_strdup(str,gc));
+    result = gc_malloc(gc,ft_strlen(str) + 1);
+    if (!result)
+        return (NULL);
+    i = 0;
+    j = 0;
+    current_quote = 0;
+    while (str[i])
+    {
+        if ((str[i] == '"' || str[i] == '\''))
+        {
+            if (!current_quote)
+                current_quote = str[i++];
+            else if (is_matching_quote(str[i], current_quote))
+            {
+                current_quote = 0;
+                i++;
+            }
+            else
+                result[j++] = str[i++];
+        }
+        else
+            result[j++] = str[i++];
+    }
+    result[j] = '\0';
+    return (result);
 }
 
 int	should_trim_quotes(char *str)
