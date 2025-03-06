@@ -6,31 +6,12 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/06 15:56:14 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:58:24 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	handle_quote_char(t_quote_params *params)
-{
-	if (!params->quote)
-	{
-		params->quote = params->str[*params->i];
-		(*params->i)++;
-	}
-	else if (is_matching_quote(params->str[*params->i], params->quote))
-	{
-		params->quote = 0;
-		(*params->i)++;
-	}
-	else
-	{
-		params->result[*params->j] = params->str[*params->i];
-		(*params->i)++;
-		(*params->j)++;
-	}
-}
 char *remove_outer_quotes(char *str,t_garbage **gc)
 {
     char *result;
