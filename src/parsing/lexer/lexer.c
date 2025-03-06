@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/05 17:35:13 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:12:58 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,61 +61,7 @@ bool	check_syntax(char *input, t_command *cmd)
 	return (true);
 }
 
-char	*any_env(char *input, t_env *env, t_garbage **gc, t_command *cmd)
-{
-	t_env	*envi;
-	char	*tmp;
-	int		i;
-	int		j;
-	int		h;
-	char	current_quote;
-	char	*exit_status;
-
-	envi = env;
-	tmp = NULL;
-	i = 0;
-	current_quote = 0;
-	while (input[i])
-	{
-		if ((input[i] == '\'' || input[i] == '"') && !current_quote)
-			current_quote = input[i];
-		else if (input[i] == current_quote)
-			current_quote = 0;
-		else if (input[i] == '$' && current_quote != '\'')
-		{
-			if (input[i + 1] == '?')
-			{
-				exit_status = ft_itoa(cmd->exit_status, gc);
-				if (exit_status == NULL)
-					return (NULL);
-				h = ft_strlen(input);
-				input = replace_substring(input, i, i + 2, exit_status, gc);
-				if (!input)
-					return (NULL);
-				i += ft_strlen(exit_status) - 1;
-				continue ;
-			}
-			i++;
-			j = i;
-			while (ft_isalnum(input[i]) && input[i])
-				i++;
-			if (i == j)
-				continue ;
-			tmp = ft_strcpy(tmp, input, i, j, gc);
-			h = ft_strlen(input);
-			input = might_replace(envi, input, j, tmp, gc);
-			if (!input)
-				return (NULL);
-			if ((int)ft_strlen(input) < h)
-				i = i - (h - (int)ft_strlen(input));
-			continue ;
-		}
-		i++;
-	}
-	return (input);
-}
-
-char	*replace_NULL(char *input, int j, char *tmp, t_garbage **gc)
+char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
 {
 	char	*new_input;
 	int		len;
@@ -167,13 +113,13 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,
 	}
 	if (env->vars == NULL)
 	{
-		input = replace_NULL(input, j, tmp, gc);
+		input = replace_null(input, j, tmp, gc);
 		env->vars = head;
 	}
 	return (input);
 }
 
-char	*replace_substring(char *str, int start, int end, char *replacement,
+char	*replace_substring(char *str, t_range pos, char *replacement,
 		t_garbage **gc)
 {
 	char	*result;
@@ -181,12 +127,12 @@ char	*replace_substring(char *str, int start, int end, char *replacement,
 
 	if (!str || !replacement)
 		return (NULL);
-	len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
+	len = ft_strlen(str) - (pos.end - pos.start) + ft_strlen(replacement);
 	result = gc_malloc(gc, sizeof(char) * (len + 1));
 	if (!result)
 		return (NULL);
-	ft_strncpy(result, str, start);
+	ft_strncpy(result, str, pos.start);
 	ft_strlcat(result, replacement, len + 1);
-	ft_strlcat(result, str + end, len + 1);
+	ft_strlcat(result, str + pos.end, len + 1);
 	return (result);
 }

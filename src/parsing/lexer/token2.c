@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:08:08 by mafourni          #+#    #+#             */
-/*   Updated: 2025/02/18 19:23:51 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:59:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	check_empty_quotes(char *str, int len)
 	if (len == 2 && ((str[0] == '"' && str[1] == '"') || (str[0] == '\''
 				&& str[1] == '\'')))
 		return (1);
-	if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\''
-			&& str[len - 1] == '\''))
+	if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len
+				- 1] == '\''))
 	{
 		i = 1;
 		while (i < len - 1)
