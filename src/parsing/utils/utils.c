@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/05 16:42:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:29:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	print_tokens(t_tokens *list)
 
 	if (!list)
 	{
-		// printf("Token list is empty\n");
 		return ;
 	}
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/06 17:22:10 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:26:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,22 @@ bool	check_syntax(char *input, t_command *cmd)
 	}
 	return (true);
 }
-char	*replace_substring(char *str, int start, int end, char *replacement,
-	t_garbage **gc)
+char	*replace_substring(char *str,t_range pos, char *replacement,
+		t_garbage **gc)
 {
-int			len;
-char	*result;
+	int		len;
+	char	*result;
 
-if (!str || !replacement)
-	return (NULL);
-len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
-result = gc_malloc(gc, sizeof(char) * (len + 1));
-if (!result)
-	return (NULL);
-ft_strncpy(result, str, start);
-ft_strlcat(result, replacement, len + 1);
-ft_strlcat(result, str + end, len + 1);
-return (result);
+	if (!str || !replacement)
+		return (NULL);
+	len = ft_strlen(str) - (pos.end - pos.start) + ft_strlen(replacement);
+	result = gc_malloc(gc, sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	ft_strncpy(result, str, pos.start);
+	ft_strlcat(result, replacement, len + 1);
+	ft_strlcat(result, str + pos.end, len + 1);
+	return (result);
 }
 
 char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
@@ -136,24 +136,3 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,
 	}
 	return (input);
 }
-<<<<<<< HEAD
-
-char	*replace_substring(char *str, t_range pos, char *replacement,
-		t_garbage **gc)
-{
-	char	*result;
-	int		len;
-
-	if (!str || !replacement)
-		return (NULL);
-	len = ft_strlen(str) - (pos.end - pos.start) + ft_strlen(replacement);
-	result = gc_malloc(gc, sizeof(char) * (len + 1));
-	if (!result)
-		return (NULL);
-	ft_strncpy(result, str, pos.start);
-	ft_strlcat(result, replacement, len + 1);
-	ft_strlcat(result, str + pos.end, len + 1);
-	return (result);
-}
-=======
->>>>>>> bf5293dfc52beb422a4cb5c321c4fe84fd332760

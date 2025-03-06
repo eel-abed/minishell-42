@@ -6,31 +6,18 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:09:21 by mafourni          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/06 17:13:37 by mafourni         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/06 15:53:09 by eel-abed         ###   ########.fr       */
->>>>>>> bf5293dfc52beb422a4cb5c321c4fe84fd332760
+/*   Updated: 2025/03/06 17:26:24 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-<<<<<<< HEAD
 char	*remove_outer_quotes(char *str, t_garbage **gc)
 {
 	char	*result;
 	int		i;
 	int		j;
 	char	current_quote;
-=======
-char *remove_outer_quotes(char *str,t_garbage **gc)
-{
-    char *result;
-    int i;
-    int j;
-    char current_quote;
->>>>>>> bf5293dfc52beb422a4cb5c321c4fe84fd332760
 
 	if (!str || !str[0])
 		return (ft_strdup(str, gc));
