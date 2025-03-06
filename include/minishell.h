@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 17:22:58 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:33:08 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_quote_params
-{
-	char	*str;
-	int		*i;
-	int		*j;
-	char	quote;
-	char	*result;
-}	t_quote_params;
-
-typedef struct s_range
-{
-	int	start;
-	int	end;
-}	t_range;
-
 extern int				g_signal_received;
-
 typedef enum e_operator_kind
 {
 	kind_none,
@@ -61,6 +45,7 @@ typedef enum e_operator_kind
 	kind_redir_2right,
 	kind_pipe
 }						t_operator_kind;
+
 typedef struct s_env_var
 {
 	char				*key;
@@ -108,22 +93,60 @@ typedef struct s_pipe_data
 	t_garbage			**gc;
 }						t_pipe_data;
 
+//Norminette structure
+
+typedef struct s_quote_params
+{
+    char    *str;
+    int     i;
+    int     j;
+    char    current_quote;
+    char    *result;
+}   t_quote_params;
+
+typedef struct s_trim_exp_norm
+{
+	char		*tem;
+	int			i;
+	int			y;
+}   t_trim_exp_norm;
+
+typedef struct s_range
+{
+	int	start;
+	int	end;
+}	t_range;
+
+typedef struct s_might
+{
+	char 	*input;
+	int			j;
+}t_might;
+
+typedef struct s_twpipe_norm
+{
+	t_tokens	*cmd_start;
+	t_tokens	*result;
+	t_tokens	*new_token;
+	char		*cmd_str;
+}	t_wpipe_norm;
+//Norminette structure
 t_env					*init_env(char **envp, t_garbage **gc);
 void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
 void					execute_builtin(char *cmd, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc);
-void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
-							t_garbage **gc);
-void					pwd_builtin(void);
-void					echo_builtin_tokens(t_tokens *tokens);
-bool					handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc);
-void					env_builtin(t_env *env);
-void					exit_builtin(t_tokens *tokens, t_command *cmd,
-							t_garbage **gc);
-void					export_builtin(t_tokens *tokens, t_env *env,
-							t_garbage **gc, t_command *cmd);
-int						unset_builtin(t_tokens *tokens, t_env *env,
+	t_command *cmd_info, t_garbage **gc);
+	void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
+		t_garbage **gc);
+		void					pwd_builtin(void);
+		void					echo_builtin_tokens(t_tokens *tokens);
+		bool					handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc);
+		void					env_builtin(t_env *env);
+		void					exit_builtin(t_tokens *tokens, t_command *cmd,
+			t_garbage **gc);
+			void					export_builtin(t_tokens *tokens, t_env *env,
+				t_garbage **gc, t_command *cmd);
+				int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
 							t_garbage **gc);
@@ -199,12 +222,13 @@ int						has_attached_quotes(char *str);
 int						is_matching_quote(char c, char quote_type);
 char					*get_clean_word(char *str, t_garbage **gc);
 int						is_export_cmd(char *str, t_garbage **gc);
+void	ft_export_clean_and(t_tokens *current, char *trimmed, char *tem,
+	t_garbage **gc);
 t_tokens				*token_with_pipe(t_tokens *tokens, t_garbage **gc);
 bool					is_space(char *input, int i);
 int						ft_strcmp(const char *s1, const char *s2);
-char					*ft_strcpy(char *dest, char *src, int i, int j,
-							t_garbage **gc);
-char					*might_replace(t_env *env, char *input, int j,
+char					*ft_strcpy(char *dest, t_might replace_mr, int i, t_garbage **gc);
+char					*might_replace(t_env *env,t_might replace_mr,
 							char *tmp, t_garbage **gc);
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
@@ -230,6 +254,8 @@ t_env_var				*init_env_var(t_garbage **gc);
 
 int	is_echo_cmd(char *str,t_garbage **gc);
 void	ft_clean_words_export(t_tokens *current, t_garbage **gc);
+char	*handle_exit_status(char *input, int *i, t_command *cmd,
+	t_garbage **gc);
 
 
 //norminette struct

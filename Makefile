@@ -6,14 +6,14 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/06 17:16:05 by mafourni         ###   ########.fr        #
+#    Updated: 2025/03/06 19:36:01 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 
 # Directories
 SRC_DIR = src
