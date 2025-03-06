@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 21:57:33 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/05 16:08:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:47:32 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_if_loop(int *x, int *y, t_tokens *current, int i)
 		*x += 1;
 }
 
-void	ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed,
-		char *clen_trimmed, t_garbage **gc)
-{
-	clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i, gc), trimmed, gc);
-	current->value = clen_trimmed;
-}
+// void	ft_error_export_clean_loop(t_tokens *current, int i, char *trimmed,
+// 		char *clen_trimmed, t_garbage **gc)
+// {
+// 	clen_trimmed = ft_strjoin(ft_substr(current->value, 0, i, gc), trimmed, gc);
+// 	current->value = clen_trimmed;
+// }
 
 static char	*removing(char *value, t_garbage **gc)
 {
@@ -73,3 +73,7 @@ void	ft_clean_words_export(t_tokens *current, t_garbage **gc)
 	current->value = ft_strjoin(key, value, gc);
 }
 
+int	is_quote(char c)
+{
+	return (c == '"' || c == '\'');
+}

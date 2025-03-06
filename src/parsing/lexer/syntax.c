@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 18:57:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/05 18:40:48 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:10:19 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,36 +73,4 @@ bool	is_valid_operator(char *str, size_t remain, t_operator_kind kind)
 	else if (kind == kind_redir_left)
 		return (is_valid_redir_left(str, remain));
 	return (true);
-}
-
-bool	is_operator(char ch, t_operator_kind *out_kind)
-{
-	static char	quote = 0;
-
-    if (ch == '"' || ch == '\'')
-    {
-        if (!quote)
-            quote = ch;
-        else if (ch == quote)
-            quote = 0;
-        return (false);
-    }
-    if (quote)
-		return (false);
-	if (ch == '|')
-	{
-		*out_kind = kind_pipe;
-		return (true);
-	}
-	else if (ch == '>')
-	{
-		*out_kind = kind_redir_right;
-		return (true);
-	}
-	else if (ch == '<')
-	{
-		*out_kind = kind_redir_left;
-		return (true);
-	}
-	return (false);
 }
