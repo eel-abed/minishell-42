@@ -3,24 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:18:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 19:07:02 by eel-abed         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../include/minishell.h"
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 17:18:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/26 18:40:41 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/06 21:17:47 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +66,7 @@ void	child_process(t_pipe_data *data)
 		dup2(data->pipes[data->i][1], STDOUT_FILENO);
 	close_all_pipes(data->pipes, data->pipe_count);
 	execute_command(data->current, data->cmd_info, data->gc);
+	gc_free_all(data->gc);
 	exit(data->cmd_info->exit_status);
 }
 
