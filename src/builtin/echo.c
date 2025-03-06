@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 17:02:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:26:15 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static bool	is_valid_n_flag(char *arg)
 	}
 	return (true);
 }
-
 static void print_echo_args(t_tokens *tokens, bool newline)
 {
     t_tokens    *current;
@@ -38,7 +37,6 @@ static void print_echo_args(t_tokens *tokens, bool newline)
     first = true;
     found_echo = false;
 
-    // Skip the echo command itself
     while (current && !found_echo)
     {
         if (ft_strcmp(current->value, "echo") == 0)
@@ -46,28 +44,69 @@ static void print_echo_args(t_tokens *tokens, bool newline)
         current = current->next;
     }
 
-    // Print arguments until we hit a pipe or redirection
-    while (current && current->type != kind_pipe && 
-           current->type != kind_redir_right && 
-           current->type != kind_redir_2right &&
-           current->type != kind_redir_left &&
-           current->type != kind_redir_2left)
+    while (current)
     {
-        // Don't print the -n flag(s)
-        if (!is_valid_n_flag(current->value))
+        // Skip the redirection operator and its argument
+        if (current->type == kind_redir_left || 
+            current->type == kind_redir_right ||
+            current->type == kind_redir_2left ||
+            current->type == kind_redir_2right)
+            current = current->next ? current->next->next : NULL;
+        else if (!is_valid_n_flag(current->value))
         {
             if (!first)
                 ft_putchar_fd(' ', STDOUT_FILENO);
             else
                 first = false;
             ft_putstr_fd(current->value, STDOUT_FILENO);
+            current = current->next;
         }
-        current = current->next;
+        else
+            current = current->next;
     }
-    
     if (newline)
         ft_putchar_fd('\n', STDOUT_FILENO);
 }
+
+// static void print_echo_args(t_tokens *tokens, bool newline)
+// {
+//     t_tokens    *current;
+//     bool        first;
+//     bool        found_echo;
+
+//     current = tokens;
+//     first = true;
+//     found_echo = false;
+
+//     // Skip the echo command itself
+//     while (current && !found_echo)
+//     {
+//         if (ft_strcmp(current->value, "echo") == 0)
+//             found_echo = true;
+//         current = current->next;
+//     }
+
+//     // Print arguments until we hit a pipe or redirection
+//     while (current && current->type != kind_pipe && 
+//            current->type != kind_redir_right && 
+//            current->type != kind_redir_2right &&
+//            current->type != kind_redir_left &&
+//            current->type != kind_redir_2left)
+//     {
+//         if (!is_valid_n_flag(current->value))
+//         {
+//             if (!first)
+//                 ft_putchar_fd(' ', STDOUT_FILENO);
+//             else
+//                 first = false;
+//             ft_putstr_fd(current->value, STDOUT_FILENO);
+//         }
+//         current = current->next;
+//     }
+    
+//     if (newline)
+//         ft_putchar_fd('\n', STDOUT_FILENO);
+// }
 
 void	echo_builtin_tokens(t_tokens *tokens)
 {
@@ -98,6 +137,5 @@ void	echo_builtin_tokens(t_tokens *tokens)
 		newline = false;
 		current = current->next;
 	}
-	// Print arguments
 	print_echo_args(tokens, newline);
 }

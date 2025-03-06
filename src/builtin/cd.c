@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 18:29:49 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:51:23 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
 	args = ft_split(tokens->value, ' ', gc);
 	if (!args)
 		return ;
+	if (args[1] && args[2])
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		cmd->exit_status = 1;
+		return ;
+	}
 	target_dir = get_target_directory(args, env, cmd);
 	if (!target_dir)
 		return ;

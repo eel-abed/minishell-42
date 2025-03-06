@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_helper.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 17:48:28 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:48:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ bool handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage 
 
     while (current)
     {
-        // Check for redirection operators
         if (current->type == kind_redir_right)
         {
             found_redirection = true;
