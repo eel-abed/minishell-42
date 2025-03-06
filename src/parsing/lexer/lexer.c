@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/06 17:12:58 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:22:10 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 
 	temp = input;
 	token_list = NULL;
+	add_history(input);
 	if (quote_check(temp, cmd) == 1)
 		return (printf("Syntax %s !\n", ERROR), NULL);
 	if (check_syntax(temp, cmd) == 0)
@@ -59,6 +60,23 @@ bool	check_syntax(char *input, t_command *cmd)
 		++i;
 	}
 	return (true);
+}
+char	*replace_substring(char *str, int start, int end, char *replacement,
+	t_garbage **gc)
+{
+int			len;
+char	*result;
+
+if (!str || !replacement)
+	return (NULL);
+len = ft_strlen(str) - (end - start) + ft_strlen(replacement);
+result = gc_malloc(gc, sizeof(char) * (len + 1));
+if (!result)
+	return (NULL);
+ft_strncpy(result, str, start);
+ft_strlcat(result, replacement, len + 1);
+ft_strlcat(result, str + end, len + 1);
+return (result);
 }
 
 char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
@@ -118,6 +136,7 @@ char	*might_replace(t_env *env, char *input, int j, char *tmp,
 	}
 	return (input);
 }
+<<<<<<< HEAD
 
 char	*replace_substring(char *str, t_range pos, char *replacement,
 		t_garbage **gc)
@@ -136,3 +155,5 @@ char	*replace_substring(char *str, t_range pos, char *replacement,
 	ft_strlcat(result, str + pos.end, len + 1);
 	return (result);
 }
+=======
+>>>>>>> bf5293dfc52beb422a4cb5c321c4fe84fd332760
