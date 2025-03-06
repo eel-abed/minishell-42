@@ -6,28 +6,30 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/06 18:35:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:56:01 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_signal_received = 0;
+int		g_signal_received = 0;
 
-void handle_command_line(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
+void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
+		t_garbage **gc)
 {
-    t_tokens *current = tokens;
+	t_tokens	*current;
 
-    while (current)
-    {
-        if (current->type == kind_pipe)
-        {
-            execute_piped_commands(tokens, cmd_info, gc);
-            return;
-        }
-        current = current->next;
-    }
-    execute_command(tokens, cmd_info, gc);
+	current = tokens;
+	while (current)
+	{
+		if (current->type == kind_pipe)
+		{
+			execute_piped_commands(tokens, cmd_info, gc);
+			return ;
+		}
+		current = current->next;
+	}
+	execute_command(tokens, cmd_info, gc);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -41,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	gc = NULL;
 	(void)argc;
 	(void)argv;
-	env = init_env(envp,&gc);
+	env = init_env(envp, &gc);
 	if (!env)
 		return (1);
 	setup_signals();
@@ -52,18 +54,17 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = readline("minishell> ");
 		if (!input)
-			break;
+			break ;
 		if (strlen(input) > 0)
 		{
-			token_clean = ft_lexer(input, env,&gc,&cmd);
+			token_clean = ft_lexer(input, env, &gc, &cmd);
 			// print_tokens(token_clean);
 			if (token_clean)
-				handle_command_line(token_clean, &cmd,&gc);
+				handle_command_line(token_clean, &cmd, &gc);
 		}
-		if(input)
+		if (input)
 			free(input);
 	}
 	gc_free_all(&gc);
 	return (0);
 }
-

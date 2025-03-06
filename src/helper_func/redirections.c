@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 19:51:29 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:56:58 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,7 @@ int	redirect_output(const char *filename, int append_mode)
 	close(fd);
 	return (0);
 }
-// int redirect_input(const char *filename)
-// {
-//     char *unquoted_filename;
-//     int fd;
-    
-//     // Remove quotes but preserve the filename as-is
-//     unquoted_filename = remove_outer_quotes((char *)filename, gc);
-//     if (!unquoted_filename)
-//         return (-1);
-        
-//     fd = open(unquoted_filename, O_RDONLY);
-//     if (fd == -1)
-//     {
-//         ft_putstr_fd("minishell: ", 2);
-//         perror(unquoted_filename);
-//         return (-1);
-//     }
-    
-//     if (dup2(fd, STDIN_FILENO) == -1)
-//     {
-//         close(fd);
-//         return (-1);
-//     }
-//     close(fd);
-//     return (0);
-// }
+
 int	redirect_input(const char *filename)
 {
 	int	fd;

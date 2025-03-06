@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 19:48:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:56:16 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,67 +100,70 @@ int	finalize_heredoc(int fd, char *filename, int status)
 	unlink(filename);
 	return (status);
 }
-bool handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
+bool	handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info,
+		t_garbage **gc)
 {
-    t_tokens *current = tokens;
-    bool found_redirection = false;
+	t_tokens	*current;
+	bool		found_redirection;
 
-    while (current)
-    {
-        if (current->type == kind_redir_right)
-        {
-            found_redirection = true;
-            if (current->next)
-            {
-                cmd_info->output_file = ft_strdup(current->next->value, gc);
-                if (redirect_output(current->next->value, 0) < 0)
-                {
-                    cmd_info->exit_status = 1;
-                    return false;
-                }
-            }
-        }
-        else if (current->type == kind_redir_2right)
-        {
-            found_redirection = true;
-            if (current->next)
-            {
-                cmd_info->output_file = ft_strdup(current->next->value, gc);
-                if (redirect_output(current->next->value, 1) < 0)
-                {
-                    cmd_info->exit_status = 1;
-                    return false;
-                }
-            }
-        }
-        else if (current->type == kind_redir_left)
-        {
-            found_redirection = true;
-            if (current->next)
-            {
-                cmd_info->input_file = ft_strdup(current->next->value, gc);
-                if (redirect_input(current->next->value) < 0)
-                {
-                    cmd_info->exit_status = 1;
-                    return false;
-                }
-            }
-        }
-        else if (current->type == kind_redir_2left)
-        {
-            found_redirection = true;
-            if (current->next)
-            {
-                cmd_info->delimiter = ft_strdup(current->next->value, gc);
-                cmd_info->heredoc_flag = true;
-                if (heredoc(current->next->value, gc) < 0)
-                {
-                    cmd_info->exit_status = 1;
-                    return false;
-                }
-            }
-        }
-        current = current->next;
-    }
-    return true;
+	current = tokens;
+	found_redirection = false;
+	while (current)
+	{
+		if (current->type == kind_redir_right)
+		{
+			found_redirection = true;
+			if (current->next)
+			{
+				cmd_info->output_file = ft_strdup(current->next->value, gc);
+				if (redirect_output(current->next->value, 0) < 0)
+				{
+					cmd_info->exit_status = 1;
+					return (false);
+				}
+			}
+		}
+		else if (current->type == kind_redir_2right)
+		{
+			found_redirection = true;
+			if (current->next)
+			{
+				cmd_info->output_file = ft_strdup(current->next->value, gc);
+				if (redirect_output(current->next->value, 1) < 0)
+				{
+					cmd_info->exit_status = 1;
+					return (false);
+				}
+			}
+		}
+		else if (current->type == kind_redir_left)
+		{
+			found_redirection = true;
+			if (current->next)
+			{
+				cmd_info->input_file = ft_strdup(current->next->value, gc);
+				if (redirect_input(current->next->value) < 0)
+				{
+					cmd_info->exit_status = 1;
+					return (false);
+				}
+			}
+		}
+		else if (current->type == kind_redir_2left)
+		{
+			found_redirection = true;
+			if (current->next)
+			{
+				cmd_info->delimiter = ft_strdup(current->next->value, gc);
+				cmd_info->heredoc_flag = true;
+				if (heredoc(current->next->value, gc) < 0)
+				{
+					cmd_info->exit_status = 1;
+					return (false);
+				}
+			}
+		}
+		current = current->next;
+	}
+	return (true);
 }

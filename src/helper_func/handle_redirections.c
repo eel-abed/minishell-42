@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 15:38:13 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:56:08 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 static bool	handle_append_output(char **parts, int i, t_command *cmd_info,
 		t_garbage **gc)
 {
+	int	fd;
+
 	if (!parts[i + 1])
 		return (true);
-	int fd = open(parts[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-    if (fd == -1) 
+	fd = open(parts[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
 	{
-        ft_putstr_fd("minishell: ", 2);
-        ft_putstr_fd(parts[i + 1], 2);
-        ft_putstr_fd(": Permission denied\n", 2);
-        cmd_info->exit_status = 1;
-        return (false);
-    }
-    close(fd);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(parts[i + 1], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		cmd_info->exit_status = 1;
+		return (false);
+	}
+	close(fd);
 	cmd_info->output_file = ft_strdup(parts[i + 1], gc);
 	if (redirect_output(parts[i + 1], 1) < 0)
 	{
