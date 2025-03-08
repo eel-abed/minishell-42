@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 19:57:16 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:41:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static bool	is_valid_n_flag(char *arg)
 	}
 	return (true);
 }
+
 static void	print_echo_args(t_tokens *tokens, bool newline)
 {
 	t_tokens	*current;

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 19:56:16 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:41:07 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	finalize_heredoc(int fd, char *filename, int status)
 	unlink(filename);
 	return (status);
 }
+
 bool	handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info,
 		t_garbage **gc)
 {

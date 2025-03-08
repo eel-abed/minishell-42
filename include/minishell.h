@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 19:56:39 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:41:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include <unistd.h>
 
 extern int				g_signal_received;
+
 typedef enum e_operator_kind
 {
 	kind_none,
