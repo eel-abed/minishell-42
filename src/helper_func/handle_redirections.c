@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 17:05:34 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:07:38 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ bool	process_redirection(char **parts, int i, t_command *cmd_info,
 		return (handle_heredoc(parts, i, cmd_info, gc));
 	else if (!ft_strcmp(parts[i], ">"))
 	{
-		if (!handle_output_redirection(parts, i, cmd_info, gc))
-			return (false);
-		return (false);
+		return handle_output_redirection(parts, i, cmd_info, gc);
 	}
 	else if (!ft_strcmp(parts[i], ">>"))
 	{
