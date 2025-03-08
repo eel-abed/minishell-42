@@ -3,4 +3,5 @@ PRIORITE : ls >> oui
 2nd : echo max > oui | echo yesa
     output: dans le file oui : [max | echo yesa]  dans le terminal : [yesa]
     on veut seulement [max] dans le file
+3eme: la globale
 APRES ON TEST TOUT PUIS PUSH
