@@ -1,0 +1,6 @@
+PRIORITE : ls >> oui
+    Ca ne marche plus
+2nd : echo max > oui | echo yesa
+    output: dans le file oui : [max | echo yesa]  dans le terminal : [yesa]
+    on veut seulement [max] dans le file
+APRES ON TEST TOUT PUIS PUSH
