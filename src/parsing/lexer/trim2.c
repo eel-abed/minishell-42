@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:25:13 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/06 19:15:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:23:48 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,23 @@ int	is_echo_cmd(char *str, t_garbage **gc)
 	if (!clean_str)
 		return (0);
 	result = !ft_strcmp(clean_str, "echo");
+	return (result);
+}
+int	is_cat_cmd(char *str, t_garbage **gc)
+{
+	char	*outer_quotes_removed;
+	char	*clean_str;
+	int		result;
+
+	if (!str)
+		return (0);
+	outer_quotes_removed = remove_outer_quotes(str, gc);
+	if (!outer_quotes_removed)
+		return (0);
+	clean_str = get_clean_word(outer_quotes_removed, gc);
+	if (!clean_str)
+		return (0);
+	result = !ft_strcmp(clean_str, "cat");
 	return (result);
 }
 

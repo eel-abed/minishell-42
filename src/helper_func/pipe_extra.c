@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:01:11 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 21:16:10 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 19:34:42 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_tokens	*find_next_command(t_tokens *current)
 		current = current->next;
 	return (current);
 }
+
 
 int	init_pipe_resources(t_pipe_data *data, t_tokens *tokens,
 		t_command *cmd_info, t_garbage **gc)

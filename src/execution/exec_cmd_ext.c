@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 19:19:46 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:29:34 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ char	*find_command_path(char *cmd, t_env *env, t_garbage **gc)
 		return (full_path);
 	return (NULL);
 }
-
 static int	wait_for_child(pid_t pid)
 {
 	int	status;
 	int	exit_status;
-
+	
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		exit_status = WEXITSTATUS(status);
+	exit_status = WEXITSTATUS(status);
 	else
-		exit_status = 1;
+	exit_status = 1;
 	return (exit_status);
 }
 
@@ -94,10 +93,24 @@ int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
 	char	**env_array;
 	char	**cmd_args;
 	pid_t	pid;
+	int		i;
+	char	*str;
 
-	cmd_args = ft_split(tokens->value, ' ', gc);
+	i = 0;
+	while (tokens->value[i] != 32 && tokens->value[i] != '\0')
+		i++;
+	str = ft_substr(tokens->value, 0, i, gc);
+	if (!str)
+		return (1);
+	if (ft_strncmp(str, "cat", 3) == 0)
+	{
+		cmd_args = ft_split_hors_quotes(tokens->value, ' ', gc);
+	}
+	else
+		cmd_args = ft_split(tokens->value, ' ', gc);
 	if (!cmd_args)
 		return (1);
+	cmd_args[1] = remove_outer_quotes(cmd_args[1], gc);
 	cmd_path = find_command_path(cmd_args[0], cmd_info->env, gc);
 	if (!cmd_path)
 		return (handle_command_not_found(cmd_args[0]));

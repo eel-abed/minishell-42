@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 19:14:03 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:46:08 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static void	execute_cmd(t_tokens *cmd_token, char **parts, t_command *cmd_info,
 				gc);
 }
 
+
 void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 {
 	int			original_stdout;
@@ -91,7 +92,18 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	cmd_info->env = tokens->env;
 	if (!tokens)
 		return ;
-	parts = ft_split(tokens->value, ' ', gc);
+	if (is_cat_cmd(tokens->value, gc) == 0)
+	{
+		parts = ft_split_hors_quotes(tokens->value, ' ', gc);
+	}
+	else
+		parts = ft_split(tokens->value, ' ', gc);
+	int i = 0;
+	while (parts[i])
+	{
+		// printf("parts[%d]: %s\n", i, parts[i]);
+		i++;
+	}
 	if (!parts)
 	{
 		save_restore_fd(&original_stdout, &original_stdin, 1);
@@ -118,4 +130,73 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 			execute_cmd(cmd_token, parts, cmd_info, gc);
 	}
 	save_restore_fd(&original_stdout, &original_stdin, 1);
+}
+static int	count_words_with_quotes(const char *s, char c)
+{
+	int		count;
+	int		i;
+	char	quote;
+
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+			count++;
+		while (s[i] && (s[i] != c || quote))
+		{
+			if ((s[i] == '"' || s[i] == '\'') && !quote)
+				quote = s[i];
+			else if (s[i] == quote)
+				quote = 0;
+			i++;
+		}
+	}
+	return (count);
+}
+
+char **ft_split_hors_quotes(char const *s, char c, t_garbage **gc)
+{
+    char    **result;
+    int     word_count;
+    int     i;
+    int     j;
+    char    quote;
+
+    if (!s)
+        return (NULL);
+    word_count = count_words_with_quotes(s, c);
+    result = gc_malloc(gc, sizeof(char *) * (word_count + 1));
+    if (!result)
+        return (NULL);
+    i = 0;
+    j = 0;
+    quote = 0;
+    while (j < word_count)
+    {
+        while (s[i] && s[i] == c)
+            i++;
+        if (s[i])
+        {
+            int start = i;
+            int len = 0;
+            while (s[i] && (s[i] != c || quote))
+            {
+                if ((s[i] == '"' || s[i] == '\'') && !quote)
+                    quote = s[i];
+                else if (s[i] == quote)
+                    quote = 0;
+                i++;
+                len++;
+            }
+            result[j] = ft_substr(s, start, len, gc);
+            if (!result[j])
+                return (NULL);
+            j++;
+        }
+    }
+    result[j] = NULL;
+    return (result);
 }
