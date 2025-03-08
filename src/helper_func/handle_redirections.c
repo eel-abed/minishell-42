@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 14:13:04 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/08 19:02:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,24 @@ static bool	handle_append_output(char **parts, int i, t_command *cmd_info,
 static bool	handle_input_redirection(char **parts, int i, t_command *cmd_info,
 		t_garbage **gc)
 {
+	char	*clean_filename;
+	int		j;
+
+	j = i + 1;
 	if (!parts[i + 1])
 		return (true);
-	cmd_info->input_file = ft_strdup(parts[i + 1], gc);
-	if (redirect_input(parts[i + 1]) < 0)
+	// Find the last non-redirection argument
+	while (parts[j] && ft_strcmp(parts[j], "<") != 0 && ft_strcmp(parts[j],
+			">") != 0 && ft_strcmp(parts[j], ">>") != 0 && ft_strcmp(parts[j],
+			"<<") != 0)
+	{
+		j++;
+	}
+	// Use the last file before any redirection
+	clean_filename = remove_outer_quotes(parts[j - 1], gc);
+	// printf("parts[j - 1]: %s\n", parts[j - 1]);
+	cmd_info->input_file = ft_strdup(parts[j - 1], gc);
+	if (redirect_input(clean_filename) < 0)
 	{
 		cmd_info->exit_status = 1;
 		return (false);
@@ -90,7 +104,7 @@ bool	process_redirection(char **parts, int i, t_command *cmd_info,
 		return (handle_heredoc(parts, i, cmd_info, gc));
 	else if (!ft_strcmp(parts[i], ">"))
 	{
-		return handle_output_redirection(parts, i, cmd_info, gc);
+		return (handle_output_redirection(parts, i, cmd_info, gc));
 	}
 	else if (!ft_strcmp(parts[i], ">>"))
 	{
