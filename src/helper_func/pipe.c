@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:18:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 19:48:23 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:40:02 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,26 @@ void	close_all_pipes(int **pipes, int pipe_count)
 
 void	child_process(t_pipe_data *data)
 {
+	t_tokens	*cmd_end;
+	t_tokens	*next_after_cmd;
+
+	cmd_end = data->current;
+	while (cmd_end && cmd_end->next && cmd_end->next->type != kind_pipe)
+		cmd_end = cmd_end->next;
+	next_after_cmd = NULL;
+	if (cmd_end && cmd_end->next)
+	{
+		next_after_cmd = cmd_end->next;
+		cmd_end->next = NULL;
+	}
 	if (data->i > 0)
 		dup2(data->pipes[data->i - 1][0], STDIN_FILENO);
 	if (data->i < data->pipe_count)
 		dup2(data->pipes[data->i][1], STDOUT_FILENO);
 	close_all_pipes(data->pipes, data->pipe_count);
 	execute_command(data->current, data->cmd_info, data->gc);
+	if (cmd_end && next_after_cmd)
+		cmd_end->next = next_after_cmd;
 	gc_free_all(data->gc);
 	exit(data->cmd_info->exit_status);
 }
