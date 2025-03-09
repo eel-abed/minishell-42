@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/09 17:55:10 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/03/09 18:09:45 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_FILES = main.c \
             execution/execution.c \
             execution/execution_utils.c \
 			execution/exec_cmd_ext.c \
+			execution/execution_big_helper.c \
 			execution/exec_cmd_ext_more.c \
 			execution/exec_cmd_ext_utils.c \
 			helper_func/redirections.c \

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 17:53:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 17:54:47 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:14:22 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,37 @@ t_env_var	*get_path_variable(t_env *env)
 		path_var = path_var->next;
 	}
 	return (NULL);
+}
+
+void	execute_cmd(t_tokens *cmd_token, char **parts, t_command *cmd_info,
+		t_garbage **gc)
+{
+	if (is_builtin(parts[0]))
+		execute_builtin(parts[0], cmd_token, cmd_info, gc);
+	else
+		cmd_info->exit_status = execute_external_command(cmd_token, cmd_info,
+				gc);
+}
+
+char	*extract_word(const char *s, int *i, char c, t_garbage **gc)
+{
+	int		start;
+	int		len;
+	char	quote;
+	char	*word;
+
+	quote = 0;
+	start = *i;
+	len = 0;
+	while (s[*i] && (s[*i] != c || quote))
+	{
+		if ((s[*i] == '"' || s[*i] == '\'') && !quote)
+			quote = s[*i];
+		else if (s[*i] == quote)
+			quote = 0;
+		(*i)++;
+		len++;
+	}
+	word = ft_substr(s, start, len, gc);
+	return (word);
 }

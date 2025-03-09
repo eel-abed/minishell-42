@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 17:54:41 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:14:30 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,20 @@ void					wait_for_children(pid_t *pids, int cmd_count,
 							t_command *cmd_info);
 int						wait_for_child(pid_t pid);
 t_env_var				*get_path_variable(t_env *env);
+t_tokens				*prepare_cmd_token(char **parts, t_tokens *tokens,
+							t_garbage **gc);
+char					*build_command_string(char **parts, t_garbage **gc);
+void					save_restore_fd(int *original_stdout,
+							int *original_stdin, int restore);
+void					handle_echo_command(char **parts, t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc);
+void					handle_other_command(char **parts, t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc);
+void					execute_cmd(t_tokens *cmd_token, char **parts,
+							t_command *cmd_info, t_garbage **gc);
 t_tokens				*find_next_command(t_tokens *current);
+char					*extract_word(const char *s, int *i, char c,
+							t_garbage **gc);
 int						heredoc(const char *delimiter, t_garbage **gc);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc);
