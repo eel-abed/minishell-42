@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 19:02:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:27:41 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ bool	process_redirection(char **parts, int i, t_command *cmd_info,
 	}
 	else if (!ft_strcmp(parts[i], ">>"))
 	{
-		if (!handle_append_output(parts, i, cmd_info, gc))
-			return (false);
-		return (false);
+		return (handle_append_output(parts, i, cmd_info, gc));
 	}
 	return (true);
 }
