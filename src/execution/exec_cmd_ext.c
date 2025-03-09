@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 17:29:34 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:43:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
 	str = ft_substr(tokens->value, 0, i, gc);
 	if (!str)
 		return (1);
-	if (ft_strncmp(str, "cat", 3) == 0)
+	if (ft_strncmp(str, "cat", 3) == 0 || ft_strncmp(str, "ls", 3) == 0)
 	{
 		cmd_args = ft_split_hors_quotes(tokens->value, ' ', gc);
 	}
