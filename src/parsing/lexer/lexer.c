@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/09 15:55:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:13:02 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
 	t_tokens	*next;
 	int			after_redir;
 	char		*quoted;
-
+	bool		is_echo_cmd;
 	current = tokens;
 	after_redir = 0;
 	while (current)
 	{
+		if (current->value && ft_strcmp(current->value, "echo") == 0)
+            is_echo_cmd = true;
 		if (current->value && (ft_strcmp(current->value, "cat") == 0 || ft_strcmp(current->value, "ls") == 0))
 		{
 			next = current->next;
@@ -100,7 +102,7 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
 		if (current->value && ft_strcmp(current->value, ">") == 0)
         {
             next = current->next;
-            if (next && next->type == kind_none)
+            if (next && next->type == kind_none && !is_echo_cmd)
             {
                 if (next->value[0] != '"' && next->value[0] != '\'')
                 {
@@ -108,6 +110,10 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
                     next->value = ft_strjoin(quoted, "\"", gc);
                 }
             }
+        }
+		if (current->value && ft_strcmp(current->value, "|") == 0)
+        {
+            is_echo_cmd = false;
         }
 		current = current->next;
 	}
