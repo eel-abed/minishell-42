@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 17:36:40 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:34:33 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,13 @@ typedef struct s_twpipe_norm
 }						t_wpipe_norm;
 // Norminette structure
 
-int	is_cat_cmd(char *str, t_garbage **gc);
-t_tokens *add_quotes_cat(t_tokens *tokens, t_garbage **gc);
+int						is_cat_cmd(char *str, t_garbage **gc);
+t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
-int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
-	t_garbage **gc);
-char **ft_split_hors_quotes(char const *s, char c, t_garbage **gc);
+int						execute_external_command(t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc);
+char					**ft_split_hors_quotes(char const *s, char c,
+							t_garbage **gc);
 void					free_env(t_env *env);
 bool					is_builtin(char *cmd);
 void					execute_builtin(char *cmd, t_tokens *tokens,
@@ -267,5 +268,4 @@ void					ft_clean_words_export(t_tokens *current,
 char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							t_garbage **gc);
 
-// norminette struct
 #endif
