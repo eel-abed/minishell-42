@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 17:34:33 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:54:41 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ void					close_all_pipes(int **pipes, int pipe_count);
 void					child_process(t_pipe_data *data);
 void					wait_for_children(pid_t *pids, int cmd_count,
 							t_command *cmd_info);
+int						wait_for_child(pid_t pid);
+t_env_var				*get_path_variable(t_env *env);
 t_tokens				*find_next_command(t_tokens *current);
 int						heredoc(const char *delimiter, t_garbage **gc);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,

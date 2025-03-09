@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 16:20:35 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:48:20 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	execute_cmd(t_tokens *cmd_token, char **parts, t_command *cmd_info,
 				gc);
 }
 
-
 void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 {
 	int			original_stdout;
@@ -98,7 +97,6 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	}
 	else
 		parts = ft_split(tokens->value, ' ', gc);
-
 	if (!parts)
 	{
 		save_restore_fd(&original_stdout, &original_stdin, 1);
@@ -154,46 +152,48 @@ static int	count_words_with_quotes(const char *s, char c)
 	return (count);
 }
 
-char **ft_split_hors_quotes(char const *s, char c, t_garbage **gc)
+char	**ft_split_hors_quotes(char const *s, char c, t_garbage **gc)
 {
-    char    **result;
-    int     word_count;
-    int     i;
-    int     j;
-    char    quote;
+	char	**result;
+	int		word_count;
+	int		i;
+	int		j;
+	char	quote;
+	int		start;
+	int		len;
 
-    if (!s)
-        return (NULL);
-    word_count = count_words_with_quotes(s, c);
-    result = gc_malloc(gc, sizeof(char *) * (word_count + 1));
-    if (!result)
-        return (NULL);
-    i = 0;
-    j = 0;
-    quote = 0;
-    while (j < word_count)
-    {
-        while (s[i] && s[i] == c)
-            i++;
-        if (s[i])
-        {
-            int start = i;
-            int len = 0;
-            while (s[i] && (s[i] != c || quote))
-            {
-                if ((s[i] == '"' || s[i] == '\'') && !quote)
-                    quote = s[i];
-                else if (s[i] == quote)
-                    quote = 0;
-                i++;
-                len++;
-            }
-            result[j] = ft_substr(s, start, len, gc);
-            if (!result[j])
-                return (NULL);
-            j++;
-        }
-    }
-    result[j] = NULL;
-    return (result);
+	if (!s)
+		return (NULL);
+	word_count = count_words_with_quotes(s, c);
+	result = gc_malloc(gc, sizeof(char *) * (word_count + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	quote = 0;
+	while (j < word_count)
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+		{
+			start = i;
+			len = 0;
+			while (s[i] && (s[i] != c || quote))
+			{
+				if ((s[i] == '"' || s[i] == '\'') && !quote)
+					quote = s[i];
+				else if (s[i] == quote)
+					quote = 0;
+				i++;
+				len++;
+			}
+			result[j] = ft_substr(s, start, len, gc);
+			if (!result[j])
+				return (NULL);
+			j++;
+		}
+	}
+	result[j] = NULL;
+	return (result);
 }
