@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 18:46:08 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:33:12 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,7 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	}
 	else
 		parts = ft_split(tokens->value, ' ', gc);
-	int i = 0;
-	while (parts[i])
-	{
-		// printf("parts[%d]: %s\n", i, parts[i]);
-		i++;
-	}
+
 	if (!parts)
 	{
 		save_restore_fd(&original_stdout, &original_stdin, 1);
