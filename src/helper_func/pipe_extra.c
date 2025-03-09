@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_extra.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:01:11 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 16:47:40 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:15:52 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_tokens	*find_next_command(t_tokens *current)
 		current = current->next;
 	return (current);
 }
-
 
 int	init_pipe_resources(t_pipe_data *data, t_tokens *tokens,
 		t_command *cmd_info, t_garbage **gc)
@@ -79,5 +78,4 @@ void	execute_piped_commands(t_tokens *tokens, t_command *cmd_info,
 	execute_pipe_loop(&data, tokens);
 	close_all_pipes(data.pipes, data.pipe_count);
 	wait_for_children(data.pids, data.cmd_count, cmd_info);
-	// gc_free_all(gc);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 15:58:01 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:15:37 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,13 @@ static bool	handle_input_redirection(char **parts, int i, t_command *cmd_info,
 	j = i + 1;
 	if (!parts[i + 1])
 		return (true);
-	// Find the last non-redirection argument
 	while (parts[j] && ft_strcmp(parts[j], "<") != 0 && ft_strcmp(parts[j],
 			">") != 0 && ft_strcmp(parts[j], ">>") != 0 && ft_strcmp(parts[j],
 			"<<") != 0)
 	{
 		j++;
 	}
-	// Use the last file before any redirection
 	clean_filename = remove_outer_quotes(parts[j - 1], gc);
-	// printf("parts[j - 1]: %s\n", parts[j - 1]);
 	cmd_info->input_file = ft_strdup(parts[j - 1], gc);
 	if (redirect_input(clean_filename) < 0)
 	{

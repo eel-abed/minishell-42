@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_helper.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 18:38:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:15:45 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ bool	handle_redirection_tokens(t_tokens *tokens, t_command *cmd_info,
 			if (current->next)
 			{
 				cmd_info->input_file = ft_strdup(current->next->value, gc);
-				current->next->value = remove_outer_quotes(current->next->value, gc);
+				current->next->value = remove_outer_quotes(current->next->value,
+						gc);
 				if (redirect_input(current->next->value) < 0)
 				{
 					cmd_info->exit_status = 1;
