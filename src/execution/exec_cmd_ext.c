@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 15:43:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:44:38 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ static t_env_var	*get_path_variable(t_env *env)
 	t_env_var	*path_var;
 
 	if (!env)
+	{
 		return (NULL);
+	}
 	if (!env->vars)
+	{
 		return (NULL);
+	}
 	path_var = env->vars;
 	while (path_var)
 	{
@@ -77,7 +81,7 @@ static int	wait_for_child(pid_t pid)
 {
 	int	status;
 	int	exit_status;
-	
+
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	exit_status = WEXITSTATUS(status);
@@ -107,16 +111,18 @@ int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
 		cmd_args = ft_split_hors_quotes(tokens->value, ' ', gc);
 	}
 	else
+	{
 		cmd_args = ft_split(tokens->value, ' ', gc);
+	}
 	if (!cmd_args)
 		return (1);
 	cmd_args[1] = remove_outer_quotes(cmd_args[1], gc);
 	cmd_path = find_command_path(cmd_args[0], cmd_info->env, gc);
 	if (!cmd_path)
-		return (handle_command_not_found(cmd_args[0]));
+	return (handle_command_not_found(cmd_args[0]));
 	env_array = env_to_array(cmd_info->env, gc);
 	if (!env_array)
-		return (1);
+	return (1);
 	pid = fork();
 	if (pid == -1)
 	{
