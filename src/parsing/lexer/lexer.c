@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/09 16:13:02 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:24:56 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	if (check_syntax(temp, cmd) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env, gc, cmd);
+	printf("DEBUG1 \n");
 	token_list = lets_tokeninze(temp, gc);
+	printf("DEBUG2 \n");
 	token_list = ft_trim_all(token_list, gc);
+	printf("DEBUG3 \n");
 	token_list = add_quotes_cat(token_list, gc);
+	printf("DEBUG4 \n");
 	token_list = token_with_pipe(token_list, gc);
 	current = token_list;
 	while (current)

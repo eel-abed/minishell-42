@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/08 17:30:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:48:41 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
 		if (current->type == kind_pipe)
 		{
 			execute_piped_commands(tokens, cmd_info, gc);
-			gc_free_all(gc);
+			// gc_free_all(gc);
 			return ;
 		}
 		current = current->next;
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			token_clean = ft_lexer(input, env, &gc, &cmd);
 			print_tokens(token_clean);
+			printf("DEBUG5 \n");
 			if (token_clean)
 				handle_command_line(token_clean, &cmd, &gc);
 		}

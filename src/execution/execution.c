@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 14:33:12 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:20:35 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	}
 	save_restore_fd(&original_stdout, &original_stdin, 1);
 }
+
 static int	count_words_with_quotes(const char *s, char c)
 {
 	int		count;
@@ -134,6 +135,7 @@ static int	count_words_with_quotes(const char *s, char c)
 
 	i = 0;
 	count = 0;
+	quote = 0;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)

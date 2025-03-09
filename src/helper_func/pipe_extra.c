@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:01:11 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/08 19:34:42 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:47:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	execute_piped_commands(t_tokens *tokens, t_command *cmd_info,
 	execute_pipe_loop(&data, tokens);
 	close_all_pipes(data.pipes, data.pipe_count);
 	wait_for_children(data.pids, data.cmd_count, cmd_info);
-	gc_free_all(gc);
+	// gc_free_all(gc);
 }
