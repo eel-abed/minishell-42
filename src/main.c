@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/09 17:12:19 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:52:55 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void print_int_tab(int *tab)
 int *compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
 {
 	t_tokens *curr;
+	
 	int fd;
 	int *here_doc_fds;
 	int i;
