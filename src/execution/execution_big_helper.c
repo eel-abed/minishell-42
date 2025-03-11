@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:06:45 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:08:43 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:20:53 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,3 @@ void	handle_echo_command(char **parts, t_tokens *tokens, t_command *cmd_info,
 		execute_builtin(first_command, tokens, cmd_info, gc);
 }
 
-void	handle_other_command(char **parts, t_tokens *tokens,
-		t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
-{
-	t_tokens	*cmd_token;
-
-	if (handle_redirectionnn(parts, cmd_info, gc, here_doc_fds))
-	{
-		cmd_token = prepare_cmd_token(parts, tokens, gc);
-		if (cmd_token)
-			execute_cmd(cmd_token, parts, cmd_info, gc);
-	}
-}
