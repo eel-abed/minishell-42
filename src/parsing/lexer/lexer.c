@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/09 17:57:27 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:08 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	token_list = lets_tokeninze(temp, gc);
 	token_list = ft_trim_all(token_list, gc);
 	token_list = add_quotes_cat(token_list, gc);
-
 	token_list = token_with_pipe(token_list, gc);
 	current = token_list;
 	while (current)
@@ -70,12 +69,14 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
 	t_tokens	*next;
 	char		*quoted;
 	bool		is_echo_cmd;
+
 	current = tokens;
 	while (current)
 	{
 		if (current->value && ft_strcmp(current->value, "echo") == 0)
-            is_echo_cmd = true;
-		if (current->value && (ft_strcmp(current->value, "cat") == 0 || ft_strcmp(current->value, "ls") == 0))
+			is_echo_cmd = true;
+		if (current->value && (ft_strcmp(current->value, "cat") == 0
+				|| ft_strcmp(current->value, "ls") == 0))
 		{
 			next = current->next;
 			if (next && next->type == kind_none)
@@ -100,21 +101,21 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
 			}
 		}
 		if (current->value && ft_strcmp(current->value, ">") == 0)
-        {
-            next = current->next;
-            if (next && next->type == kind_none && !is_echo_cmd)
-            {
-                if (next->value[0] != '"' && next->value[0] != '\'')
-                {
-                    quoted = ft_strjoin("\"", next->value, gc);
-                    next->value = ft_strjoin(quoted, "\"", gc);
-                }
-            }
-        }
+		{
+			next = current->next;
+			if (next && next->type == kind_none && !is_echo_cmd)
+			{
+				if (next->value[0] != '"' && next->value[0] != '\'')
+				{
+					quoted = ft_strjoin("\"", next->value, gc);
+					next->value = ft_strjoin(quoted, "\"", gc);
+				}
+			}
+		}
 		if (current->value && ft_strcmp(current->value, "|") == 0)
-        {
-            is_echo_cmd = false;
-        }
+		{
+			is_echo_cmd = false;
+		}
 		current = current->next;
 	}
 	return (tokens);

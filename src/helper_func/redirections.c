@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 18:15:29 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	redirect_output(const char *filename, int append_mode)
 
 int	redirect_input(int fd)
 {
-
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -67,7 +66,7 @@ char	*get_temp_filename(t_garbage **gc)
 {
 	static int	count = 0;
 	char		*filename;
-	char *filename_count;
+	char		*filename_count;
 
 	filename_count = ft_itoa(count++, gc);
 	filename = ft_strjoin("/tmp/minishell_heredoc_", filename_count, gc);
@@ -99,7 +98,8 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 		}
 	}
 	if (status < 0)
-	return (ft_putstr_fd("minishell: heredoc: failed to redirect input: ", STDERR_FILENO), status);
+		return (ft_putstr_fd("minishell: heredoc: failed to redirect input: ",
+				STDERR_FILENO), status);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{

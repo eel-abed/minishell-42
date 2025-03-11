@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/11 13:48:33 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:22:18 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int		g_signal_received = 0;
 
-int contains_here_doc(char *token_value, t_garbage **gc)
+int	contains_here_doc(char *token_value, t_garbage **gc)
 {
-	char **token_split;
-	int i;
-	int j;
+	char	**token_split;
+	int		i;
+	int		j;
 
 	token_split = ft_split(token_value, ' ', gc);
 	i = 0;
@@ -32,28 +32,29 @@ int contains_here_doc(char *token_value, t_garbage **gc)
 	return (j);
 }
 
-int count_here_docs(t_tokens *tokens, t_garbage **gc)
+int	count_here_docs(t_tokens *tokens, t_garbage **gc)
 {
-	int i;
-	t_tokens *tmp;
+	int			i;
+	t_tokens	*tmp;
 
 	i = 0;
 	tmp = tokens;
 	while (tmp)
 	{
-		if (tmp->type == kind_redir_2left || (tmp->type == kind_none && contains_here_doc(tmp->value, gc)))
+		if (tmp->type == kind_redir_2left || (tmp->type == kind_none
+				&& contains_here_doc(tmp->value, gc)))
 			i += contains_here_doc(tmp->value, gc);
 		tmp = tmp->next;
 	}
 	return (i);
 }
 
-void *handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
+void	*handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 {
-	int j;
-	int i;
-	char **split_token;
-	int fd;
+	int		j;
+	int		i;
+	char	**split_token;
+	int		fd;
 
 	j = 1;
 	i = 0;
@@ -63,10 +64,11 @@ void *handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 		if (!ft_strcmp(split_token[j], "<<"))
 		{
 			j++;
-			continue;
+			continue ;
 		}
-		else if (ft_strcmp(split_token[j], "<<") && ft_strcmp(split_token[j - 1], "<<"))
-			break;
+		else if (ft_strcmp(split_token[j], "<<") && ft_strcmp(split_token[j
+				- 1], "<<"))
+			break ;
 		fd = heredoc(split_token[j], gc);
 		if (fd == -1)
 			return (NULL);
@@ -75,70 +77,6 @@ void *handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 		j++;
 	}
 	return (NULL);
-}
-
-void print_int_tab(int *tab)
-{
-	int i;
-
-	i = 0;
-	while (i < 3)
-	{
-		printf("tab[%d] -> %d\n", i, tab[i]);
-		i++;
-	}
-}
-
-int *compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
-{
-	t_tokens *curr;
-	
-	int fd;
-	int *here_doc_fds;
-	int i;
-
-	curr = tokens;
-	i = 0;
-	here_doc_fds = gc_malloc(gc, (count_here_docs(tokens, gc) * sizeof (int)));
-	while (curr)
-	{
-		if (curr->type == kind_redir_2left )
-		{
-			fd = heredoc(curr->next->value, gc);
-			if (fd == -1)
-			return (NULL);
-			here_doc_fds[i] = fd;
-			i++;
-		}
-		else if (curr->type == kind_none)
-			handle_single_token(curr, here_doc_fds, gc);
-		curr = curr->next;
-	}
-	return (here_doc_fds);
-}
-
-void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
-		t_garbage **gc)
-{
-	g_signal_received = -1;
-	
-	t_tokens	*current;
-	int *here_doc_fds;
-
-	here_doc_fds = compute_here_docs(tokens,  gc);
-	current = tokens;
-	while (current)
-	{
-		if (current->type == kind_pipe)
-		{
-			execute_piped_commands(tokens, cmd_info, gc, &here_doc_fds);
-			g_signal_received = 0;
-			return ;
-		}
-		current = current->next;
-	}
-	execute_command(tokens, cmd_info, gc, &here_doc_fds);
-	g_signal_received = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -181,15 +119,4 @@ int	main(int argc, char **argv, char **envp)
 	close(1);
 	close(0);
 	return (0);
-}
-
-
-void close_all_std_evetring()
-{
-	int i = 3;
-	while (i < 2000)
-	{
-		close(i);
-		i++;
-	}
 }

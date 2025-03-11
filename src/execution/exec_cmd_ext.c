@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 17:54:26 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:53 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
 	char	**env_array;
 	char	**cmd_args;
 
-	
 	cmd_args = prepare_command_args(tokens, gc);
 	if (!cmd_args)
 		return (1);

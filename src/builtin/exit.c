@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/28 17:44:42 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:03:25 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static int	is_valid_number(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if (!str[i])
-		return (0);
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static long long	ft_atoll(const char *str)
 {
@@ -53,6 +35,25 @@ static long long	ft_atoll(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+static int	is_valid_number(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	if (ft_atoll(str) > INT_MAX || ft_atoll(str) < INT_MIN)
+		return (0);
+	return (1);
 }
 
 static void	handle_invalid_number(char *arg, t_garbage **gc)

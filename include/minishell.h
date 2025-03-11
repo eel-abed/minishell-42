@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 13:30:30 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:23:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,9 @@ void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
 							t_garbage **gc);
 void					pwd_builtin(void);
 void					echo_builtin_tokens(t_tokens *tokens);
-bool					handle_redirection_tokens(t_tokens *tokens, int *here_doc_fds,
-							t_command *cmd_info, t_garbage **gc);
+bool					handle_redirection_tokens(t_tokens *tokens,
+							int *here_doc_fds, t_command *cmd_info,
+							t_garbage **gc);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
 							t_garbage **gc);
@@ -177,9 +178,11 @@ char					*build_command_string(char **parts, t_garbage **gc);
 void					save_restore_fd(int *original_stdout,
 							int *original_stdin, int restore);
 void					handle_echo_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc, int *here_doc_fds);
+							t_command *cmd_info, t_garbage **gc,
+							int *here_doc_fds);
 void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 void					execute_cmd(t_tokens *cmd_token, char **parts,
 							t_command *cmd_info, t_garbage **gc);
 t_tokens				*find_next_command(t_tokens *current);
@@ -190,7 +193,8 @@ bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
 int						handle_command_not_found(char *cmd);
 void					execute_piped_commands(t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
 void					setup_signals(void);
@@ -266,10 +270,10 @@ void					process_export_arg(char *arg, t_env *env,
 							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
-							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 int						write_to_heredoc(int fd, const char *str);
-int						init_heredoc(char **filename,
-							int *fd, t_garbage **gc);
+int						init_heredoc(char **filename, int *fd, t_garbage **gc);
 int						process_heredoc_line(int fd, char *line,
 							const char *delimiter);
 int						finalize_heredoc(int fd, int status);
@@ -282,12 +286,16 @@ void					ft_clean_words_export(t_tokens *current,
 							t_garbage **gc);
 char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							t_garbage **gc);
+void					*handle_single_token(t_tokens *token, int *here_doc_fds,
+							t_garbage **gc);
+int						count_here_docs(t_tokens *tokens, t_garbage **gc);
 
-							int is_redir_operator(char *str);
-							char *extract_first_cmd(char **parts);
-							void print_tab(char **tab);
-							int    redirect_simple_input(const char *filename);
+int						is_redir_operator(char *str);
+char					*extract_first_cmd(char **parts);
+void					print_tab(char **tab);
+int						redirect_simple_input(const char *filename);
+void					handle_command_line(t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc);
+void					close_all_std_evetring(void);
 
-void			close_all_std_evetring();
-							
 #endif

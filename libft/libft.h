@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:28:36 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/10 15:34:51 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/03/11 15:28:51 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

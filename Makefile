@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/09 18:09:45 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/03/11 16:19:54 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ LIBFT_DIR = libft
 
 # Source files
 SRC_FILES = main.c \
+			main_norm.c \
             execution/execution.c \
             execution/execution_utils.c \
 			execution/exec_cmd_ext.c \
