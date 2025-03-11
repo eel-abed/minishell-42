@@ -188,7 +188,8 @@ void					execute_cmd(t_tokens *cmd_token, char **parts,
 t_tokens				*find_next_command(t_tokens *current);
 char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);
-int						heredoc(const char *delimiter, t_garbage **gc);
+int						heredoc(const char *delimiter, t_garbage **gc, int *original_stdin);
+void					reopen_stdin(int *original_stdin);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
 int						handle_command_not_found(char *cmd);
@@ -275,7 +276,7 @@ bool					process_redirection(char **parts, int i,
 int						write_to_heredoc(int fd, const char *str);
 int						init_heredoc(char **filename, int *fd, t_garbage **gc);
 int						process_heredoc_line(int fd, char *line,
-							const char *delimiter);
+							const char *delimiter, int *original_stdin);
 int						finalize_heredoc(int fd, int status);
 char					*get_temp_filename(t_garbage **gc);
 char					*join_env_var(t_env_var *current, t_garbage **gc);
@@ -286,7 +287,7 @@ void					ft_clean_words_export(t_tokens *current,
 							t_garbage **gc);
 char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							t_garbage **gc);
-void					*handle_single_token(t_tokens *token, int *here_doc_fds,
+int 	handle_single_token(t_tokens *token, int *here_doc_fds,
 							t_garbage **gc);
 int						count_here_docs(t_tokens *tokens, t_garbage **gc);
 

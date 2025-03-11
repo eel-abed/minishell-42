@@ -75,7 +75,7 @@ char	*get_temp_filename(t_garbage **gc)
 	return (filename);
 }
 
-int	heredoc(const char *delimiter, t_garbage **gc)
+int	heredoc(const char *delimiter, t_garbage **gc, int *original_stdin)
 {
 	char	*line;
 	char	*filename;
@@ -89,7 +89,7 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 	while (1)
 	{
 		line = readline("> ");
-		result = process_heredoc_line(fd, line, delimiter);
+		result = process_heredoc_line(fd, line, delimiter, original_stdin);
 		if (result != 0)
 		{
 			if (result < 0)
@@ -97,7 +97,9 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 			break ;
 		}
 	}
-	if (status < 0)
+	if (g_signal_received == SIGINT)
+		return (-1);
+	if (status < 0 )
 		return (ft_putstr_fd("minishell: heredoc: failed to redirect input: ",
 				STDERR_FILENO), status);
 	fd = open(filename, O_RDONLY);
@@ -109,7 +111,6 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return (-1);
 	}
-	
 	unlink(filename);
 	return (fd);
 }

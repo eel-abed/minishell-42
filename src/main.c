@@ -49,15 +49,17 @@ int	count_here_docs(t_tokens *tokens, t_garbage **gc)
 	return (i);
 }
 
-void	*handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
+int	handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 {
 	int		j;
 	int		i;
 	char	**split_token;
 	int		fd;
+	int original_stdin;
 
 	j = 1;
 	i = 0;
+	original_stdin = dup(STDIN_FILENO);
 	split_token = ft_split(token->value, ' ', gc);
 	while (split_token[j])
 	{
@@ -69,14 +71,14 @@ void	*handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 		else if (ft_strcmp(split_token[j], "<<") && ft_strcmp(split_token[j
 				- 1], "<<"))
 			break ;
-		fd = heredoc(split_token[j], gc);
+		fd = heredoc(split_token[j], gc, &original_stdin);
 		if (fd == -1)
-			return (NULL);
+			return (1);
 		here_doc_fds[i] = fd;
 		i++;
 		j++;
 	}
-	return (NULL);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)

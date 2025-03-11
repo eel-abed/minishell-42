@@ -12,10 +12,21 @@
 
 #include "../../include/minishell.h"
 
-int	process_heredoc_line(int fd, char *line, const char *delimiter)
+void reopen_stdin(int *original_stdin)
+{
+	dup2(*original_stdin, STDIN_FILENO);
+	close(*original_stdin);
+}
+
+int	process_heredoc_line(int fd, char *line, const char *delimiter, int *original_stdin)
 {
 	if (!line)
 	{
+		if (g_signal_received == SIGINT)
+		{
+			reopen_stdin(original_stdin);
+			return (-1);
+		}
 		ft_putendl_fd("minishell: warning: here-document delimited by EOF", 2);
 		return (1);
 	}

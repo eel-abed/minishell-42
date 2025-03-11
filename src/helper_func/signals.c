@@ -11,28 +11,24 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+void here_doc_sig_handler(int sig);
 
 void	handle_sigint(int sig)
 {
-	(void)sig;
-	write(STDERR_FILENO, "\n", 1);
-	if (g_signal_received < 0)
-	{
-		g_signal_received = sig;
-	}
-	else
-	{
-		g_signal_received = sig;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+    g_signal_received = sig;
+    if (sig == SIGINT)
+    {
+        printf("\n");
+        rl_replace_line("", 0); // Clear the current input line
+        rl_on_new_line();
+        rl_redisplay();
+    }
 }
 
 void handle_sigquit(int sig)
 {
     (void)sig;
-    
+
     // We don't write anything here - the message will be printed
     // when we detect that a child process was terminated by SIGQUIT
     if (g_signal_received < 0) {
@@ -48,22 +44,19 @@ void handle_sigquit(int sig)
 void	setup_signals(void)
 {
 	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
-	struct sigaction	sa_tstp;
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
-	
-	// Use our SIGQUIT handler instead of ignoring it
-	sa_quit.sa_handler = handle_sigquit;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
-	
-	sa_tstp.sa_handler = SIG_IGN;
-	sigemptyset(&sa_tstp.sa_mask);
-	sa_tstp.sa_flags = SA_RESTART;
-	sigaction(SIGTSTP, &sa_tstp, NULL);
+}
+
+void	setup_here_doc_signals(void)
+{
+	struct sigaction	sa_int;
+
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_handler = here_doc_sig_handler;
+	sa_int.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa_int, NULL);
 }
