@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 17:53:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:09:02 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:02:02 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 int	wait_for_child(pid_t pid)
 {
 	int	status;
-	int	exit_status;
+	int	exit_code;
 
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		exit_status = WEXITSTATUS(status);
+		exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		exit_code = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+	}
 	else
-		exit_status = 1;
-	return (exit_status);
+		exit_code = 1;
+	return (exit_code);
 }
 
 t_env_var	*get_path_variable(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:50:09 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:08:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:01:04 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return (-1);
 	}
+	
 	unlink(filename);
 	return (fd);
 }

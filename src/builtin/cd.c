@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:24 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 18:51:23 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:16:50 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static const char	*get_target_directory(char **args, t_env *env,
 		t_command *cmd)
 {
 	t_env_var	*home_var;
+	t_env_var	*oldpwd_var;
 
 	if (!args[1])
 	{
@@ -80,6 +81,17 @@ static const char	*get_target_directory(char **args, t_env *env,
 			return (NULL);
 		}
 		return (home_var->value);
+	}
+	else if (ft_strcmp(args[1], "-") == 0)
+	{
+		oldpwd_var = find_env_var(env, "OLDPWD");
+		if (!oldpwd_var || !oldpwd_var->value)
+		{
+			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
+			cmd->exit_status = 1;
+			return (NULL);
+		}
+		return (oldpwd_var->value);
 	}
 	return (args[1]);
 }
@@ -108,5 +120,16 @@ void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
 		return ;
 	}
 	update_env_vars(env, gc);
+	if (args[1] && ft_strcmp(args[1], "-") == 0)
+	{
+		t_env_var	*pwd_var;
+
+		pwd_var = find_env_var(env, "PWD");
+		if (pwd_var && pwd_var->value)
+		{
+			ft_putstr_fd(pwd_var->value, STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		}
+	}
 	cmd->exit_status = 0;
 }
