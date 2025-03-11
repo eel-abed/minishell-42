@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 18:14:30 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:30:30 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,4 +287,7 @@ char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							char *extract_first_cmd(char **parts);
 							void print_tab(char **tab);
 							int    redirect_simple_input(const char *filename);
+
+void			close_all_std_evetring();
+							
 #endif
