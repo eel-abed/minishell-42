@@ -6,19 +6,27 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/02 16:54:23 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:46:52 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	handle_sigint(int sig)
+void handle_sigint(int sig)
 {
-	g_signal_received = sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+    (void)sig;
+    write(STDERR_FILENO, "\n", 1);
+    
+    if (g_signal_received < 0) {
+        // Signal received during command execution
+        g_signal_received = sig;
+    } else {
+        // Signal received during prompt/readline
+        g_signal_received = sig;
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
 }
 
 void	setup_signals(void)

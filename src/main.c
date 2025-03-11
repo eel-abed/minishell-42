@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/11 12:52:55 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:48:33 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int *compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
 void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
 		t_garbage **gc)
 {
+	g_signal_received = -1;
+	
 	t_tokens	*current;
 	int *here_doc_fds;
 
@@ -130,12 +132,13 @@ void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
 		if (current->type == kind_pipe)
 		{
 			execute_piped_commands(tokens, cmd_info, gc, &here_doc_fds);
-			// gc_free_all(gc);
+			g_signal_received = 0;
 			return ;
 		}
 		current = current->next;
 	}
 	execute_command(tokens, cmd_info, gc, &here_doc_fds);
+	g_signal_received = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
