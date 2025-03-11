@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:23:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:21:24 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,5 +297,7 @@ int						redirect_simple_input(const char *filename);
 void					handle_command_line(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
 void					close_all_std_evetring(void);
+void	handle_other_command(char **parts, t_tokens *tokens,
+    t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
 
 #endif
