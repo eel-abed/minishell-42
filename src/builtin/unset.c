@@ -61,9 +61,9 @@ static int	process_unset_args(char **args, t_env *env)
 	{
 		if (!is_valid_identifier(args[i]))
 		{
-			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
 			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 			exit_status = 1;
 		}
 		else

@@ -76,19 +76,19 @@ t_tokens	*prepare_cmd_token(char **parts, t_tokens *tokens, t_garbage **gc)
 }
 
 void	handle_echo_command(char **parts, t_tokens *tokens, t_command *cmd_info,
-		t_garbage **gc)
+		t_garbage **gc, int *here_doc_fds)
 {
 	char *first_command = extract_first_cmd(parts);
-	if (handle_redirection_tokens(tokens, cmd_info, gc))
+	if (handle_redirection_tokens(tokens, here_doc_fds, cmd_info, gc))
 		execute_builtin(first_command, tokens, cmd_info, gc);
 }
 
 void	handle_other_command(char **parts, t_tokens *tokens,
-		t_command *cmd_info, t_garbage **gc)
+		t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
 {
 	t_tokens	*cmd_token;
 
-	if (handle_redirectionnn(parts, cmd_info, gc))
+	if (handle_redirectionnn(parts, cmd_info, gc, here_doc_fds))
 	{
 		cmd_token = prepare_cmd_token(parts, tokens, gc);
 		if (cmd_token)

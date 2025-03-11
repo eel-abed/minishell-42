@@ -14,13 +14,13 @@
 
 static void	report_error(const char *filename, int error_type)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (error_type == 0 && filename)
 	{
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	ft_putendl_fd(strerror(errno), 2);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
 int	redirect_output(const char *filename, int append_mode)
@@ -49,23 +49,13 @@ int	redirect_output(const char *filename, int append_mode)
 	return (0);
 }
 
-int	redirect_input(const char *filename)
+int	redirect_input(int fd)
 {
-	int	fd;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		return (-1);
-	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		close(fd);
 		return (-1);
 	}
@@ -77,10 +67,10 @@ char	*get_temp_filename(t_garbage **gc)
 {
 	static int	count = 0;
 	char		*filename;
-	char		num[32];
+	char *filename_count;
 
-	snprintf(num, sizeof(num), "%d", count++);
-	filename = ft_strjoin("/tmp/minishell_heredoc_", num, gc);
+	filename_count = ft_itoa(count++, gc);
+	filename = ft_strjoin("/tmp/minishell_heredoc_", filename_count, gc);
 	if (!filename)
 		return (NULL);
 	return (filename);
@@ -94,7 +84,7 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 	int		status;
 	int		result;
 
-	status = init_heredoc(delimiter, &filename, &fd, gc);
+	status = init_heredoc(&filename, &fd, gc);
 	if (status < 0)
 		return (-1);
 	while (1)
@@ -108,5 +98,17 @@ int	heredoc(const char *delimiter, t_garbage **gc)
 			break ;
 		}
 	}
-	return (finalize_heredoc(fd, filename, status));
+	if (status < 0)
+	return (ft_putstr_fd("minishell: heredoc: failed to redirect input: ", STDERR_FILENO), status);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return (-1);
+	}
+	unlink(filename);
+	return (fd);
 }

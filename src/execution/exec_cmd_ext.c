@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "stdio.h"
 
 static int	try_command_path(char **paths, char *cmd, char **full_path,
 		t_garbage **gc)
@@ -90,7 +91,9 @@ static int	execute_command_process(char *cmd_path, char **cmd_args,
 		return (1);
 	}
 	if (pid == 0)
+	{
 		execute_child(cmd_path, cmd_args, env_array);
+	}
 	return (wait_for_child(pid));
 }
 
@@ -101,6 +104,7 @@ int	execute_external_command(t_tokens *tokens, t_command *cmd_info,
 	char	**env_array;
 	char	**cmd_args;
 
+	
 	cmd_args = prepare_command_args(tokens, gc);
 	if (!cmd_args)
 		return (1);

@@ -60,7 +60,7 @@ char *rebuild_command(t_tokens *tokens, t_garbage **gc)
 	return (cmd);
 }
 
-void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
+void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
 {
 	int			original_stdout;
 	int			original_stdin;
@@ -75,10 +75,10 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc)
 	if (parts[0] && contain_echo_token(tokens))
 	{
 		parts = ft_split(rebuild_command(tokens, gc), ' ', gc);
-		handle_echo_command(parts, tokens, cmd_info, gc);
+		handle_echo_command(parts, tokens, cmd_info, gc, *here_doc_fds);
 	}
 	else
-		handle_other_command(parts, tokens, cmd_info, gc);
+		handle_other_command(parts, tokens, cmd_info, gc, here_doc_fds);
 	save_restore_fd(&original_stdout, &original_stdin, 1);
 }
 

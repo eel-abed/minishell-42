@@ -43,7 +43,7 @@ int	init_pipe_resources(t_pipe_data *data, t_tokens *tokens,
 	return (setup_pipes(data->pipes, data->pipe_count));
 }
 
-void	execute_pipe_loop(t_pipe_data *data, t_tokens *tokens)
+void	execute_pipe_loop(t_pipe_data *data, t_tokens *tokens, int **here_doc_fds)
 {
 	data->current = tokens;
 	data->i = 0;
@@ -60,22 +60,22 @@ void	execute_pipe_loop(t_pipe_data *data, t_tokens *tokens)
 			return ;
 		}
 		if (data->pids[data->i] == 0)
-			child_process(data);
+			child_process(data, here_doc_fds);
 		data->i++;
 	}
 }
 
 void	execute_piped_commands(t_tokens *tokens, t_command *cmd_info,
-		t_garbage **gc)
+		t_garbage **gc, int **here_doc_fds)
 {
 	t_pipe_data	data;
 
 	if (!init_pipe_resources(&data, tokens, cmd_info, gc))
 	{
-		ft_putstr_fd("minishell: memory allocation error\n", 2);
+		ft_putstr_fd("minishell: memory allocation error\n", STDERR_FILENO);
 		return ;
 	}
-	execute_pipe_loop(&data, tokens);
+	execute_pipe_loop(&data, tokens, here_doc_fds);
 	close_all_pipes(data.pipes, data.pipe_count);
 	wait_for_children(data.pids, data.cmd_count, cmd_info);
 }
