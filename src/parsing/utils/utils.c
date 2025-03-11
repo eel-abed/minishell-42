@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/09 19:22:32 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:19:37 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	print_tokens(t_tokens *list)
 {
-	(void) list;
 	t_tokens	*current;
 	int			i;
-
+	
+	(void) list;
 	if (!list)
 	{
 		return ;

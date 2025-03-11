@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 18:14:14 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:37 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	setup_command(t_tokens *tokens, t_command *cmd_info,
-		char ***parts, t_garbage **gc)
+static int	setup_command(t_tokens *tokens, t_command *cmd_info, char ***parts,
+		t_garbage **gc)
 {
 	ft_memset(cmd_info, 0, sizeof(t_command));
 	cmd_info->env = tokens->env;
@@ -26,12 +26,11 @@ static int	setup_command(t_tokens *tokens, t_command *cmd_info,
 	return (*parts != NULL);
 }
 
-int contain_echo_token(t_tokens *tokens)
+int	contain_echo_token(t_tokens *tokens)
 {
-	t_tokens *tmp;
+	t_tokens	*tmp;
 
 	tmp = tokens;
-
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->value, "echo"))
@@ -41,10 +40,10 @@ int contain_echo_token(t_tokens *tokens)
 	return (0);
 }
 
-char *rebuild_command(t_tokens *tokens, t_garbage **gc)
+char	*rebuild_command(t_tokens *tokens, t_garbage **gc)
 {
-	t_tokens *tmp;
-	char *cmd;
+	t_tokens	*tmp;
+	char		*cmd;
 
 	tmp = tokens;
 	cmd = ft_strdup("", gc);
@@ -60,11 +59,12 @@ char *rebuild_command(t_tokens *tokens, t_garbage **gc)
 	return (cmd);
 }
 
-void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
+void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc,
+		int **here_doc_fds)
 {
-	int			original_stdout;
-	int			original_stdin;
-	char		**parts;
+	int		original_stdout;
+	int		original_stdin;
+	char	**parts;
 
 	save_restore_fd(&original_stdout, &original_stdin, 0);
 	if (!setup_command(tokens, cmd_info, &parts, gc))
@@ -80,6 +80,7 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc, int 
 	else
 		handle_other_command(parts, tokens, cmd_info, gc, here_doc_fds);
 	save_restore_fd(&original_stdout, &original_stdin, 1);
+	close_all_std_evetring();
 }
 
 static int	count_words_with_quotes(const char *s, char c)

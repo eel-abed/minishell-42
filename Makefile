@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/09 18:09:45 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/03/11 17:21:43 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,17 @@ LIBFT_DIR = libft
 
 # Source files
 SRC_FILES = main.c \
+			main_norm.c \
             execution/execution.c \
             execution/execution_utils.c \
 			execution/exec_cmd_ext.c \
 			execution/execution_big_helper.c \
+			execution/execution_big_helper2.c \
 			execution/exec_cmd_ext_more.c \
 			execution/exec_cmd_ext_utils.c \
 			helper_func/redirections.c \
 			helper_func/redirection_helper.c \
+			helper_func/redirection_helper2.c \
 			helper_func/pipe.c \
 			helper_func/pipe_extra.c \
 			helper_func/handle_redirections.c \

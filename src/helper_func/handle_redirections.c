@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:25:33 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 18:15:37 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:10:31 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static bool	handle_append_output(char **parts, int i, t_command *cmd_info, t_garbage **gc)
+static bool	handle_append_output(char **parts, int i, t_command *cmd_info,
+		t_garbage **gc)
 {
 	int	fd;
 
@@ -55,8 +56,6 @@ static bool	handle_input_redirection(char **parts, int i, t_command *cmd_info,
 	}
 	return (true);
 }
-
-
 
 static bool	handle_heredoc(char **parts, int i, t_command *cmd_info,
 		t_garbage **gc, int **here_doc_fds)

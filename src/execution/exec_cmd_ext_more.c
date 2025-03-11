@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext_more.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 17:53:27 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/03/11 16:02:02 by eel-abed         ###   ########.fr       */
@@ -53,12 +53,12 @@ t_env_var	*get_path_variable(t_env *env)
 	return (NULL);
 }
 
-char *extract_first_cmd(char **parts)
+char	*extract_first_cmd(char **parts)
 {
-	int i;
+	int	i;
 
 	i = 0;
-    while (parts[i] && is_redir_operator(parts[i]))
+	while (parts[i] && is_redir_operator(parts[i]))
 		i += 2;
 	return (parts[i]);
 }
@@ -66,7 +66,9 @@ char *extract_first_cmd(char **parts)
 void	execute_cmd(t_tokens *cmd_token, char **parts, t_command *cmd_info,
 		t_garbage **gc)
 {
-	char *first_command = extract_first_cmd(parts);
+	char	*first_command;
+
+	first_command = extract_first_cmd(parts);
 	if (is_builtin(first_command))
 		execute_builtin(first_command, cmd_token, cmd_info, gc);
 	else

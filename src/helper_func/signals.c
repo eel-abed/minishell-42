@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
 /*   Updated: 2025/03/11 16:01:57 by eel-abed         ###   ########.fr       */
@@ -12,21 +12,21 @@
 
 #include "../../include/minishell.h"
 
-void handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
-    (void)sig;
-    write(STDERR_FILENO, "\n", 1);
-    
-    if (g_signal_received < 0) {
-        // Signal received during command execution
-        g_signal_received = sig;
-    } else {
-        // Signal received during prompt/readline
-        g_signal_received = sig;
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+	(void)sig;
+	write(STDERR_FILENO, "\n", 1);
+	if (g_signal_received < 0)
+	{
+		g_signal_received = sig;
+	}
+	else
+	{
+		g_signal_received = sig;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void handle_sigquit(int sig)

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:04:52 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/06 15:09:03 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:48 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	execute_child(char *cmd_path, char **cmd_args, char **env_array)
 {
 	execve(cmd_path, cmd_args, env_array);
 	if (errno == EACCES)
-    {
-        perror(cmd_args[0]);
-        exit(126);
-    }
-    else
-    {
-        perror(cmd_args[0]);
-        exit(127);
-    }
+	{
+		perror(cmd_args[0]);
+		exit(126);
+	}
+	else
+	{
+		perror(cmd_args[0]);
+		exit(127);
+	}
 }

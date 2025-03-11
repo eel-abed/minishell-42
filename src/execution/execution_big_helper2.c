@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   execution_big_helper2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 18:04:57 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 15:28:57 by mafourni         ###   ########.fr       */
+/*   Created: 2025/03/11 17:20:32 by mafourni          #+#    #+#             */
+/*   Updated: 2025/03/11 17:20:55 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	handle_other_command(char **parts, t_tokens *tokens,
+    t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
 {
-	size_t	i;
+t_tokens	*cmd_token;
 
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	if (n < 1)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
-	{
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+if (handle_redirectionnn(parts, cmd_info, gc, here_doc_fds))
+{
+    cmd_token = prepare_cmd_token(parts, tokens, gc);
+    if (cmd_token)
+        execute_cmd(cmd_token, parts, cmd_info, gc);
+}
 }

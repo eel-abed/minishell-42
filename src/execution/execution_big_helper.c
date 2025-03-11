@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_big_helper.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:06:45 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 18:12:20 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:20:53 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	save_restore_fd(int *original_stdout, int *original_stdin, int restore)
 	}
 }
 
-int is_redir_operator(char *str)
+int	is_redir_operator(char *str)
 {
-	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || !ft_strcmp(str, "<") || !ft_strcmp(str, "<<"))
+	if (!ft_strcmp(str, ">") || !ft_strcmp(str, ">>") || !ft_strcmp(str, "<")
+		|| !ft_strcmp(str, "<<"))
 		return (1);
 	return (0);
 }
@@ -48,7 +49,7 @@ char	*build_command_string(char **parts, t_garbage **gc)
 		if (is_redir_operator(parts[i]))
 		{
 			i += 2;
-			continue;
+			continue ;
 		}
 		if (cmd_only == NULL)
 			cmd_only = ft_strdup(parts[i], gc);
@@ -78,20 +79,10 @@ t_tokens	*prepare_cmd_token(char **parts, t_tokens *tokens, t_garbage **gc)
 void	handle_echo_command(char **parts, t_tokens *tokens, t_command *cmd_info,
 		t_garbage **gc, int *here_doc_fds)
 {
-	char *first_command = extract_first_cmd(parts);
+	char	*first_command;
+
+	first_command = extract_first_cmd(parts);
 	if (handle_redirection_tokens(tokens, here_doc_fds, cmd_info, gc))
 		execute_builtin(first_command, tokens, cmd_info, gc);
 }
 
-void	handle_other_command(char **parts, t_tokens *tokens,
-		t_command *cmd_info, t_garbage **gc, int **here_doc_fds)
-{
-	t_tokens	*cmd_token;
-
-	if (handle_redirectionnn(parts, cmd_info, gc, here_doc_fds))
-	{
-		cmd_token = prepare_cmd_token(parts, tokens, gc);
-		if (cmd_token)
-			execute_cmd(cmd_token, parts, cmd_info, gc);
-	}
-}

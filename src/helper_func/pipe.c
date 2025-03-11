@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:18:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 14:40:02 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:30:45 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	child_process(t_pipe_data *data, int **here_doc_fds)
 	if (cmd_end && next_after_cmd)
 		cmd_end->next = next_after_cmd;
 	gc_free_all(data->gc);
+	close_all_std_evetring();
 	exit(data->cmd_info->exit_status);
 }
 

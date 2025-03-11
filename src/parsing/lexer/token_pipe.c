@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/09 19:35:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:09:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*build_cmd_str(t_tokens *cmd_start, t_tokens *current, t_tokens *tokens,
 char	*handle_last_token(t_wpipe_norm wpipe, t_tokens *current,
 		t_tokens *tokens, t_garbage **gc)
 {
-
 	if (!current->next && current->type != kind_pipe)
 	{
 		if (wpipe.cmd_start != tokens || ft_strlen(wpipe.cmd_str) > 0)
@@ -58,9 +57,9 @@ void	add_pipe_token(t_tokens **result, t_tokens **cmd_start,
 	}
 }
 
-bool is_echo_block(t_tokens *current, t_garbage **gc)
+bool	is_echo_block(t_tokens *current, t_garbage **gc)
 {
-	t_tokens *tmp;
+	t_tokens	*tmp;
 
 	tmp = current;
 	while (tmp && tmp->type != kind_pipe)
@@ -71,7 +70,6 @@ bool is_echo_block(t_tokens *current, t_garbage **gc)
 	}
 	return (false);
 }
-
 
 t_tokens	*token_with_pipe(t_tokens *tokens, t_garbage **gc)
 {
@@ -91,7 +89,8 @@ t_tokens	*token_with_pipe(t_tokens *tokens, t_garbage **gc)
 		{
 			while (current && current->type != kind_pipe)
 			{
-				wpipe.new_token = mini_lstnew(ft_strdup(current->value, gc), current->type, gc);
+				wpipe.new_token = mini_lstnew(ft_strdup(current->value, gc),
+						current->type, gc);
 				mini_lstadd_back(&wpipe.result, wpipe.new_token);
 				current = current->next;
 			}
@@ -101,9 +100,11 @@ t_tokens	*token_with_pipe(t_tokens *tokens, t_garbage **gc)
 			wpipe.new_token = mini_lstnew(ft_strdup(" ", gc), kind_none, gc);
 			while (current && current->type != kind_pipe)
 			{
-				wpipe.new_token->value = ft_strjoin(wpipe.new_token->value, current->value, gc);
+				wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
+						current->value, gc);
 				if (current->next)
-					wpipe.new_token->value = ft_strjoin(wpipe.new_token->value, " ", gc);
+					wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
+							" ", gc);
 				current = current->next;
 			}
 			mini_lstadd_back(&wpipe.result, wpipe.new_token);
