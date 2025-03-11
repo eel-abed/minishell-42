@@ -118,9 +118,8 @@ minishell> echo "This is a 'quoted' string"
 
 ## Authors
 
-- [Your Name](https://github.com/yourusername)
-- [Collaborator Name](https://github.com/collaboratorusername) (if applicable)
-
+- [Main contributor](https://github.com/eel-abed)
+- [NPC](https://github.com/Makesense22pls)
 ## Acknowledgements
 
 - 42 School for the project guidelines and educational framework
