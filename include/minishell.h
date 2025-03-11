@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxencefournier <maxencefournier@studen    +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/10 15:34:58 by maxencefour      ###   ########.fr       */
+/*   Updated: 2025/03/09 18:14:30 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
-// # include <linux/limits.h>
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -148,7 +148,7 @@ void					cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd,
 							t_garbage **gc);
 void					pwd_builtin(void);
 void					echo_builtin_tokens(t_tokens *tokens);
-bool					handle_redirection_tokens(t_tokens *tokens,
+bool					handle_redirection_tokens(t_tokens *tokens, int *here_doc_fds,
 							t_command *cmd_info, t_garbage **gc);
 void					env_builtin(t_env *env);
 void					exit_builtin(t_tokens *tokens, t_command *cmd,
@@ -158,15 +158,15 @@ void					export_builtin(t_tokens *tokens, t_env *env,
 int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
-							t_garbage **gc);
+							t_garbage **gc, int **here_doc_fds);
 int						execute_external_command(t_tokens *tokens,
 							t_command *cmd, t_garbage **gc);
 int						redirect_output(const char *filename, int append_mode);
-int						redirect_input(const char *filename);
+int						redirect_input(int fd);
 int						count_commands(t_tokens *tokens);
 int						setup_pipes(int **pipes, int pipe_count);
 void					close_all_pipes(int **pipes, int pipe_count);
-void					child_process(t_pipe_data *data);
+void					child_process(t_pipe_data *data, int **here_doc_fds);
 void					wait_for_children(pid_t *pids, int cmd_count,
 							t_command *cmd_info);
 int						wait_for_child(pid_t pid);
@@ -177,9 +177,9 @@ char					*build_command_string(char **parts, t_garbage **gc);
 void					save_restore_fd(int *original_stdout,
 							int *original_stdin, int restore);
 void					handle_echo_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc);
+							t_command *cmd_info, t_garbage **gc, int *here_doc_fds);
 void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc);
+							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
 void					execute_cmd(t_tokens *cmd_token, char **parts,
 							t_command *cmd_info, t_garbage **gc);
 t_tokens				*find_next_command(t_tokens *current);
@@ -187,10 +187,10 @@ char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);
 int						heredoc(const char *delimiter, t_garbage **gc);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
-							t_garbage **gc);
+							t_garbage **gc, int **here_doc_fds);
 int						handle_command_not_found(char *cmd);
 void					execute_piped_commands(t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc);
+							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
 void					setup_signals(void);
@@ -266,13 +266,13 @@ void					process_export_arg(char *arg, t_env *env,
 							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
-							t_command *cmd_info, t_garbage **gc);
+							t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
 int						write_to_heredoc(int fd, const char *str);
-int						init_heredoc(const char *delimiter, char **filename,
+int						init_heredoc(char **filename,
 							int *fd, t_garbage **gc);
 int						process_heredoc_line(int fd, char *line,
 							const char *delimiter);
-int						finalize_heredoc(int fd, char *filename, int status);
+int						finalize_heredoc(int fd, int status);
 char					*get_temp_filename(t_garbage **gc);
 char					*join_env_var(t_env_var *current, t_garbage **gc);
 t_env_var				*init_env_var(t_garbage **gc);
@@ -286,4 +286,5 @@ char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							int is_redir_operator(char *str);
 							char *extract_first_cmd(char **parts);
 							void print_tab(char **tab);
+							int    redirect_simple_input(const char *filename);
 #endif

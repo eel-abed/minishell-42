@@ -75,7 +75,7 @@ static const char	*get_target_directory(char **args, t_env *env,
 		home_var = find_env_var(env, "HOME");
 		if (!home_var || !home_var->value)
 		{
-			ft_putstr_fd("cd: HOME not set\n", 2);
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 			cmd->exit_status = 1;
 			return (NULL);
 		}
@@ -94,7 +94,7 @@ void	cd_builtin(t_tokens *tokens, t_env *env, t_command *cmd, t_garbage **gc)
 		return ;
 	if (args[1] && args[2])
 	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		cmd->exit_status = 1;
 		return ;
 	}

@@ -53,11 +53,8 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	token_list = lets_tokeninze(temp, gc);
 	token_list = ft_trim_all(token_list, gc);
 	token_list = add_quotes_cat(token_list, gc);
-	// printf("BEFORE TOKEN WITH PIPE\n");
-	// print_tokens(token_list);
+
 	token_list = token_with_pipe(token_list, gc);
-	// printf("AFTER TOKEN WITH PIPE\n");
-	// print_tokens(token_list);
 	current = token_list;
 	while (current)
 	{

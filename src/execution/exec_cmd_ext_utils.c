@@ -35,13 +35,13 @@ void	execute_child(char *cmd_path, char **cmd_args, char **env_array)
 {
 	execve(cmd_path, cmd_args, env_array);
 	if (errno == EACCES)
-	{
-		perror(cmd_args[0]);
-		exit(126);
-	}
-	else
-	{
-		perror(cmd_args[0]);
-		exit(127);
-	}
+    {
+        perror(cmd_args[0]);
+        exit(126);
+    }
+    else
+    {
+        perror(cmd_args[0]);
+        exit(127);
+    }
 }

@@ -38,6 +38,7 @@ int	setup_pipes(int **pipes, int pipe_count)
 		if (pipe(pipes[i]) < 0)
 		{
 			perror("pipe");
+			close_all_pipes(pipes, i + 1);
 			return (0);
 		}
 		i++;
@@ -58,7 +59,7 @@ void	close_all_pipes(int **pipes, int pipe_count)
 	}
 }
 
-void	child_process(t_pipe_data *data)
+void	child_process(t_pipe_data *data, int **here_doc_fds)
 {
 	t_tokens	*cmd_end;
 	t_tokens	*next_after_cmd;
@@ -77,7 +78,7 @@ void	child_process(t_pipe_data *data)
 	if (data->i < data->pipe_count)
 		dup2(data->pipes[data->i][1], STDOUT_FILENO);
 	close_all_pipes(data->pipes, data->pipe_count);
-	execute_command(data->current, data->cmd_info, data->gc);
+	execute_command(data->current, data->cmd_info, data->gc, here_doc_fds);
 	if (cmd_end && next_after_cmd)
 		cmd_end->next = next_after_cmd;
 	gc_free_all(data->gc);
