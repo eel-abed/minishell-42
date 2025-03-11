@@ -1,0 +1,13 @@
+salut vincent encore merci bcp bcp <3
+
+voici les seules problemes qu'il nous reste mon bogoss.
+
+quand on rentre dans le minishell et on fait 2 heredocs donc par exemple : << a << b 
+>test
+>test
+>test
+>test
+>(ICI CTRL+C bah ca fou rien genre c'est trop bizzare, mais le ctrl+c tu peux mm le faire au debut la genre ctrl c dans un heredoc en gros ca marche pas...)
+
+bon et l'autre erreur c'est ./minishell dans ./minishell
+quand on fait CTRL+C dans le deuxieme ou troisieme ou quatrieme minishell, genre c'est moche ca fait un truc bizzare.
