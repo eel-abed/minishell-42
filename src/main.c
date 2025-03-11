@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/11 12:52:55 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:43:16 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,22 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 	}
 	gc_free_all(&gc);
+	printf("exit\n");
+	close_all_std_evetring();
+	close(3);
+	close(2);
+	close(1);
+	close(0);
 	return (0);
+}
+
+
+void close_all_std_evetring()
+{
+	int i = 3;
+	while (i < 2000)
+	{
+		close(i);
+		i++;
+	}
 }
