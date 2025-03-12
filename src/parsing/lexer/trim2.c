@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:25:13 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 17:20:02 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:44:40 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,45 +117,4 @@ t_tokens	*ft_trim_all(t_tokens *tokens, t_garbage **gc)
 		current = current->next;
 	}
 	return (tokens);
-}
-
-// t_tokens	*ft_trim_all(t_tokens *tokens, t_garbage **gc)
-// {
-// 	t_tokens	*current;
-// 	char		*trimmed;
-// 	int			in_export;
-
-// 	if (!tokens)
-// 		return (NULL);
-// 	current = tokens;
-// 	in_export = 0;
-// 	while (current)
-// 	{
-// 		if (current->value)
-// 		{
-// 			if (is_export_cmd(current->value, gc))
-// 			{
-// 				trimmed = get_clean_word(current->value, gc);
-// 				current->value = trimmed;
-// 				in_export = 1;
-// 			}
-// 			else if (current->type == kind_pipe)
-// 				in_export = 0;
-// 			else if (in_export)
-// 				ft_trim_export(current, gc);
-// 			else if (!in_export && (has_attached_quotes(current->value)
-// 					|| should_trim_quotes(current->value)))
-// 			{
-// 				trimmed = remove_outer_quotes(current->value, gc);
-// 				current->value = trimmed;
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (tokens);
-// }
-
-int	is_matching_quote(char c, char quote_type)
-{
-	return (c == quote_type);
 }

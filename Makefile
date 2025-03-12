@@ -6,7 +6,7 @@
 #    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/11 17:21:43 by mafourni         ###   ########.fr        #
+#    Updated: 2025/03/12 11:53:43 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ SRC_FILES = main.c \
             builtin/pwd.c \
             builtin/unset.c \
 			parsing/lexer/lexer.c \
+			parsing/lexer/lexer2.c \
+			parsing/lexer/lexer3.c \
 			parsing/lexer/env.c \
 			parsing/lexer/syntax.c \
 			parsing/lexer/syntax2.c \
@@ -64,6 +66,7 @@ SRC_FILES = main.c \
 			parsing/lexer/trim3.c \
 			parsing/lexer/trim4.c \
 			parsing/lexer/token_pipe.c \
+			parsing/lexer/token_pipe2.c \
 
 
 # Object files

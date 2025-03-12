@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 17:13:26 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:50:49 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,62 +63,6 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	return (token_list);
 }
 
-// NE PAS SUPP NORMINETTE POUR LES DEUX FONCTIOSN PLUS BAS
-// t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
-// {
-// 	t_tokens	*current;
-// 	t_tokens	*next;
-// 	char		*quoted;
-// 	bool		is_echo_cmd;
-
-// 	current = tokens;
-// 	while (current)
-// 	{
-// 		if (current->value && ft_strcmp(current->value, "echo") == 0)
-// 			is_echo_cmd = true;
-// 		if (current->value && (ft_strcmp(current->value, "cat") == 0
-// 				|| ft_strcmp(current->value, "ls") == 0))
-// 		{
-// 			next = current->next;
-// 			if (next && next->type == kind_none)
-// 			{
-// 				if (next->value[0] != '"' && next->value[0] != '\'')
-// 				{
-// 					quoted = ft_strjoin("\"", next->value, gc);
-// 					next->value = ft_strjoin(quoted, "\"", gc);
-// 				}
-// 			}
-// 		}
-// 		if (current->value && ft_strcmp(current->value, "<") == 0)
-// 		{
-// 			next = current->next;
-// 			if (next && next->type == kind_none)
-// 			{
-// 				if (next->value[0] != '"' && next->value[0] != '\'')
-// 				{
-// 					quoted = ft_strjoin("\"", next->value, gc);
-// 					next->value = ft_strjoin(quoted, "\"", gc);
-// 				}
-// 			}
-// 		}
-// 		if (current->value && ft_strcmp(current->value, ">") == 0)
-// 		{
-// 			next = current->next;
-// 			if (next && next->type == kind_none && !is_echo_cmd)
-// 			{
-// 				if (next->value[0] != '"' && next->value[0] != '\'')
-// 				{
-// 					quoted = ft_strjoin("\"", next->value, gc);
-// 					next->value = ft_strjoin(quoted, "\"", gc);
-// 				}
-// 			}
-// 		}
-// 		if (current->value && ft_strcmp(current->value, "|") == 0)
-// 			is_echo_cmd = false;
-// 		current = current->next;
-// 	}
-// 	return (tokens);
-// }
 static void	quote_token_if_needed(t_tokens *current, t_garbage **gc,
 		bool is_echo_cmd)
 {
@@ -174,58 +118,4 @@ char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
 	ft_strlcat(new_input, input + ft_strlen(tmp) + j, len + 1);
 	input = new_input;
 	return (input);
-}
-
-static char	*handle_env_value(t_env *env, t_might replace_mr, char *tmp,
-		t_garbage **gc)
-{
-	char	*new_input;
-	int		len;
-
-	if (!env->vars->value)
-	{
-		len = ft_strlen(replace_mr.input) - (ft_strlen(tmp) + 1);
-		new_input = ft_calloc(len + 1, 1, gc);
-		ft_strncpy(new_input, replace_mr.input, replace_mr.j - 1);
-		ft_strlcat(new_input, replace_mr.input + replace_mr.j + ft_strlen(tmp),
-			len + 1);
-	}
-	else
-	{
-		len = ft_strlen(replace_mr.input) + ft_strlen(env->vars->value);
-		new_input = ft_calloc(len + 1, 1, gc);
-		new_input = ft_strncpy(new_input, replace_mr.input, replace_mr.j);
-		ft_strlcat_mini(new_input, env->vars->value, len);
-		ft_strlcat(new_input, replace_mr.input + replace_mr.j + ft_strlen(tmp),
-			len);
-	}
-	return (new_input);
-}
-
-char	*might_replace(t_env *env, t_might replace_mr, char *tmp,
-		t_garbage **gc)
-{
-	t_env_var	*head;
-	char		*new_input;
-
-	new_input = replace_mr.input;
-	head = env->vars;
-	while (env->vars != NULL)
-	{
-		if (ft_strcmp(env->vars->key, tmp) == 0)
-		{
-			new_input = handle_env_value(env, replace_mr, tmp, gc);
-			replace_mr.input = new_input;
-			env->vars = head;
-			break ;
-		}
-		env->vars = env->vars->next;
-	}
-	if (env->vars == NULL)
-	{
-		replace_mr.input = replace_null(replace_mr.input, replace_mr.j, tmp,
-				gc);
-		env->vars = head;
-	}
-	return (replace_mr.input);
 }

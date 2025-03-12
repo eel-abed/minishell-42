@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 17:21:24 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:54:50 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,8 @@ void					execute_cmd(t_tokens *cmd_token, char **parts,
 t_tokens				*find_next_command(t_tokens *current);
 char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);
-int						heredoc(const char *delimiter, t_garbage **gc, int *original_stdin);
+int						heredoc(const char *delimiter, t_garbage **gc,
+							int *original_stdin);
 void					reopen_stdin(int *original_stdin);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
@@ -244,7 +245,16 @@ int						should_preserve_token(t_tokens *token);
 void					remove_empty_head(t_tokens **list);
 char					*trim_unquoted(char *str, t_garbage **gc);
 int						has_empty_quotes_at_start(char *str);
-int						is_quote(char c);
+char					*might_replace(t_env *env, t_might replace_mr,
+							char *tmp, t_garbage **gc);
+char					*handle_env_value(t_env *env, t_might replace_mr,
+							char *tmp, t_garbage **gc);
+char					*replace_null(char *input, int j, char *tmp,
+							t_garbage **gc);
+int 					is_quote(char c);
+void	add_pipe_token(t_tokens **result, t_tokens **cmd_start,
+	t_tokens *current, t_garbage **gc);
+bool					is_echo_block(t_tokens *current, t_garbage **gc);
 char					*remove_outer_quotes(char *str, t_garbage **gc);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);
@@ -287,7 +297,7 @@ void					ft_clean_words_export(t_tokens *current,
 							t_garbage **gc);
 char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							t_garbage **gc);
-int 	handle_single_token(t_tokens *token, int *here_doc_fds,
+int						handle_single_token(t_tokens *token, int *here_doc_fds,
 							t_garbage **gc);
 int						count_here_docs(t_tokens *tokens, t_garbage **gc);
 
@@ -298,7 +308,8 @@ int						redirect_simple_input(const char *filename);
 void					handle_command_line(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
 void					close_all_std_evetring(void);
-void	handle_other_command(char **parts, t_tokens *tokens,
-    t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
+void					handle_other_command(char **parts, t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 
 #endif
