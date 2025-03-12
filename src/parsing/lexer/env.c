@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:07:47 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:26:17 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,27 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {
-	int		j;
-	char	*tmp;
-	char	*result;
-	t_might	replace_mr;
+    int		j;
+    char	*tmp;
+    char	*result;
+    t_might	replace_mr;
 
-	j = ++(*i);
-	while (ft_isalnum(input[*i]) || input[*i] == '_')
-		(*i)++;
-	if (*i == j)
-		return (input);
-	replace_mr.input = input;
-	replace_mr.j = j;
-	tmp = ft_strcpy(NULL, replace_mr, *i, gc);
-	result = might_replace(env, replace_mr, tmp, gc);
-	if (result && ft_strlen(result) < ft_strlen(input))
-		*i -= (ft_strlen(input) - ft_strlen(result));
-	if (result)
-		return (result);
-	return (input);
+    j = ++(*i);
+    while (ft_isalnum(input[*i]) || input[*i] == '_')
+        (*i)++;
+    if (*i == j)
+        return (input);
+    replace_mr.input = input;
+    replace_mr.j = j;
+    tmp = ft_strcpy(NULL, replace_mr, *i, gc);
+	if (ft_isdigit(tmp[0]) || tmp[0] == '-')
+		tmp = ft_substr(tmp, 0, 1, gc);
+    result = might_replace(env, replace_mr, tmp, gc);
+    if (result && ft_strlen(result) < ft_strlen(input))
+        *i -= (ft_strlen(input) - ft_strlen(result));
+    if (result)
+        return (result);
+    return (input);
 }
 
 char	*any_env(char *input, t_env *env, t_garbage **gc, t_command *cmd)
