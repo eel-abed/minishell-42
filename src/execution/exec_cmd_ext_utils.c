@@ -12,6 +12,8 @@
 
 #include "../../include/minishell.h"
 
+void fork_signals(void);
+
 char	*join_path(char *path, char *cmd, t_garbage **gc)
 {
 	char	*temp;
@@ -33,6 +35,7 @@ int	handle_command_not_found(char *cmd)
 
 void	execute_child(char *cmd_path, char **cmd_args, char **env_array)
 {
+	fork_signals();
 	execve(cmd_path, cmd_args, env_array);
 	if (errno == EACCES)
 	{
