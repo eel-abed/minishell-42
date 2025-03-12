@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:06:45 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 11:46:19 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:08:27 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ void	handle_echo_command(char **parts, t_tokens *tokens, t_command *cmd_info,
 	first_command = extract_first_cmd(parts);
 	if (handle_redirection_tokens(tokens, here_doc_fds, cmd_info, gc))
 		execute_builtin(first_command, tokens, cmd_info, gc);
+	
 }
