@@ -82,6 +82,13 @@ typedef struct s_command
 	int					exit_status;
 }						t_command;
 
+typedef struct s_exec_context
+{
+	t_command			*cmd_info;
+	t_garbage			**gc;
+	int					*here_doc_fds;
+}						t_exec_context;
+
 typedef struct s_pipe_data
 {
 	int					i;
@@ -131,13 +138,32 @@ typedef struct s_twpipe_norm
 	t_tokens			*new_token;
 	char				*cmd_str;
 }						t_wpipe_norm;
-// Norminette structure
+
+typedef struct s_heredoc_context
+{
+	int					*i;
+	int					*here_doc_fds;
+	int					*original_stdin;
+	t_garbage			**gc;
+}						t_heredoc_context;
+
+typedef struct s_heredoc_data
+{
+	int					*here_doc_fds;
+	t_garbage			**gc;
+	int					*original_stdin;
+}						t_heredoc_data;
 
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
 int						execute_external_command(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
+void					cleanup_shell(t_garbage **gc);
+void					process_input(char *input, t_command *cmd,
+							t_garbage **gc);
+void					init_shell(t_command *cmd, t_env **env, char **envp,
+							t_garbage **gc);
 char					**ft_split_hors_quotes(char const *s, char c,
 							t_garbage **gc);
 void					free_env(t_env *env);
@@ -158,6 +184,9 @@ void					export_builtin(t_tokens *tokens, t_env *env,
 							t_garbage **gc, t_command *cmd);
 int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
+void					initialize_shell(t_env **env, t_command *cmd,
+							char **envp, t_garbage **gc);
+void					cleanup_shell(t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
 int						execute_external_command(t_tokens *tokens,
@@ -179,13 +208,22 @@ char					*build_command_string(char **parts, t_garbage **gc);
 void					save_restore_fd(int *original_stdout,
 							int *original_stdin, int restore);
 void					handle_echo_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int *here_doc_fds);
+							t_exec_context *ctx);
 void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int **here_doc_fds);
+							t_exec_context *ctx);
+t_exec_context			init_exec_context(t_command *cmd_info, t_garbage **gc,
+							int *here_doc_fds);
 void					execute_cmd(t_tokens *cmd_token, char **parts,
 							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_right(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_2right(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_left(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_2left(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 t_tokens				*find_next_command(t_tokens *current);
 char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);
@@ -279,16 +317,16 @@ char					*might_replace(t_env *env, t_might replace_mr,
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
-void					ft_error_export_clean_loop(t_tokens *current, int i,
-							char *trimmed, char *clen_trimmed, t_garbage **gc);
 void					ft_trim_export(t_tokens *tokens, t_garbage **gc);
 void					if_found(char *input, int *i, int *flag, char to_found);
 void					process_export_arg(char *arg, t_env *env,
 							t_garbage **gc, t_command *cmd);
 void					set_env_var(char *arg, t_env *env, t_garbage **gc);
 bool					process_redirection(char **parts, int i,
-							t_command *cmd_info, t_garbage **gc,
-							int **here_doc_fds);
+							t_exec_context *ctx);
+int						process_heredoc_content(int fd, const char *delimiter,
+							int *original_stdin);
+int						open_heredoc_file(const char *filename);
 int						write_to_heredoc(int fd, const char *str);
 int						init_heredoc(char **filename, int *fd, t_garbage **gc);
 int						process_heredoc_line(int fd, char *line,
@@ -314,8 +352,5 @@ int						redirect_simple_input(const char *filename);
 void					handle_command_line(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
 void					close_all_std_evetring(void);
-void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int **here_doc_fds);
 
 #endif

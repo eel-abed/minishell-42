@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_extra.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:01:11 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 13:33:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:33:05 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	init_pipe_resources(t_pipe_data *data, t_tokens *tokens,
 	return (setup_pipes(data->pipes, data->pipe_count));
 }
 
-void	execute_pipe_loop(t_pipe_data *data, t_tokens *tokens, int **here_doc_fds)
+void	execute_pipe_loop(t_pipe_data *data, t_tokens *tokens,
+		int **here_doc_fds)
 {
 	data->current = tokens;
 	data->i = 0;

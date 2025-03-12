@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:06:45 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 12:08:27 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:50:35 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ t_tokens	*prepare_cmd_token(char **parts, t_tokens *tokens, t_garbage **gc)
 	return (cmd_token);
 }
 
-void	handle_echo_command(char **parts, t_tokens *tokens, t_command *cmd_info,
-		t_garbage **gc, int *here_doc_fds)
+void	handle_echo_command(char **parts, t_tokens *tokens, t_exec_context *ctx)
 {
 	char	*first_command;
 
 	first_command = extract_first_cmd(parts);
-	if (handle_redirection_tokens(tokens, here_doc_fds, cmd_info, gc))
-		execute_builtin(first_command, tokens, cmd_info, gc);
-	
+	if (handle_redirection_tokens(tokens, ctx->here_doc_fds, ctx->cmd_info,
+			ctx->gc))
+		execute_builtin(first_command, tokens, ctx->cmd_info, ctx->gc);
 }
