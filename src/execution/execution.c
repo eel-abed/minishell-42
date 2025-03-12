@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:08:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:42:24 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ static int	setup_command(t_tokens *tokens, t_command *cmd_info, char ***parts,
 	else
 		*parts = ft_split(tokens->value, ' ', gc);
 	return (*parts != NULL);
-}
-
-int	contain_echo_token(t_tokens *tokens)
-{
-	t_tokens	*tmp;
-
-	tmp = tokens;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->value, "echo"))
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
 }
 
 char	*rebuild_command(t_tokens *tokens, t_garbage **gc)
@@ -81,33 +67,6 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc,
 		handle_other_command(parts, tokens, cmd_info, gc, here_doc_fds);
 	save_restore_fd(&original_stdout, &original_stdin, 1);
 	close_all_std_evetring();
-}
-
-static int	count_words_with_quotes(const char *s, char c)
-{
-	int		count;
-	int		i;
-	char	quote;
-
-	i = 0;
-	count = 0;
-	quote = 0;
-	while (s[i])
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i])
-			count++;
-		while (s[i] && (s[i] != c || quote))
-		{
-			if ((s[i] == '"' || s[i] == '\'') && !quote)
-				quote = s[i];
-			else if (s[i] == quote)
-				quote = 0;
-			i++;
-		}
-	}
-	return (count);
 }
 
 static int	init_split(char const *s, char c, char ***result, t_garbage **gc)

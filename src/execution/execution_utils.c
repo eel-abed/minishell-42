@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:36:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/05 17:36:03 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:42:34 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,45 @@ bool	is_builtin(char *cmd)
 		|| !ft_strncmp(cmd, "unset", 5))
 		return (true);
 	return (false);
+}
+
+int	count_words_with_quotes(const char *s, char c)
+{
+	int		count;
+	int		i;
+	char	quote;
+
+	i = 0;
+	count = 0;
+	quote = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+			count++;
+		while (s[i] && (s[i] != c || quote))
+		{
+			if ((s[i] == '"' || s[i] == '\'') && !quote)
+				quote = s[i];
+			else if (s[i] == quote)
+				quote = 0;
+			i++;
+		}
+	}
+	return (count);
+}
+
+int	contain_echo_token(t_tokens *tokens)
+{
+	t_tokens	*tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->value, "echo"))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

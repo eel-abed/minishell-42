@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 17:21:24 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:41:59 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,8 @@ void					execute_cmd(t_tokens *cmd_token, char **parts,
 t_tokens				*find_next_command(t_tokens *current);
 char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);
-int						heredoc(const char *delimiter, t_garbage **gc, int *original_stdin);
+int						heredoc(const char *delimiter, t_garbage **gc,
+							int *original_stdin);
 void					reopen_stdin(int *original_stdin);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
@@ -198,7 +199,9 @@ void					execute_piped_commands(t_tokens *tokens,
 							int **here_doc_fds);
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
+bool					validate_cd_args(char **args, t_command *cmd);
 void					setup_signals(void);
+void					display_pwd_if_needed(char **args, t_env *env);
 char					*replace_substring(char *str, t_range pos,
 							char *replacement, t_garbage **gc);
 char					*find_command_path(char *cmd, t_env *env,
@@ -206,6 +209,8 @@ char					*find_command_path(char *cmd, t_env *env,
 void					update_env_vars(t_env *env, t_garbage **gc);
 char					**env_to_array(t_env *env, t_garbage **gc);
 t_env_var				*find_env_var(t_env *env, const char *key);
+const char				*handle_home_directory(t_env *env, t_command *cmd);
+int						count_words_with_quotes(const char *s, char c);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg, t_garbage **gc);
 char					*join_path(char *path, char *cmd, t_garbage **gc);
@@ -258,6 +263,7 @@ bool					is_space(char *input, int i);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strcpy(char *dest, t_might replace_mr, int i,
 							t_garbage **gc);
+int						contain_echo_token(t_tokens *tokens);
 char					*might_replace(t_env *env, t_might replace_mr,
 							char *tmp, t_garbage **gc);
 char					*ft_strlcat_mini(char *dst, const char *src,
@@ -287,7 +293,7 @@ void					ft_clean_words_export(t_tokens *current,
 							t_garbage **gc);
 char					*handle_exit_status(char *input, int *i, t_command *cmd,
 							t_garbage **gc);
-int 	handle_single_token(t_tokens *token, int *here_doc_fds,
+int						handle_single_token(t_tokens *token, int *here_doc_fds,
 							t_garbage **gc);
 int						count_here_docs(t_tokens *tokens, t_garbage **gc);
 
@@ -298,7 +304,8 @@ int						redirect_simple_input(const char *filename);
 void					handle_command_line(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
 void					close_all_std_evetring(void);
-void	handle_other_command(char **parts, t_tokens *tokens,
-    t_command *cmd_info, t_garbage **gc, int **here_doc_fds);
+void					handle_other_command(char **parts, t_tokens *tokens,
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 
 #endif

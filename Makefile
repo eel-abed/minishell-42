@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/11 17:21:43 by mafourni         ###   ########.fr        #
+#    Updated: 2025/03/12 11:44:57 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC_FILES = main.c \
 			helper_func/env_utils.c\
 			helper_func/env_setter.c\
             builtin/cd.c \
+            builtin/cd_norm.c \
             builtin/echo.c \
             builtin/env.c \
             builtin/exit.c \

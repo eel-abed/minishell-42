@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:03:25 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:20:05 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static long long	ft_atoll(const char *str)
 	}
 	return (result * sign);
 }
+
 static int	is_valid_number(const char *str)
 {
 	int	i;
