@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 17:55:44 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:05:09 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,17 @@ static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 	char	*result;
 	t_might	replace_mr;
 
+	t_range pos; // Declare pos here
 	j = ++(*i);
+	if (input[*i] == '$')
+	{
+		(*i)++;
+		tmp = ft_itoa(getpid(), gc);
+		pos.start = j - 1;
+		pos.end = *i;
+		input = replace_substring(input, pos, tmp, gc);
+		return (input);
+	}
 	while (ft_isalnum(input[*i]) || input[*i] == '_')
 		(*i)++;
 	if (*i == j)
