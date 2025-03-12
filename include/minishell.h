@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 17:06:11 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:12:50 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,6 @@ int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
 void					initialize_shell(t_env **env, t_command *cmd,
 							char **envp, t_garbage **gc);
-void					process_input(char *input, t_tokens **token_clean,
-							t_command *cmd, t_garbage **gc);
 void					cleanup_shell(t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
