@@ -6,7 +6,7 @@
 #    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/12 11:44:57 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/03/12 14:42:12 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC_FILES = main.c \
 			helper_func/redirections.c \
 			helper_func/redirection_helper.c \
 			helper_func/redirection_helper2.c \
+			helper_func/redirection_helper3.c \
 			helper_func/pipe.c \
 			helper_func/pipe_extra.c \
 			helper_func/handle_redirections.c \

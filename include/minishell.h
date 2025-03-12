@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 14:31:20 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:44:00 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,15 @@ t_exec_context			init_exec_context(t_command *cmd_info, t_garbage **gc,
 							int *here_doc_fds);
 void					execute_cmd(t_tokens *cmd_token, char **parts,
 							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_right(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_2right(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_left(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc);
+bool					handle_redir_2left(t_tokens *current,
+							t_command *cmd_info, t_garbage **gc,
+							int **here_doc_fds);
 t_tokens				*find_next_command(t_tokens *current);
 char					*extract_word(const char *s, int *i, char c,
 							t_garbage **gc);

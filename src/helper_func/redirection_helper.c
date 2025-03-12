@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_helper.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 17:07:08 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:42:42 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,53 +81,23 @@ bool	handle_redirection_tokens(t_tokens *tokens, int *here_doc_fds,
 		t_command *cmd_info, t_garbage **gc)
 {
 	t_tokens	*current;
-	int			status;
+	bool		result;
 
 	current = tokens;
 	while (current)
 	{
 		if (current->type == kind_redir_right)
-		{
-			cmd_info->output_file = ft_strdup(current->next->value, gc);
-			current->next->value = remove_outer_quotes(current->next->value,
-					gc);
-			if (redirect_output(current->next->value, 0) < 0)
-			{
-				cmd_info->exit_status = 1;
-				return (false);
-			}
-		}
+			result = handle_redir_right(current, cmd_info, gc);
 		else if (current->type == kind_redir_2right)
-		{
-			cmd_info->output_file = ft_strdup(current->next->value, gc);
-			current->next->value = remove_outer_quotes(current->next->value,
-					gc);
-			if (redirect_output(current->next->value, 1) < 0)
-			{
-				cmd_info->exit_status = 1;
-				return (false);
-			}
-		}
+			result = handle_redir_2right(current, cmd_info, gc);
 		else if (current->type == kind_redir_left)
-		{
-			cmd_info->input_file = ft_strdup(current->next->value, gc);
-			current->next->value = remove_outer_quotes(current->next->value,
-					gc);
-			if (redirect_simple_input(current->next->value) < 0)
-			{
-				cmd_info->exit_status = 1;
-				return (false);
-			}
-		}
+			result = handle_redir_left(current, cmd_info, gc);
 		else if (current->type == kind_redir_2left)
-		{
-			cmd_info->delimiter = ft_strdup(current->next->value, gc);
-			cmd_info->heredoc_flag = true;
-			status = finalize_heredoc(*here_doc_fds, 0);
-			here_doc_fds++;
-			if (status < 0)
-				return (false);
-		}
+			result = handle_redir_2left(current, cmd_info, gc, &here_doc_fds);
+		else
+			result = true;
+		if (!result)
+			return (false);
 		current = current->next;
 	}
 	return (true);
