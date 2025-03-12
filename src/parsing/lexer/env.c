@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/13 00:10:50 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:33:34 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,30 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 	return (input);
 }
 
-char	*ft_clean_the_echo(char *input, t_garbage **gc)
+char	*remove_only_quotes(char *input, int j, t_garbage **gc)
 {
-	int		j;
 	char	*tmp;
 	char	*tmp2;
 
-	j = 0;
+	tmp = ft_substr(input, 0, j + 1, gc);
+	tmp2 = ft_substr(input, j + 2, ft_strlen(input) - j - 2, gc);
+	return (ft_strjoin(tmp, tmp2, gc));
+}
+
+char	*ft_clean_the_echo(char *input, t_garbage **gc)
+{
+	int	j;
+
 	j = 0;
 	while (input[j])
 	{
 		if (input[j] == '$' && input[j + 1] && (input[j + 1] == '"' || input[j
 					+ 1] == '\''))
 		{
-			tmp = ft_substr(input, 0, j, gc);
-			tmp2 = ft_substr(input, j + 1, ft_strlen(input) - 1, gc);
-			input = ft_strjoin(tmp, tmp2, gc);
+			if (ft_isalpha(input[j + 2]))
+				input = remove_dollar_quotes(input, j, gc);
+			else
+				input = remove_only_quotes(input, j, gc);
 			j = -1;
 		}
 		j++;

@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 00:06:41 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/13 00:10:38 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:33:22 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 	if (result)
 		return (result);
 	return (input);
+}
+
+char	*remove_dollar_quotes(char *input, int j, t_garbage **gc)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
+
+	tmp = ft_substr(input, 0, j, gc);
+	tmp2 = ft_substr(input, j + 2, ft_strlen(input) - j - 3, gc);
+	tmp3 = ft_strjoin(tmp, tmp2, gc);
+	return (ft_strdup(tmp3, gc));
 }
