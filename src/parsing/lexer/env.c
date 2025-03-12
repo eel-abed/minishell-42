@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 20:33:58 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:33:34 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,62 +46,34 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 	return (input);
 }
 
-char	*ft_clean_the_echo(char *input, t_garbage **gc)
+char	*remove_only_quotes(char *input, int j, t_garbage **gc)
 {
-	int		j;
 	char	*tmp;
 	char	*tmp2;
 
-	j = 0;
+	tmp = ft_substr(input, 0, j + 1, gc);
+	tmp2 = ft_substr(input, j + 2, ft_strlen(input) - j - 2, gc);
+	return (ft_strjoin(tmp, tmp2, gc));
+}
+
+char	*ft_clean_the_echo(char *input, t_garbage **gc)
+{
+	int	j;
+
 	j = 0;
 	while (input[j])
 	{
 		if (input[j] == '$' && input[j + 1] && (input[j + 1] == '"' || input[j
-				+ 1] == '\''))
+					+ 1] == '\''))
 		{
-			tmp = ft_substr(input, 0, j, gc);
-			tmp2 = ft_substr(input, j + 1, ft_strlen(input) - 1, gc);
-			input = ft_strjoin(tmp, tmp2, gc);
+			if (ft_isalpha(input[j + 2]))
+				input = remove_dollar_quotes(input, j, gc);
+			else
+				input = remove_only_quotes(input, j, gc);
 			j = -1;
 		}
 		j++;
 	}
-	return (input);
-}
-
-
-static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
-{
-	int		j;
-	char	*tmp;
-	char	*result;
-	t_might	replace_mr;
-	t_range	pos;
-
-	j = ++(*i);
-	if (input[*i] == '$')
-	{
-		(*i)++;
-		tmp = ft_itoa(getpid(), gc);
-		pos.start = j - 1;
-		pos.end = *i;
-		input = replace_substring(input, pos, tmp, gc);
-		return (input);
-	}
-	while (ft_isalnum(input[*i]) || input[*i] == '_')
-		(*i)++;
-	if (*i == j)
-		return (ft_clean_the_echo(input, gc));
-	replace_mr.input = input;
-	replace_mr.j = j;
-	tmp = ft_strcpy(NULL, replace_mr, *i, gc);
-	if (ft_isdigit(tmp[0]) || tmp[0] == '-')
-		tmp = ft_substr(tmp, 0, 1, gc);
-	result = might_replace(env, replace_mr, tmp, gc);
-	if (result && ft_strlen(result) < ft_strlen(input))
-		*i -= (ft_strlen(input) - ft_strlen(result));
-	if (result)
-		return (result);
 	return (input);
 }
 

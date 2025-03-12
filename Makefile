@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
+#    By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 15:39:20 by eel-abed          #+#    #+#              #
-#    Updated: 2025/03/12 17:31:13 by eel-abed         ###   ########.fr        #
+#    Updated: 2025/03/13 00:31:06 by mafourni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g
 
 # Directories
 SRC_DIR = src
@@ -72,7 +72,7 @@ SRC_FILES = main.c \
 			parsing/lexer/trim4.c \
 			parsing/lexer/token_pipe.c \
 			parsing/lexer/token_pipe2.c \
-
+			parsing/lexer/env2.c \
 
 # Object files
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)

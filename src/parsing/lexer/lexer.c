@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 18:01:25 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:52:38 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	if (quote_check(temp, cmd) == 1)
 		return (printf("Syntax %s !\n", ERROR), NULL);
 	if (check_syntax(temp, cmd) == 0)
+	{
 		return (printf("OPE %s !\n", ERROR), NULL);
+	}
 	temp = any_env(temp, env, gc, cmd);
 	token_list = lets_tokeninze(temp, gc);
 	token_list = ft_trim_all(token_list, gc);
