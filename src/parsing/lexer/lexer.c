@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:29:08 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:53:41 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	if (check_syntax(temp, cmd) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env, gc, cmd);
+	print_tokens(token_list);
 	token_list = lets_tokeninze(temp, gc);
+	print_tokens(token_list);
 	token_list = ft_trim_all(token_list, gc);
+	print_tokens(token_list);
 	token_list = add_quotes_cat(token_list, gc);
+	print_tokens(token_list);
 	token_list = token_with_pipe(token_list, gc);
 	current = token_list;
 	while (current)
@@ -61,6 +65,17 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 		current = current->next;
 	}
 	return (token_list);
+}
+
+static bool	is_first_command_echo(t_tokens *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->type == kind_none)
+			return (ft_strcmp(tokens->value, "echo") == 0);
+		tokens = tokens->next;
+	}
+	return (false);
 }
 
 static void	quote_token_if_needed(t_tokens *current, t_garbage **gc,
@@ -90,32 +105,20 @@ t_tokens	*add_quotes_cat(t_tokens *tokens, t_garbage **gc)
 {
 	t_tokens	*current;
 	bool		is_echo_cmd;
+	bool		first_command_is_echo;
 
 	current = tokens;
 	is_echo_cmd = false;
+	first_command_is_echo = is_first_command_echo(tokens);
 	while (current)
 	{
 		if (current->value && ft_strcmp(current->value, "echo") == 0)
 			is_echo_cmd = true;
-		quote_token_if_needed(current, gc, is_echo_cmd);
+		if (!first_command_is_echo)
+			quote_token_if_needed(current, gc, is_echo_cmd);
 		if (current->value && ft_strcmp(current->value, "|") == 0)
 			is_echo_cmd = false;
 		current = current->next;
 	}
 	return (tokens);
-}
-
-char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
-{
-	char	*new_input;
-	int		len;
-
-	len = ft_strlen(input);
-	new_input = ft_calloc(len + 1, 1, gc);
-	if (!new_input)
-		return (NULL);
-	new_input = ft_strncpy(new_input, input, j - 1);
-	ft_strlcat(new_input, input + ft_strlen(tmp) + j, len + 1);
-	input = new_input;
-	return (input);
 }
