@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:18 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/09 17:49:35 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:33:07 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 
 static bool	is_valid_n_flag(char *arg)
 {
-	int	i;
-
-	if (!arg || arg[0] != '-' || arg[1] != 'n')
+	if (!arg || arg[0] != '-' || arg[1] != 'n' || arg[2] != '\0')
 		return (false);
-	i = 2;
-	while (arg[i])
-	{
-		if (arg[i] != 'n')
-			return (false);
-		i++;
-	}
 	return (true);
 }
 
