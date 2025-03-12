@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 17:50:21 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:52:47 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	is_valid_identifier_name(const char *str)
 				return (0);
 			i++;
 		}
+
 	}
 	return (1);
 }
