@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 14:00:16 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:31:20 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,9 @@ void					save_restore_fd(int *original_stdout,
 void					handle_echo_command(char **parts, t_tokens *tokens,
 							t_exec_context *ctx);
 void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int **here_doc_fds);
+							t_exec_context *ctx);
+t_exec_context			init_exec_context(t_command *cmd_info, t_garbage **gc,
+							int *here_doc_fds);
 void					execute_cmd(t_tokens *cmd_token, char **parts,
 							t_command *cmd_info, t_garbage **gc);
 t_tokens				*find_next_command(t_tokens *current);

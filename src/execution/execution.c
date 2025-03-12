@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 13:59:22 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:31:33 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc,
 	if (parts[0] && contain_echo_token(tokens))
 	{
 		parts = ft_split(rebuild_command(tokens, gc), ' ', gc);
-		ctx.cmd_info = cmd_info;
-		ctx.gc = gc;
-		ctx.here_doc_fds = *here_doc_fds;
+		ctx = init_exec_context(cmd_info, gc, *here_doc_fds);
 		handle_echo_command(parts, tokens, &ctx);
 	}
 	else
-		handle_other_command(parts, tokens, cmd_info, gc, here_doc_fds);
+	{
+		ctx = init_exec_context(cmd_info, gc, *here_doc_fds);
+		handle_other_command(parts, tokens, &ctx);
+	}
 	save_restore_fd(&original_stdout, &original_stdin, 1);
 	close_all_std_evetring();
 }
