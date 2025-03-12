@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:51:24 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:01:11 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,26 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	print_tokens(t_tokens *list)
-{
-	t_tokens	*current;
-	int			i;
+// void	print_tokens(t_tokens *list)
+// {
+// 	t_tokens	*current;
+// 	int			i;
 
-	(void) list;
-	if (!list)
-	{
-		return ;
-	}
-	i = 0;
-	current = list;
-	while (list)
-	{
-		// printf("Token[%d]:\n", i);
-		// printf("  Value: [%s]\n", list->value);
-		// printf("  Type:  [%d]\n", list->type);
-		// printf("------------------------\n");
-		list = list->next;
-		i++;
-	}
-	list = current;
-}
+// 	(void) list;
+// 	if (!list)
+// 	{
+// 		return ;
+// 	}
+// 	i = 0;
+// 	current = list;
+// 	while (list)
+// 	{
+// 		// printf("Token[%d]:\n", i);
+// 		// printf("  Value: [%s]\n", list->value);
+// 		// printf("  Type:  [%d]\n", list->type);
+// 		// printf("------------------------\n");
+// 		list = list->next;
+// 		i++;
+// 	}
+// 	list = current;
+// }

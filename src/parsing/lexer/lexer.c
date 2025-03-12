@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:22:50 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:53:41 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:01:25 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,9 @@ t_tokens	*ft_lexer(char *input, t_env *env, t_garbage **gc, t_command *cmd)
 	if (check_syntax(temp, cmd) == 0)
 		return (printf("OPE %s !\n", ERROR), NULL);
 	temp = any_env(temp, env, gc, cmd);
-	print_tokens(token_list);
 	token_list = lets_tokeninze(temp, gc);
-	print_tokens(token_list);
 	token_list = ft_trim_all(token_list, gc);
-	print_tokens(token_list);
 	token_list = add_quotes_cat(token_list, gc);
-	print_tokens(token_list);
 	token_list = token_with_pipe(token_list, gc);
 	current = token_list;
 	while (current)
