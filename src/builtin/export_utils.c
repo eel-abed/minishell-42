@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 17:54:16 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:55:25 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ static int	is_valid_identifier_name(const char *str)
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
+	}
+	if (str[i] == '=')
+	{
+		i++;
+		while (str[i])
+		{
+			if (str[i] == '!')
+				return (0);
+			i++;
+		}
 	}
 	return (1);
 }
