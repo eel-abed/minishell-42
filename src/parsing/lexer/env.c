@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 23:28:46 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:10:50 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_clean_the_echo(char *input, t_garbage **gc)
 	while (input[j])
 	{
 		if (input[j] == '$' && input[j + 1] && (input[j + 1] == '"' || input[j
-				+ 1] == '\''))
+					+ 1] == '\''))
 		{
 			tmp = ft_substr(input, 0, j, gc);
 			tmp2 = ft_substr(input, j + 1, ft_strlen(input) - 1, gc);
@@ -66,50 +66,6 @@ char	*ft_clean_the_echo(char *input, t_garbage **gc)
 		}
 		j++;
 	}
-	return (input);
-}
-
-static char *handle_env_var_utlis(char *input, int *i, t_garbage **gc){
-	int j;
-	char	*tmp;
-	t_range	pos;
-
-	j = *i;
-	
-	(*i)++;
-	tmp = ft_itoa(getpid(), gc);
-	pos.start = j - 1;
-	pos.end = *i;
-	input = replace_substring(input, pos, tmp, gc);
-	return (input);
-}
-
-static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
-{
-	int		j;
-	char	*tmp;
-	char	*result;
-	t_might	replace_mr;
-
-	j = ++(*i);
-	if (input[*i] == '$')
-	{
-		return (handle_env_var_utlis(input, i, gc));
-	}
-	while (ft_isalnum(input[*i]) || input[*i] == '_')
-		(*i)++;
-	if (*i == j)
-		return (ft_clean_the_echo(input, gc));
-	replace_mr.input = input;
-	replace_mr.j = j;
-	tmp = ft_strcpy(NULL, replace_mr, *i, gc);
-	if (ft_isdigit(tmp[0]) || tmp[0] == '-')
-		tmp = ft_substr(tmp, 0, 1, gc);
-	result = might_replace(env, replace_mr, tmp, gc);
-	if (result && ft_strlen(result) < ft_strlen(input))
-		*i -= (ft_strlen(input) - ft_strlen(result));
-	if (result)
-		return (result);
 	return (input);
 }
 

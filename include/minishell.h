@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 23:18:28 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:10:59 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,9 @@ typedef struct s_env_gc
 }						t_env_gc;
 
 char					*any_env(char *input, t_env *env, t_garbage **gc,
-	t_command *cmd);
-	char					*replace_substring(char *str, t_range pos,
-								char *replacement, t_garbage **gc);
+							t_command *cmd);
+char					*replace_substring(char *str, t_range pos,
+							char *replacement, t_garbage **gc);
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
@@ -281,10 +281,11 @@ t_tokens				*mini_lstnew(char *value, int kind, t_garbage **gc);
 int						mini_lstsize(t_tokens *lst);
 int						count_tokens(char *input);
 int						detect_operator(char c);
-char					*handle_env_var_utils(char *input, int *i, t_garbage **gc);
+char					*handle_env_var(char *input, int *i, t_env *env,
+							t_garbage **gc);
+char					*handle_env_var_utlis(char *input, int *i,
+							t_garbage **gc);
 char					*ft_clean_the_echo(char *input, t_garbage **gc);
-char					*replace_variable(char *input, int *i, t_env *env,
-							char *tmp, t_garbage **gc);
 char					*get_variable_name(char *input, int *i, t_garbage **gc);
 char					**split_mini(char *input, t_garbage **gc);
 char					*extract_token(char *input, int *i, int *start,
