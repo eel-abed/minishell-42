@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:33:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:08:53 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:30:06 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include "stdio.h"
 
-void wait_pid_signals(void);
+void		wait_pid_signals(void);
 
 static int	try_command_path(char **paths, char *cmd, char **full_path,
 		t_garbage **gc)

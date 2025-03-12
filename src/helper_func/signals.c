@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 11:52:25 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 14:33:19 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:30:29 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,9 @@ void	setup_here_doc_signals(void)
 	sigaction(SIGINT, &sa_int, NULL);
 }
 
-void fork_signals(void)
+void	fork_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
-}
-
-
-void wait_pid_handler(int sig)
-{
-	g_signal_received = sig;
-	printf("\n");
-}
-
-void wait_pid_signals(void)
-{
-	signal(SIGINT, wait_pid_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 }
