@@ -108,8 +108,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (g_signal_received == SIGINT)
 		{
+			cmd.exit_status = 130;
 			g_signal_received = 0;
-			// Mettre a jour le exit status
 		}
 		if (strlen(input) > 0)
 		{
