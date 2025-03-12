@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/12 16:14:01 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:05:36 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,36 @@ int	handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 	data.gc = gc;
 	data.original_stdin = &original_stdin;
 	while (split_token[j])
-	{>ean;
+	{
+		j = process_heredoc_token(split_token, j, &i, &data);
+		if (j == -1)
+			break ;
+		if (j == -2)
+			return (1);
+	}
+	return (0);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
 	t_garbage	*gc;
 
 	gc = NULL;
-	rl_catch_signals = 0;
 	(void)argc;
 	(void)argv;
-	initialize_shell(&env, &cmd, envp, &gc);
+	init_shell(&cmd, &env, envp, &gc);
+	if (!env)
+		return (1);
 	while (1)
 	{
 		setup_signals();
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		process_input(input, &token_clean, &cmd, &gc);
+		process_input(input, &cmd, &gc);
 		free(input);
 	}
 	cleanup_shell(&gc);
