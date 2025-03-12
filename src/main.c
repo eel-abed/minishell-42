@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/12 17:05:36 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 20:10:53 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 int			g_signal_received = 0;
 
-int	contains_here_doc(char *token_value, t_garbage **gc)
+int	contains_here_doc(char *token_value, t_operator_kind token_type,
+		t_garbage **gc)
 {
 	char	**token_split;
 	int		i;
 	int		j;
 
+	if (token_type == kind_none && ft_strchr(token_value, '<'))
+	{
+		return (0);
+	}
 	token_split = ft_split(token_value, ' ', gc);
 	i = 0;
 	j = 0;
@@ -41,9 +46,11 @@ int	count_here_docs(t_tokens *tokens, t_garbage **gc)
 	tmp = tokens;
 	while (tmp)
 	{
-		if (tmp->type == kind_redir_2left || (tmp->type == kind_none
-				&& contains_here_doc(tmp->value, gc)))
-			i += contains_here_doc(tmp->value, gc);
+		if (tmp->type == kind_redir_2left)
+			i++;
+		else if (tmp->type == kind_none && contains_here_doc(tmp->value,
+				tmp->type, gc))
+			i += contains_here_doc(tmp->value, tmp->type, gc);
 		tmp = tmp->next;
 	}
 	return (i);
@@ -75,6 +82,8 @@ int	handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 	int				original_stdin;
 	t_heredoc_data	data;
 
+	if (token->type == kind_none && ft_strchr(token->value, '<'))
+		return (0);
 	j = 1;
 	i = 0;
 	original_stdin = dup(STDIN_FILENO);
