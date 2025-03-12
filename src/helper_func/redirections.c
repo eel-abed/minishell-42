@@ -88,7 +88,7 @@ int	heredoc(const char *delimiter, t_garbage **gc, int *original_stdin)
 		return (-1);
 	while (1)
 	{
-		line = readline("> ");
+		line = readline(">");
 		result = process_heredoc_line(fd, line, delimiter, original_stdin);
 		if (result != 0)
 		{

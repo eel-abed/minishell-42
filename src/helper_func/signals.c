@@ -15,10 +15,10 @@ void here_doc_sig_handler(int sig);
 
 void	handle_sigint(int sig)
 {
-    g_signal_received = sig;
-    if (sig == SIGINT)
+	g_signal_received = sig;
+	if (sig == SIGINT)
     {
-        printf("\n");
+		printf("^C\n");
         rl_replace_line("", 0); // Clear the current input line
         rl_on_new_line();
         rl_redisplay();

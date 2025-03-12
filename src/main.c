@@ -90,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	t_garbage	*gc;
 
 	gc = NULL;
+	rl_catch_signals = 0;
 	(void)argc;
 	(void)argv;
 	env = init_env(envp, &gc);
@@ -101,9 +102,15 @@ int	main(int argc, char **argv, char **envp)
 	cmd.exit_status = 0;
 	while (1)
 	{
+		setup_signals();
 		input = readline("minishell> ");
 		if (!input)
 			break ;
+		if (g_signal_received == SIGINT)
+		{
+			g_signal_received = 0;
+			// Mettre a jour le exit status
+		}
 		if (strlen(input) > 0)
 		{
 			token_clean = ft_lexer(input, env, &gc, &cmd);

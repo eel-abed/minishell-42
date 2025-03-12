@@ -29,8 +29,8 @@ void	close_all_std_evetring(void)
 void here_doc_sig_handler(int sig)
 {
 	g_signal_received = sig;
+	printf("^C");
 	close(STDIN_FILENO);
-	printf("\n");
 }
 
 int	*compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
@@ -60,11 +60,10 @@ int	*compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
 		else if (curr->type == kind_none)
 		{
 			if (handle_single_token(curr, here_doc_fds, gc) == 1)
-				return (setup_signals() , NULL);
+				return (NULL);
 		}
 		curr = curr->next;
 	}
-	setup_signals();
 	return (here_doc_fds);
 }
 
@@ -77,7 +76,7 @@ void	handle_command_line(t_tokens *tokens, t_command *cmd_info,
 	g_signal_received = -1;
 	here_doc_fds = compute_here_docs(tokens, gc);
 	if (!here_doc_fds)
-		return ;
+		return (setup_signals());
 	current = tokens;
 	while (current)
 	{
