@@ -13,6 +13,8 @@
 #include "../../include/minishell.h"
 #include "stdio.h"
 
+void wait_pid_signals(void);
+
 static int	try_command_path(char **paths, char *cmd, char **full_path,
 		t_garbage **gc)
 {
@@ -94,6 +96,7 @@ static int	execute_command_process(char *cmd_path, char **cmd_args,
 	{
 		execute_child(cmd_path, cmd_args, env_array);
 	}
+	wait_pid_signals();
 	return (wait_for_child(pid));
 }
 

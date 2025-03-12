@@ -70,3 +70,24 @@ void	setup_here_doc_signals(void)
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
 }
+
+void fork_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+}
+
+
+void wait_pid_handler(int sig)
+{
+	g_signal_received = sig;
+	printf("\n");
+}
+
+void wait_pid_signals(void)
+{
+	signal(SIGINT, wait_pid_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+}
