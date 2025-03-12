@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 12:30:32 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:28:36 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 		*i += ft_strlen(exit_status) - 1;
 	return (input);
 }
+// ! thesting  no soposta $ :
+	// ! numeros
+	// ! -
+	// ! =  -> $=
+	// ! ""
+	// ! '' 
+	// ! # -> 0
+	// ! @ -> line nada
+	
+	
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {
@@ -61,6 +71,8 @@ static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
     replace_mr.input = input;
     replace_mr.j = j;
     tmp = ft_strcpy(NULL, replace_mr, *i, gc);
+	if (ft_isdigit(tmp[0]) || tmp[0] == '-')
+		tmp = ft_substr(tmp, 0, 1, gc);
     result = might_replace(env, replace_mr, tmp, gc);
     if (result && ft_strlen(result) < ft_strlen(input))
         *i -= (ft_strlen(input) - ft_strlen(result));
