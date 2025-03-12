@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 17:17:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:23:50 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ t_tokens				*ft_lexer(char *input, t_env *env, t_garbage **gc,
 int						quote_check(char *input, t_command *cmd);
 bool					check_syntax(char *input, t_command *cmd);
 bool					is_operator(char ch, t_operator_kind *out_kind);
+char					*handle_env_value(t_env *env, t_might replace_mr,
+							char *tmp, t_garbage **gc);
 bool					is_valid_operator(char *str, size_t remain,
 							t_operator_kind kind);
 bool					is_valid_redir_left(char *string, size_t remaining);
@@ -289,8 +291,6 @@ void					remove_empty_head(t_tokens **list);
 char					*trim_unquoted(char *str, t_garbage **gc);
 int						has_empty_quotes_at_start(char *str);
 char					*might_replace(t_env *env, t_might replace_mr,
-							char *tmp, t_garbage **gc);
-char					*handle_env_value(t_env *env, t_might replace_mr,
 							char *tmp, t_garbage **gc);
 char					*replace_null(char *input, int j, char *tmp,
 							t_garbage **gc);
