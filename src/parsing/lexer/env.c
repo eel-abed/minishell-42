@@ -45,6 +45,16 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 		*i += ft_strlen(exit_status) - 1;
 	return (input);
 }
+// ! thesting  no soposta $ :
+	// ! numeros
+	// ! -
+	// ! =  -> $=
+	// ! ""
+	// ! '' 
+	// ! # -> 0
+	// ! @ -> line nada
+	
+	
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {
