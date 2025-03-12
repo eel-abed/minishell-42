@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 11:54:50 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:41:59 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,9 @@ void					execute_piped_commands(t_tokens *tokens,
 							int **here_doc_fds);
 void					execute_child(char *cmd_path, char **cmd_args,
 							char **env_array);
+bool					validate_cd_args(char **args, t_command *cmd);
 void					setup_signals(void);
+void					display_pwd_if_needed(char **args, t_env *env);
 char					*replace_substring(char *str, t_range pos,
 							char *replacement, t_garbage **gc);
 char					*find_command_path(char *cmd, t_env *env,
@@ -207,6 +209,8 @@ char					*find_command_path(char *cmd, t_env *env,
 void					update_env_vars(t_env *env, t_garbage **gc);
 char					**env_to_array(t_env *env, t_garbage **gc);
 t_env_var				*find_env_var(t_env *env, const char *key);
+const char				*handle_home_directory(t_env *env, t_command *cmd);
+int						count_words_with_quotes(const char *s, char c);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg, t_garbage **gc);
 char					*join_path(char *path, char *cmd, t_garbage **gc);
@@ -268,6 +272,7 @@ bool					is_space(char *input, int i);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strcpy(char *dest, t_might replace_mr, int i,
 							t_garbage **gc);
+int						contain_echo_token(t_tokens *tokens);
 char					*might_replace(t_env *env, t_might replace_mr,
 							char *tmp, t_garbage **gc);
 char					*ft_strlcat_mini(char *dst, const char *src,

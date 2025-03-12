@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_norm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:15:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 16:16:25 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:15:29 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void here_doc_sig_handler(int sig)
 	close(STDIN_FILENO);
 }
 
-int	*compute_here_docs(t_tokens *tokens, t_garbage **gc) // ! OK
+int	*compute_here_docs(t_tokens *tokens, t_garbage **gc)
 {
 	t_tokens *curr;
 
