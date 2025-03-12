@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 17:03:02 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 14:42:42 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:00:13 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,23 @@ void	print_tab(char **tab)
 bool	handle_redirectionnn(char **parts, t_command *cmd_info, t_garbage **gc,
 		int **here_doc_fds)
 {
-	int		i;
-	bool	result;
+	int				i;
+	bool			result;
+	t_exec_context	ctx;
 
+	ctx.cmd_info = cmd_info;
+	ctx.gc = gc;
+	ctx.here_doc_fds = *here_doc_fds;
 	i = 0;
 	while (parts[i])
 	{
-		result = process_redirection(parts, i, cmd_info, gc, here_doc_fds);
+		result = process_redirection(parts, i, &ctx);
 		if (!result)
 			return (i > 0 && (ft_strcmp(parts[i - 1], ">") == 0
 					|| ft_strcmp(parts[i - 1], ">>") == 0));
 		i++;
 	}
+	*here_doc_fds = ctx.here_doc_fds;
 	return (true);
 }
 

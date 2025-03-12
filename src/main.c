@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/11 16:22:18 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:08:42 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		g_signal_received = 0;
+int	g_signal_received = 0;
 
 int	contains_here_doc(char *token_value, t_garbage **gc)
 {
@@ -55,7 +55,7 @@ int	handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 	int		i;
 	char	**split_token;
 	int		fd;
-	int original_stdin;
+	int		original_stdin;
 
 	j = 1;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:15:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 11:15:29 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:08:39 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	setup_here_doc_signals(void);
 
 void	close_all_std_evetring(void)
 {
-	int i = 3;
+	int	i;
+
+	i = 3;
 	while (i < 2000)
 	{
 		close(i);
@@ -26,7 +28,7 @@ void	close_all_std_evetring(void)
 	}
 }
 
-void here_doc_sig_handler(int sig)
+void	here_doc_sig_handler(int sig)
 {
 	g_signal_received = sig;
 	printf("^C");
@@ -35,12 +37,11 @@ void here_doc_sig_handler(int sig)
 
 int	*compute_here_docs(t_tokens *tokens, t_garbage **gc)
 {
-	t_tokens *curr;
-
-	int fd;
-	int *here_doc_fds;
-	int i;
-	int original_stdin;
+	t_tokens	*curr;
+	int			fd;
+	int			*here_doc_fds;
+	int			i;
+	int			original_stdin;
 
 	curr = tokens;
 	i = 0;
