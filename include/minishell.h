@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 13:40:10 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:17:49 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int						execute_external_command(t_tokens *tokens,
 							t_command *cmd, t_garbage **gc);
 int						redirect_output(const char *filename, int append_mode);
 int						redirect_input(int fd);
+
 int						count_commands(t_tokens *tokens);
 int						setup_pipes(int **pipes, int pipe_count);
 void					close_all_pipes(int **pipes, int pipe_count);
