@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainhelperla.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:04:42 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 17:06:06 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:49:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	process_input(char *input, t_command *cmd, t_garbage **gc)
 	if (strlen(input) > 0)
 	{
 		token_clean = ft_lexer(input, cmd->env, gc, cmd);
+		print_tokens(token_clean);
 		if (token_clean)
 			handle_command_line(token_clean, cmd, gc);
 	}

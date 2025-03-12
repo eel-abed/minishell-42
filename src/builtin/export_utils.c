@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:50:47 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/03 17:54:16 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:50:21 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ static int	is_valid_identifier_name(const char *str)
 			return (0);
 		i++;
 	}
+	if (str[i] == '=')
+	{
+		i++;
+		while (str[i])
+		{
+			if (str[i] == '!')
+				return (0);
+			i++;
+		}
+	}
 	return (1);
 }
 
@@ -56,7 +66,6 @@ void	process_export_arg(char *arg, t_env *env, t_garbage **gc,
 		t_command *cmd)
 {
 	char	*unquoted_arg;
-
 	unquoted_arg = remove_outer_quotes(arg, gc);
 	if (!unquoted_arg)
 		return ;
