@@ -249,7 +249,16 @@ int						should_preserve_token(t_tokens *token);
 void					remove_empty_head(t_tokens **list);
 char					*trim_unquoted(char *str, t_garbage **gc);
 int						has_empty_quotes_at_start(char *str);
-int						is_quote(char c);
+char					*might_replace(t_env *env, t_might replace_mr,
+							char *tmp, t_garbage **gc);
+char					*handle_env_value(t_env *env, t_might replace_mr,
+							char *tmp, t_garbage **gc);
+char					*replace_null(char *input, int j, char *tmp,
+							t_garbage **gc);
+int 					is_quote(char c);
+void	add_pipe_token(t_tokens **result, t_tokens **cmd_start,
+	t_tokens *current, t_garbage **gc);
+bool					is_echo_block(t_tokens *current, t_garbage **gc);
 char					*remove_outer_quotes(char *str, t_garbage **gc);
 int						should_trim_quotes(char *str);
 int						has_attached_quotes(char *str);

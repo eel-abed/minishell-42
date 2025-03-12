@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:43 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 16:09:22 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:53:12 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,52 +71,52 @@ bool	is_echo_block(t_tokens *current, t_garbage **gc)
 	return (false);
 }
 
-t_tokens	*token_with_pipe(t_tokens *tokens, t_garbage **gc)
-{
-	t_tokens		*current;
-	t_wpipe_norm	wpipe;
+// t_tokens	*token_with_pipe(t_tokens *tokens, t_garbage **gc)
+// {
+// 	t_tokens		*current;
+// 	t_wpipe_norm	wpipe;
 
-	if (!tokens)
-		return (NULL);
-	wpipe.result = NULL;
-	wpipe.cmd_str = NULL;
-	wpipe.new_token = NULL;
-	current = tokens;
-	wpipe.cmd_start = tokens;
-	while (current)
-	{
-		if (is_echo_block(current, gc))
-		{
-			while (current && current->type != kind_pipe)
-			{
-				wpipe.new_token = mini_lstnew(ft_strdup(current->value, gc),
-						current->type, gc);
-				mini_lstadd_back(&wpipe.result, wpipe.new_token);
-				current = current->next;
-			}
-		}
-		else
-		{
-			wpipe.new_token = mini_lstnew(ft_strdup(" ", gc), kind_none, gc);
-			while (current && current->type != kind_pipe)
-			{
-				wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
-						current->value, gc);
-				if (current->next)
-					wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
-							" ", gc);
-				current = current->next;
-			}
-			mini_lstadd_back(&wpipe.result, wpipe.new_token);
-		}
-		if (current)
-		{
-			if (current->type == kind_pipe)
-				add_pipe_token(&wpipe.result, &wpipe.cmd_start, current, gc);
-			current = current->next;
-		}
-	}
-	if (wpipe.result == NULL)
-		return (tokens);
-	return (wpipe.result);
-}
+// 	if (!tokens)
+// 		return (NULL);
+// 	wpipe.result = NULL;
+// 	wpipe.cmd_str = NULL;
+// 	wpipe.new_token = NULL;
+// 	current = tokens;
+// 	wpipe.cmd_start = tokens;
+// 	while (current)
+// 	{
+// 		if (is_echo_block(current, gc))
+// 		{
+// 			while (current && current->type != kind_pipe)
+// 			{
+// 				wpipe.new_token = mini_lstnew(ft_strdup(current->value, gc),
+// 						current->type, gc);
+// 				mini_lstadd_back(&wpipe.result, wpipe.new_token);
+// 				current = current->next;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			wpipe.new_token = mini_lstnew(ft_strdup(" ", gc), kind_none, gc);
+// 			while (current && current->type != kind_pipe)
+// 			{
+// 				wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
+// 						current->value, gc);
+// 				if (current->next)
+// 					wpipe.new_token->value = ft_strjoin(wpipe.new_token->value,
+// 							" ", gc);
+// 				current = current->next;
+// 			}
+// 			mini_lstadd_back(&wpipe.result, wpipe.new_token);
+// 		}
+// 		if (current)
+// 		{
+// 			if (current->type == kind_pipe)
+// 				add_pipe_token(&wpipe.result, &wpipe.cmd_start, current, gc);
+// 			current = current->next;
+// 		}
+// 	}
+// 	if (wpipe.result == NULL)
+// 		return (tokens);
+// 	return (wpipe.result);
+// }

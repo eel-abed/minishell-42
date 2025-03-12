@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:50:05 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 17:19:37 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:42:46 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_tokens(t_tokens *list)
 {
 	t_tokens	*current;
 	int			i;
-	
+
 	(void) list;
 	if (!list)
 	{
