@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 02:28:42 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 13:02:38 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:08:01 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ void	remove_empty_head(t_tokens **list)
 
 void	remove_outer_quotes_from_tokens(t_tokens **list, t_garbage **gc)
 {
-    t_tokens	*current;
+	t_tokens	*current;
 
-    remove_empty_head(list);
-    if (!*list)
-        return ;
-    current = *list;
-    while (current)
-    {
-        if (is_empty_or_quoted_empty(current->value))
-        {
-            current->value = remove_outer_quotes(current->value, gc);
-        }
-        current = current->next;
-    }
+	remove_empty_head(list);
+	if (!*list)
+		return ;
+	current = *list;
+	while (current)
+	{
+		if (is_empty_or_quoted_empty(current->value))
+		{
+			current->value = remove_outer_quotes(current->value, gc);
+		}
+		current = current->next;
+	}
 }
 
 t_tokens	*ft_tokenizer_cmd_or_ope(char **split_result, t_garbage **gc)
@@ -95,6 +95,6 @@ t_tokens	*lets_tokeninze(char *input, t_garbage **gc)
 	while (split_result[i])
 		i++;
 	token_list = ft_tokenizer_cmd_or_ope(split_result, gc);
-	remove_outer_quotes_from_tokens(&token_list,gc);
+	remove_outer_quotes_from_tokens(&token_list, gc);
 	return (token_list);
 }

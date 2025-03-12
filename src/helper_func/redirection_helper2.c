@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_helper2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:06:36 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/11 17:07:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:02:00 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void reopen_stdin(int *original_stdin)
+void	reopen_stdin(int *original_stdin)
 {
 	dup2(*original_stdin, STDIN_FILENO);
 	close(*original_stdin);
 }
 
-int	process_heredoc_line(int fd, char *line, const char *delimiter, int *original_stdin)
+int	process_heredoc_line(int fd, char *line, const char *delimiter,
+		int *original_stdin)
 {
 	if (!line)
 	{
