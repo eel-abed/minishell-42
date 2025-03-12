@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 17:17:49 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 23:18:28 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ typedef struct s_env_var
 	char				*value;
 	struct s_env_var	*next;
 }						t_env_var;
+
 typedef struct s_env
 {
 	t_env_var			*vars;
 	int					size;
 }						t_env;
+
 typedef struct s_tokens
 {
 	t_operator_kind		type;
@@ -154,6 +156,16 @@ typedef struct s_heredoc_data
 	int					*original_stdin;
 }						t_heredoc_data;
 
+typedef struct s_env_gc
+{
+	t_env				*env;
+	t_garbage			**gc;
+}						t_env_gc;
+
+char					*any_env(char *input, t_env *env, t_garbage **gc,
+	t_command *cmd);
+	char					*replace_substring(char *str, t_range pos,
+								char *replacement, t_garbage **gc);
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
@@ -233,6 +245,7 @@ void					reopen_stdin(int *original_stdin);
 bool					handle_redirectionnn(char **parts, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
 int						handle_command_not_found(char *cmd);
+char					*handle_variable(char *input, int *i, t_env_gc *env_gc);
 void					execute_piped_commands(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc,
 							int **here_doc_fds);
@@ -241,8 +254,6 @@ void					execute_child(char *cmd_path, char **cmd_args,
 bool					validate_cd_args(char **args, t_command *cmd);
 void					setup_signals(void);
 void					display_pwd_if_needed(char **args, t_env *env);
-char					*replace_substring(char *str, t_range pos,
-							char *replacement, t_garbage **gc);
 char					*find_command_path(char *cmd, t_env *env,
 							t_garbage **gc);
 void					update_env_vars(t_env *env, t_garbage **gc);
@@ -253,8 +264,6 @@ int						count_words_with_quotes(const char *s, char c);
 void					append_env_var(t_env *env, t_env_var *new_var);
 void					handle_export_error(char *arg, t_garbage **gc);
 char					*join_path(char *path, char *cmd, t_garbage **gc);
-char					*any_env(char *input, t_env *env, t_garbage **gc,
-							t_command *cmd);
 t_tokens				*ft_lexer(char *input, t_env *env, t_garbage **gc,
 							t_command *cmd);
 int						quote_check(char *input, t_command *cmd);
@@ -272,6 +281,11 @@ t_tokens				*mini_lstnew(char *value, int kind, t_garbage **gc);
 int						mini_lstsize(t_tokens *lst);
 int						count_tokens(char *input);
 int						detect_operator(char c);
+char					*handle_env_var_utils(char *input, int *i, t_garbage **gc);
+char					*ft_clean_the_echo(char *input, t_garbage **gc);
+char					*replace_variable(char *input, int *i, t_env *env,
+							char *tmp, t_garbage **gc);
+char					*get_variable_name(char *input, int *i, t_garbage **gc);
 char					**split_mini(char *input, t_garbage **gc);
 char					*extract_token(char *input, int *i, int *start,
 							t_garbage **gc);

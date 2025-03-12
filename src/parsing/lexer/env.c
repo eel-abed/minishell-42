@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 20:33:58 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 23:28:46 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ char	*ft_clean_the_echo(char *input, t_garbage **gc)
 	return (input);
 }
 
+static char *handle_env_var_utlis(char *input, int *i, t_garbage **gc){
+	int j;
+	char	*tmp;
+	t_range	pos;
+
+	j = *i;
+	
+	(*i)++;
+	tmp = ft_itoa(getpid(), gc);
+	pos.start = j - 1;
+	pos.end = *i;
+	input = replace_substring(input, pos, tmp, gc);
+	return (input);
+}
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {
@@ -76,17 +90,11 @@ static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 	char	*tmp;
 	char	*result;
 	t_might	replace_mr;
-	t_range	pos;
 
 	j = ++(*i);
 	if (input[*i] == '$')
 	{
-		(*i)++;
-		tmp = ft_itoa(getpid(), gc);
-		pos.start = j - 1;
-		pos.end = *i;
-		input = replace_substring(input, pos, tmp, gc);
-		return (input);
+		return (handle_env_var_utlis(input, i, gc));
 	}
 	while (ft_isalnum(input[*i]) || input[*i] == '_')
 		(*i)++;
