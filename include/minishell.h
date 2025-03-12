@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 15:41:15 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:06:11 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,23 @@ typedef struct s_heredoc_context
 	t_garbage			**gc;
 }						t_heredoc_context;
 
+typedef struct s_heredoc_data
+{
+	int					*here_doc_fds;
+	t_garbage			**gc;
+	int					*original_stdin;
+}						t_heredoc_data;
+
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
 int						execute_external_command(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
+void					cleanup_shell(t_garbage **gc);
+void					process_input(char *input, t_command *cmd,
+							t_garbage **gc);
+void					init_shell(t_command *cmd, t_env **env, char **envp,
+							t_garbage **gc);
 char					**ft_split_hors_quotes(char const *s, char c,
 							t_garbage **gc);
 void					free_env(t_env *env);

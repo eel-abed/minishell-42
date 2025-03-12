@@ -6,13 +6,13 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:06:29 by maxencefour       #+#    #+#             */
-/*   Updated: 2025/03/12 15:08:42 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:05:36 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_signal_received = 0;
+int			g_signal_received = 0;
 
 int	contains_here_doc(char *token_value, t_garbage **gc)
 {
@@ -49,83 +49,72 @@ int	count_here_docs(t_tokens *tokens, t_garbage **gc)
 	return (i);
 }
 
+static int	process_heredoc_token(char **split_token, int j, int *i,
+		t_heredoc_data *data)
+{
+	int	fd;
+
+	if (!ft_strcmp(split_token[j], "<<"))
+		return (j + 1);
+	else if (ft_strcmp(split_token[j], "<<") && ft_strcmp(split_token[j - 1],
+			"<<"))
+		return (-1);
+	fd = heredoc(split_token[j], data->gc, data->original_stdin);
+	if (fd == -1)
+		return (-2);
+	data->here_doc_fds[*i] = fd;
+	(*i)++;
+	return (j + 1);
+}
+
 int	handle_single_token(t_tokens *token, int *here_doc_fds, t_garbage **gc)
 {
-	int		j;
-	int		i;
-	char	**split_token;
-	int		fd;
-	int		original_stdin;
+	int				j;
+	int				i;
+	char			**split_token;
+	int				original_stdin;
+	t_heredoc_data	data;
 
 	j = 1;
 	i = 0;
 	original_stdin = dup(STDIN_FILENO);
 	split_token = ft_split(token->value, ' ', gc);
+	data.here_doc_fds = here_doc_fds;
+	data.gc = gc;
+	data.original_stdin = &original_stdin;
 	while (split_token[j])
 	{
-		if (!ft_strcmp(split_token[j], "<<"))
-		{
-			j++;
-			continue ;
-		}
-		else if (ft_strcmp(split_token[j], "<<") && ft_strcmp(split_token[j
-				- 1], "<<"))
+		j = process_heredoc_token(split_token, j, &i, &data);
+		if (j == -1)
 			break ;
-		fd = heredoc(split_token[j], gc, &original_stdin);
-		if (fd == -1)
+		if (j == -2)
 			return (1);
-		here_doc_fds[i] = fd;
-		i++;
-		j++;
 	}
 	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_tokens	*token_clean;
 	char		*input;
 	t_env		*env;
 	t_command	cmd;
 	t_garbage	*gc;
 
 	gc = NULL;
-	rl_catch_signals = 0;
 	(void)argc;
 	(void)argv;
-	env = init_env(envp, &gc);
+	init_shell(&cmd, &env, envp, &gc);
 	if (!env)
 		return (1);
-	setup_signals();
-	ft_memset(&cmd, 0, sizeof(t_command));
-	cmd.env = env;
-	cmd.exit_status = 0;
 	while (1)
 	{
 		setup_signals();
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		if (g_signal_received == SIGINT)
-		{
-			cmd.exit_status = 130;
-			g_signal_received = 0;
-		}
-		if (strlen(input) > 0)
-		{
-			token_clean = ft_lexer(input, env, &gc, &cmd);
-			if (token_clean)
-				handle_command_line(token_clean, &cmd, &gc);
-		}
-		if (input)
-			free(input);
+		process_input(input, &cmd, &gc);
+		free(input);
 	}
-	gc_free_all(&gc);
-	printf("exit\n");
-	close_all_std_evetring();
-	close(3);
-	close(2);
-	close(1);
-	close(0);
+	cleanup_shell(&gc);
 	return (0);
 }
