@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 11:41:59 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:40:10 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,9 +255,9 @@ char					*handle_env_value(t_env *env, t_might replace_mr,
 							char *tmp, t_garbage **gc);
 char					*replace_null(char *input, int j, char *tmp,
 							t_garbage **gc);
-int 					is_quote(char c);
-void	add_pipe_token(t_tokens **result, t_tokens **cmd_start,
-	t_tokens *current, t_garbage **gc);
+int						is_quote(char c);
+void					add_pipe_token(t_tokens **result, t_tokens **cmd_start,
+							t_tokens *current, t_garbage **gc);
 bool					is_echo_block(t_tokens *current, t_garbage **gc);
 char					*remove_outer_quotes(char *str, t_garbage **gc);
 int						should_trim_quotes(char *str);
