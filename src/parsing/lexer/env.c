@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 19:05:09 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 20:33:58 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,30 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 		*i += ft_strlen(exit_status) - 1;
 	return (input);
 }
-// ! thesting  no soposta $ :
-// ! numeros
-// ! -
-// ! =  -> $=
-// ! ""
-// ! ''
-// ! # -> 0
-// ! @ -> line nada
+
+char	*ft_clean_the_echo(char *input, t_garbage **gc)
+{
+	int		j;
+	char	*tmp;
+	char	*tmp2;
+
+	j = 0;
+	j = 0;
+	while (input[j])
+	{
+		if (input[j] == '$' && input[j + 1] && (input[j + 1] == '"' || input[j
+				+ 1] == '\''))
+		{
+			tmp = ft_substr(input, 0, j, gc);
+			tmp2 = ft_substr(input, j + 1, ft_strlen(input) - 1, gc);
+			input = ft_strjoin(tmp, tmp2, gc);
+			j = -1;
+		}
+		j++;
+	}
+	return (input);
+}
+
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {
@@ -60,8 +76,8 @@ static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 	char	*tmp;
 	char	*result;
 	t_might	replace_mr;
+	t_range	pos;
 
-	t_range pos; // Declare pos here
 	j = ++(*i);
 	if (input[*i] == '$')
 	{
@@ -75,7 +91,7 @@ static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 	while (ft_isalnum(input[*i]) || input[*i] == '_')
 		(*i)++;
 	if (*i == j)
-		return (input);
+		return (ft_clean_the_echo(input, gc));
 	replace_mr.input = input;
 	replace_mr.j = j;
 	tmp = ft_strcpy(NULL, replace_mr, *i, gc);
