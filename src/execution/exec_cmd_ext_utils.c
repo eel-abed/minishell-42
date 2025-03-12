@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 19:04:52 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:08:48 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:30:08 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void fork_signals(void);
+void	fork_signals(void);
 
 char	*join_path(char *path, char *cmd, t_garbage **gc)
 {

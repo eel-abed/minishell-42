@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:42:17 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 17:26:17 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:31:31 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ char	*handle_exit_status(char *input, int *i, t_command *cmd, t_garbage **gc)
 	return (input);
 }
 // ! thesting  no soposta $ :
-	// ! numeros
-	// ! -
-	// ! =  -> $=
-	// ! ""
-	// ! '' 
-	// ! # -> 0
-	// ! @ -> line nada
-	
-	
+// ! numeros
+// ! -
+// ! =  -> $=
+// ! ""
+// ! ''
+// ! # -> 0
+// ! @ -> line nada
 
 static char	*handle_env_var(char *input, int *i, t_env *env, t_garbage **gc)
 {

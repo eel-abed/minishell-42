@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:17:56 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:53:25 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:33:26 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*might_replace(t_env *env, t_might replace_mr, char *tmp,
 	}
 	return (replace_mr.input);
 }
+
 char	*replace_null(char *input, int j, char *tmp, t_garbage **gc)
 {
 	char	*new_input;
