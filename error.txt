@@ -1,2 +1,0 @@
-echoHola : should be command not handle_command_not_found
-echo-nHola : same
