@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 15:41:15 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:12:58 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,13 @@ typedef struct s_heredoc_context
 	t_garbage			**gc;
 }						t_heredoc_context;
 
+typedef struct s_heredoc_data
+{
+	int					*here_doc_fds;
+	t_garbage			**gc;
+	int					*original_stdin;
+}						t_heredoc_data;
+
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
 t_env					*init_env(char **envp, t_garbage **gc);
@@ -172,6 +179,11 @@ void					export_builtin(t_tokens *tokens, t_env *env,
 							t_garbage **gc, t_command *cmd);
 int						unset_builtin(t_tokens *tokens, t_env *env,
 							t_command *cmd, t_garbage **gc);
+void					initialize_shell(t_env **env, t_command *cmd,
+							char **envp, t_garbage **gc);
+void					process_input(char *input, t_tokens **token_clean,
+							t_command *cmd, t_garbage **gc);
+void					cleanup_shell(t_garbage **gc);
 void					execute_command(t_tokens *tokens, t_command *cmd_info,
 							t_garbage **gc, int **here_doc_fds);
 int						execute_external_command(t_tokens *tokens,
