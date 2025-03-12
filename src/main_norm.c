@@ -6,15 +6,15 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:15:47 by mafourni          #+#    #+#             */
-/*   Updated: 2025/03/12 15:08:39 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:41:53 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_sigint(int sig);
-void	setup_signals(void);
-void	setup_here_doc_signals(void);
+void		handle_sigint(int sig);
+void		setup_signals(void);
+void		setup_here_doc_signals(void);
 
 void	close_all_std_evetring(void)
 {
@@ -35,34 +35,47 @@ void	here_doc_sig_handler(int sig)
 	close(STDIN_FILENO);
 }
 
+static int	process_heredoc_token(t_tokens *curr, t_heredoc_context *ctx)
+{
+	int	fd;
+
+	if (curr->type == kind_redir_2left)
+	{
+		fd = heredoc(curr->next->value, ctx->gc, ctx->original_stdin);
+		if (fd == -1)
+			return (-1);
+		ctx->here_doc_fds[*(ctx->i)] = fd;
+		(*(ctx->i))++;
+	}
+	else if (curr->type == kind_none)
+	{
+		if (handle_single_token(curr, ctx->here_doc_fds, ctx->gc) == 1)
+			return (-1);
+	}
+	return (0);
+}
+
 int	*compute_here_docs(t_tokens *tokens, t_garbage **gc)
 {
-	t_tokens	*curr;
-	int			fd;
-	int			*here_doc_fds;
-	int			i;
-	int			original_stdin;
+	t_tokens			*curr;
+	int					*here_doc_fds;
+	int					i;
+	int					original_stdin;
+	t_heredoc_context	ctx;
 
-	curr = tokens;
 	i = 0;
+	curr = tokens;
 	original_stdin = dup(STDIN_FILENO);
 	here_doc_fds = gc_malloc(gc, (count_here_docs(tokens, gc) * sizeof(int)));
 	setup_here_doc_signals();
+	ctx.i = &i;
+	ctx.here_doc_fds = here_doc_fds;
+	ctx.original_stdin = &original_stdin;
+	ctx.gc = gc;
 	while (curr)
 	{
-		if (curr->type == kind_redir_2left)
-		{
-			fd = heredoc(curr->next->value, gc, &original_stdin);
-			if (fd == -1)
-				return (NULL);
-			here_doc_fds[i] = fd;
-			i++;
-		}
-		else if (curr->type == kind_none)
-		{
-			if (handle_single_token(curr, here_doc_fds, gc) == 1)
-				return (NULL);
-		}
+		if (process_heredoc_token(curr, &ctx) == -1)
+			return (NULL);
 		curr = curr->next;
 	}
 	return (here_doc_fds);

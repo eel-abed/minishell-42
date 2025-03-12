@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 15:05:15 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:41:15 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,14 @@ typedef struct s_twpipe_norm
 	t_tokens			*new_token;
 	char				*cmd_str;
 }						t_wpipe_norm;
-// Norminette structure
+
+typedef struct s_heredoc_context
+{
+	int					*i;
+	int					*here_doc_fds;
+	int					*original_stdin;
+	t_garbage			**gc;
+}						t_heredoc_context;
 
 int						is_cat_cmd(char *str, t_garbage **gc);
 t_tokens				*add_quotes_cat(t_tokens *tokens, t_garbage **gc);
