@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:18:41 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 13:30:45 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:00:55 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	wait_for_children(pid_t *pids, int cmd_count, t_command *cmd_info)
 	int	i;
 	int	status;
 
+	status = 0;
 	i = 0;
 	while (i < cmd_count)
 	{
