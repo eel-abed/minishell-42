@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:58:15 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 11:42:24 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:59:22 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ char	*rebuild_command(t_tokens *tokens, t_garbage **gc)
 void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc,
 		int **here_doc_fds)
 {
-	int		original_stdout;
-	int		original_stdin;
-	char	**parts;
+	int				original_stdout;
+	int				original_stdin;
+	char			**parts;
+	t_exec_context	ctx;
 
 	save_restore_fd(&original_stdout, &original_stdin, 0);
 	if (!setup_command(tokens, cmd_info, &parts, gc))
@@ -61,7 +62,10 @@ void	execute_command(t_tokens *tokens, t_command *cmd_info, t_garbage **gc,
 	if (parts[0] && contain_echo_token(tokens))
 	{
 		parts = ft_split(rebuild_command(tokens, gc), ' ', gc);
-		handle_echo_command(parts, tokens, cmd_info, gc, *here_doc_fds);
+		ctx.cmd_info = cmd_info;
+		ctx.gc = gc;
+		ctx.here_doc_fds = *here_doc_fds;
+		handle_echo_command(parts, tokens, &ctx);
 	}
 	else
 		handle_other_command(parts, tokens, cmd_info, gc, here_doc_fds);

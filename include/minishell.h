@@ -6,7 +6,7 @@
 /*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 13:40:10 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:00:16 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ typedef struct s_command
 	t_env				*env;
 	int					exit_status;
 }						t_command;
+
+typedef struct s_exec_context
+{
+	t_command			*cmd_info;
+	t_garbage			**gc;
+	int					*here_doc_fds;
+}						t_exec_context;
 
 typedef struct s_pipe_data
 {
@@ -178,8 +185,7 @@ char					*build_command_string(char **parts, t_garbage **gc);
 void					save_restore_fd(int *original_stdout,
 							int *original_stdin, int restore);
 void					handle_echo_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int *here_doc_fds);
+							t_exec_context *ctx);
 void					handle_other_command(char **parts, t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc,
 							int **here_doc_fds);
@@ -278,8 +284,6 @@ char					*might_replace(t_env *env, t_might replace_mr,
 char					*ft_strlcat_mini(char *dst, const char *src,
 							size_t dstsize);
 void					print_tokens(t_tokens *list);
-void					ft_error_export_clean_loop(t_tokens *current, int i,
-							char *trimmed, char *clen_trimmed, t_garbage **gc);
 void					ft_trim_export(t_tokens *tokens, t_garbage **gc);
 void					if_found(char *input, int *i, int *flag, char to_found);
 void					process_export_arg(char *arg, t_env *env,
@@ -313,8 +317,5 @@ int						redirect_simple_input(const char *filename);
 void					handle_command_line(t_tokens *tokens,
 							t_command *cmd_info, t_garbage **gc);
 void					close_all_std_evetring(void);
-void					handle_other_command(char **parts, t_tokens *tokens,
-							t_command *cmd_info, t_garbage **gc,
-							int **here_doc_fds);
 
 #endif
