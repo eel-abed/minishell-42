@@ -6,7 +6,7 @@
 /*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:13:37 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/13 00:31:31 by mafourni         ###   ########.fr       */
+/*   Updated: 2025/03/13 01:35:07 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ typedef struct s_env_gc
 	t_garbage			**gc;
 }						t_env_gc;
 
+long long				handle_overflow(int sign, int *overflow);
 char					*remove_dollar_quotes(char *input, int j,
 							t_garbage **gc);
 char					*any_env(char *input, t_env *env, t_garbage **gc,

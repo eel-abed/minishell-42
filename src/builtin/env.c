@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:40 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/02/10 18:06:17 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/13 01:34:16 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ void	env_builtin(t_env *env)
 		}
 		current = current->next;
 	}
+}
+
+long long	handle_overflow(int sign, int *overflow)
+{
+	*overflow = 1;
+	if (sign == 1)
+		return (LLONG_MAX);
+	else
+		return (LLONG_MIN);
 }

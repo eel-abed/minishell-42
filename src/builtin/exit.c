@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:53:56 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/12 11:20:05 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/13 01:34:10 by mafourni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <limits.h>
 
-static long long	ft_atoll(const char *str)
+static long long	ft_atoll(const char *str, int *overflow)
 {
 	long long	result;
 	int			sign;
@@ -21,6 +22,7 @@ static long long	ft_atoll(const char *str)
 	result = 0;
 	sign = 1;
 	i = 0;
+	*overflow = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -31,6 +33,8 @@ static long long	ft_atoll(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if (result > (LLONG_MAX - (str[i] - '0')) / 10)
+			return (handle_overflow(sign, overflow));
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
@@ -39,7 +43,9 @@ static long long	ft_atoll(const char *str)
 
 static int	is_valid_number(const char *str)
 {
-	int	i;
+	int			i;
+	int			overflow;
+	long long	num;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
@@ -52,7 +58,8 @@ static int	is_valid_number(const char *str)
 			return (0);
 		i++;
 	}
-	if (ft_atoll(str) > INT_MAX || ft_atoll(str) < INT_MIN)
+	num = ft_atoll(str, &overflow);
+	if (overflow)
 		return (0);
 	return (1);
 }
@@ -68,12 +75,20 @@ static void	handle_invalid_number(char *arg, t_garbage **gc)
 
 static void	perform_exit(char *arg, int default_status, t_garbage **gc)
 {
-	int	exit_status;
+	int			exit_status;
+	int			overflow;
+	long long	num;
 
 	if (!arg)
 		exit_status = default_status;
 	else
-		exit_status = (unsigned char)ft_atoll(arg);
+	{
+		num = ft_atoll(arg, &overflow);
+		if (overflow)
+			exit_status = 2;
+		else
+			exit_status = (unsigned char)num;
+	}
 	gc_free_all(gc);
 	exit(exit_status);
 }
