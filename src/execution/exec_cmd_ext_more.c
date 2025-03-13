@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_ext_more.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mafourni <mafourni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 17:53:27 by eel-abed          #+#    #+#             */
-/*   Updated: 2025/03/11 16:02:02 by eel-abed         ###   ########.fr       */
+/*   Updated: 2025/03/13 01:11:35 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	wait_for_child(pid_t pid)
 	int	status;
 	int	exit_code;
 
+	status = 0;
+	exit_code = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
